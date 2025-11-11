@@ -23,6 +23,21 @@ export const langs = {
         totalWinningsLosses: "Total Winnings / Total Losses",
         rps: "Rock/Paper/Scissors",
         stakePH: "$BANMAO",
+        telegramReminderLabel: "Telegram reminders",
+        telegramReminderDetail:
+            "Connect your Telegram account to get commit and reveal reminders from the BANMAO bot.",
+        telegramReminderConnectButton: "Connect Telegram bot",
+        telegramReminderLink: "Open bot",
+        telegramReminderLoading: "Processing...",
+        telegramReminderConnecting:
+            "Check Telegram and press \"START\" in the BANMAO bot to finish linking your wallet.",
+        telegramReminderSuccess:
+            "Telegram reminders are active! We'll notify you about commits and reveals automatically.",
+        telegramReminderWalletRequired: "Connect your wallet before opening the Telegram bot.",
+        telegramReminderServerError: "We couldn't generate a Telegram token. Please try again in a moment.",
+        telegramReminderUnknownError: "Something went wrong while opening the Telegram bot.",
+        telegramReminderPopupBlocked:
+          "Your browser blocked the new tab. Allow pop-ups for this site and press the button again to open the Telegram bot.",
         commitDurationLabel: "Commit window",
         commitDurationPH: "Seconds",
         commitDurationHint: "⏳ Room time limit (60–86400 seconds).",
@@ -336,6 +351,19 @@ export const langs = {
         totalWinningsLosses: "总赢额 / 总亏损",
         rps: "石头/纸/剪刀",
         stakePH: "$BANMAO",
+        telegramReminderLabel: "Telegram 提醒",
+        telegramReminderDetail:
+            "连接你的 Telegram 账号，即可通过 BANMAO 机器人收到提交和揭示提醒。",
+        telegramReminderConnectButton: "连接 Telegram 机器人",
+        telegramReminderLink: "打开机器人",
+        telegramReminderLoading: "处理中...",
+        telegramReminderConnecting: "请打开 Telegram，并在 BANMAO 机器人中点击“START”完成绑定。",
+        telegramReminderSuccess: "已成功关联！我们会自动向你发送提交和揭示提醒。",
+        telegramReminderWalletRequired: "在打开 Telegram 机器人前请先连接您的钱包。",
+        telegramReminderServerError: "暂时无法生成 Telegram 令牌，请稍后再试。",
+        telegramReminderUnknownError: "打开 Telegram 机器人时发生未知错误。",
+        telegramReminderPopupBlocked:
+          "浏览器拦截了新标签页，请允许本站弹出窗口后再次点击按钮打开 Telegram 机器人。",
         commitDurationLabel: "提交时限",
         commitDurationPH: "秒数",
         commitDurationHint: "⏳ 房间时间限制（60–86400 秒）",
@@ -642,6 +670,21 @@ export const langs = {
         totalWinningsLosses: "Tổng thắng / Tổng thua",
         rps: "Kéo/Búa/Bao",
         stakePH: "$BANMAO",
+        telegramReminderLabel: "Thông báo Telegram",
+        telegramReminderDetail:
+            "Kết nối tài khoản Telegram của bạn để nhận nhắc commit và reveal từ bot BANMAO.",
+        telegramReminderConnectButton: "Kết nối Bot Telegram",
+        telegramReminderLink: "Mở bot",
+        telegramReminderLoading: "Đang xử lý...",
+        telegramReminderConnecting:
+            "Hãy kiểm tra Telegram và nhấn \"START\" trong bot BANMAO để hoàn tất liên kết.",
+        telegramReminderSuccess:
+            "Đã liên kết thành công! Bạn sẽ nhận được nhắc commit và reveal tự động.",
+        telegramReminderWalletRequired: "Vui lòng kết nối ví trước khi mở bot Telegram.",
+        telegramReminderServerError: "Không thể tạo token Telegram, hãy thử lại sau ít phút.",
+        telegramReminderUnknownError: "Đã xảy ra lỗi khi mở bot Telegram.",
+        telegramReminderPopupBlocked:
+          "Trình duyệt đã chặn tab mới. Hãy cho phép pop-up cho trang này và nhấn lại để mở bot Telegram.",
         commitDurationLabel: "Thời gian commit",
         commitDurationPH: "Số giây",
         commitDurationHint: "⏳ Giới hạn thời gian của phòng (60–86400 giây).",
@@ -952,6 +995,21 @@ export const langs = {
         totalWinningsLosses: "Total Kemenangan / Total Kerugian",
         rps: "Batu/Gunting/Kertas",
         stakePH: "$BANMAO",
+        telegramReminderLabel: "Pengingat Telegram",
+        telegramReminderDetail:
+            "Hubungkan akun Telegram Anda untuk menerima pengingat commit dan reveal dari bot BANMAO.",
+        telegramReminderConnectButton: "Hubungkan Bot Telegram",
+        telegramReminderLink: "Buka bot",
+        telegramReminderLoading: "Memproses...",
+        telegramReminderConnecting:
+            "Periksa Telegram dan tekan \"START\" di bot BANMAO untuk menyelesaikan penyambungan.",
+        telegramReminderSuccess:
+            "Berhasil terhubung! Kami akan mengirim pengingat commit dan reveal secara otomatis.",
+        telegramReminderWalletRequired: "Sambungkan dompet Anda sebelum membuka bot Telegram.",
+        telegramReminderServerError: "Token Telegram tidak dapat dibuat. Coba lagi nanti.",
+        telegramReminderUnknownError: "Terjadi kesalahan saat membuka bot Telegram.",
+        telegramReminderPopupBlocked:
+          "Browser memblokir tab baru. Izinkan pop-up untuk situs ini lalu tekan tombol lagi untuk membuka bot Telegram.",
         commitDurationLabel: "Durasi commit",
         commitDurationPH: "Detik",
         commitDurationHint: "⏳ Batas waktu ruang (60–86400 detik).",
@@ -1262,6 +1320,21 @@ export const langs = {
         totalWinningsLosses: "Jumlah Kemenangan / Jumlah Kerugian",
         rps: "Gunting/Batu/Kertas",
         stakePH: "$BANMAO",
+        telegramReminderLabel: "Peringatan Telegram",
+        telegramReminderDetail:
+            "Sambungkan akaun Telegram anda untuk menerima peringatan commit dan reveal daripada bot BANMAO.",
+        telegramReminderConnectButton: "Sambung Bot Telegram",
+        telegramReminderLink: "Buka bot",
+        telegramReminderLoading: "Sedang diproses...",
+        telegramReminderConnecting:
+            "Semak Telegram dan tekan \"START\" dalam bot BANMAO untuk melengkapkan pautan.",
+        telegramReminderSuccess:
+            "Berjaya dipautkan! Kami akan menghantar peringatan commit dan reveal secara automatik.",
+        telegramReminderWalletRequired: "Sila sambungkan dompet anda sebelum membuka bot Telegram.",
+        telegramReminderServerError: "Token Telegram tidak dapat dijana. Cuba lagi sebentar lagi.",
+        telegramReminderUnknownError: "Ralat tidak dijangka berlaku ketika membuka bot Telegram.",
+        telegramReminderPopupBlocked:
+          "Pelayar menyekat tab baharu. Benarkan timbul untuk laman ini dan tekan butang sekali lagi untuk membuka bot Telegram.",
         commitDurationLabel: "Tempoh commit",
         commitDurationPH: "Saat",
         commitDurationHint: "⏳ Had masa bilik (60–86400 saat).",
@@ -1572,6 +1645,21 @@ export const langs = {
         totalWinningsLosses: "Всего выиграно / Всего проиграно",
         rps: "Камень/Ножницы/Бумага",
         stakePH: "$BANMAO",
+        telegramReminderLabel: "Напоминания в Telegram",
+        telegramReminderDetail:
+            "Подключите свой аккаунт Telegram, чтобы получать напоминания о commit и reveal от бота BANMAO.",
+        telegramReminderConnectButton: "Подключить бота Telegram",
+        telegramReminderLink: "Открыть бота",
+        telegramReminderLoading: "Обработка...",
+        telegramReminderConnecting:
+            "Откройте Telegram и нажмите «START» в боте BANMAO, чтобы завершить привязку.",
+        telegramReminderSuccess:
+            "Связь установлена! Мы будем автоматически отправлять напоминания о commit и reveal.",
+        telegramReminderWalletRequired: "Подключите свой кошелек перед открытием Telegram-бота.",
+        telegramReminderServerError: "Не удалось создать токен Telegram. Попробуйте позже.",
+        telegramReminderUnknownError: "Произошла ошибка при открытии Telegram-бота.",
+        telegramReminderPopupBlocked:
+          "Браузер заблокировал новое окно. Разрешите всплывающие окна для этого сайта и нажмите кнопку ещё раз, чтобы открыть бота Telegram.",
         commitDurationLabel: "Окно фиксации",
         commitDurationPH: "Секунды",
         commitDurationHint: "⏳ Лимит времени комнаты (60–86400 секунд).",
@@ -1882,6 +1970,21 @@ export const langs = {
         totalWinningsLosses: "총 상금 / 총 손실",
         rps: "가위/바위/보",
         stakePH: "$BANMAO",
+        telegramReminderLabel: "텔레그램 알림",
+        telegramReminderDetail:
+            "Telegram 계정을 연결하면 BANMAO 봇이 커밋과 리빌 알림을 보내 드립니다.",
+        telegramReminderConnectButton: "텔레그램 봇 연결",
+        telegramReminderLink: "봇 열기",
+        telegramReminderLoading: "처리 중...",
+        telegramReminderConnecting:
+            "Telegram을 열어 BANMAO 봇에서 \"START\"를 눌러 연동을 마무리하세요.",
+        telegramReminderSuccess:
+            "연동이 완료되었습니다! 커밋과 리빌 알림을 자동으로 보내 드릴게요.",
+        telegramReminderWalletRequired: "Telegram 봇을 열기 전에 지갑을 먼저 연결하세요.",
+        telegramReminderServerError: "Telegram 토큰을 생성할 수 없습니다. 잠시 후 다시 시도하세요.",
+        telegramReminderUnknownError: "Telegram 봇을 여는 중 알 수 없는 오류가 발생했습니다.",
+        telegramReminderPopupBlocked:
+          "브라우저가 새 탭을 차단했습니다. 이 사이트의 팝업을 허용하고 버튼을 다시 눌러 Telegram 봇을 열어 주세요.",
         commitDurationLabel: "커밋 제한 시간",
         commitDurationPH: "초",
         commitDurationHint: "⏳ 방의 시간 제한 (60~86400초).",

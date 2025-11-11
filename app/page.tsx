@@ -19,12 +19,19 @@ import FloatingSettings, {
   type HistoryLookupResult,
   type UiScale,
 } from "../components/FloatingSettings";
+import TelegramConnect from "../components/TelegramConnect";
 import { IconDocs, IconHourglass, IconTelegram, IconToken, IconX } from "../components/Icons";
 import { FaCoins, FaEye, FaEyeSlash, FaHandRock, FaSyncAlt, FaTrophy, FaWallet } from "react-icons/fa";
 import { langs, type LocaleStrings } from "../lib/i18n";
 import { RPS_ABI, ERC20_ABI } from "../lib/abis";
 import toast, { Toaster } from "react-hot-toast";
 import { DEFAULT_THEME, ThemeKey, isThemeKey } from "../lib/themes";
+import {
+  TELEGRAM_BOT_USERNAME,
+  TELEGRAM_CONNECTION_STORAGE_KEY,
+  TELEGRAM_LEGACY_USERNAME_STORAGE_KEY,
+  buildTelegramConnectionKey,
+} from "../lib/telegram";
 
 /* ===================== CONSTS ===================== */
 const RPS = process.env.NEXT_PUBLIC_RPS_ADDRESS as `0x${string}`;
@@ -103,12 +110,12 @@ const DEFAULT_COMMIT_WINDOW = 600; // 10 phút commit/inactive
 const MIN_COMMIT_WINDOW = 60; // tối thiểu 1 phút
 const MAX_COMMIT_WINDOW = 24 * 60 * 60; // tối đa 24 giờ
 const REVEAL_WINDOW = 900; // 15 phút reveal
-const TELEGRAM_HANDLE = "banmao_X";
 const X_HANDLE = "banmao_X";
 const UI_SCALE_STORAGE_KEY = "banmao_ui_scale";
 const THEME_STORAGE_KEY = "banmao_theme";
+const TELEGRAM_NOTIFY_ENDPOINT = process.env.NEXT_PUBLIC_TELEGRAM_NOTIFY_ENDPOINT;
 const GOOGLE_DOCS_URL = "https://docs.google.com/document/d/1ObVjHuoVCjXbF5zuWqzbcUuoqT86CdCm4Z9mwMWCpp0/";
-const TELEGRAM_URL = `https://t.me/${TELEGRAM_HANDLE}`;
+const TELEGRAM_URL = `https://t.me/${TELEGRAM_BOT_USERNAME}`;
 const X_URL = `https://x.com/${X_HANDLE}`;
 const ROOMS_CACHE_KEY = "banmao_rooms_cache_v1";
 const INFO_CACHE_KEY = "banmao_info_cache_v1";
@@ -416,6 +423,15 @@ type InfoRow = {
   label: string;
   value: string;
   detail?: string | null;
+};
+
+type TelegramReminderMeta = {
+  key: string;
+  roomId: number;
+  type: "commit" | "commit-urgent" | "reveal";
+  title: string;
+  body: string;
+  deadline?: number | null;
 };
 
 function normalizeForfeitAddress(value: string | null | undefined): `0x${string}` | null {
@@ -1719,6 +1735,7 @@ export default function Page() {
   const [notificationSnoozeMinutes, setNotificationSnoozeMinutes] = useState(
     DEFAULT_SNOOZE_MINUTES
   );
+  const [isTelegramConnected, setIsTelegramConnected] = useState(false);
   const [uiScale, setUiScale] = useState<UiScale>("normal");
   const [isSharing, setIsSharing] = useState(false);
   const [isPersonalBoardCollapsed, setIsPersonalBoardCollapsed] = useState(false);
@@ -2205,6 +2222,16 @@ export default function Page() {
     [triggerInteractBeep, setVibrationMs]
   );
 
+  const handleTelegramConnected = useCallback(() => {
+    setIsTelegramConnected(true);
+    if (typeof window !== "undefined") {
+      const storageKey = buildTelegramConnectionKey(address ?? null);
+      window.localStorage.setItem(storageKey, "true");
+      window.localStorage.removeItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
+      window.localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+    }
+  }, [address]);
+
   const pushNotification = useCallback(
     (
       renderer: Parameters<typeof toast.custom>[0],
@@ -2215,6 +2242,35 @@ export default function Page() {
       return toast.custom(renderer, options);
     },
     [notificationsEnabled, playBeep]
+  );
+
+  const sendTelegramReminder = useCallback(
+    (meta: TelegramReminderMeta) => {
+      if (!TELEGRAM_NOTIFY_ENDPOINT) return;
+      if (!isTelegramConnected) return;
+      if (!address) return;
+      if (typeof window === "undefined") return;
+
+      const payload = {
+        address,
+        roomId: meta.roomId,
+        type: meta.type,
+        title: meta.title,
+        body: meta.body,
+        locale: lang,
+        timestamp: Date.now(),
+        deadline: meta.deadline ?? null,
+      };
+
+      void fetch(TELEGRAM_NOTIFY_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).catch((error) => {
+        console.error("Failed to dispatch Telegram reminder", error);
+      });
+    },
+    [address, isTelegramConnected, lang]
   );
 
   const showToast = useCallback(
@@ -2334,6 +2390,7 @@ export default function Page() {
     setNotificationsEnabled(true);
     setVibrationMs(DEFAULT_VIBRATION);
     setNotificationSnoozeMinutes(DEFAULT_SNOOZE_MINUTES);
+    setIsTelegramConnected(false);
     setIsSharing(false);
     setLang("en");
     setTheme(DEFAULT_THEME);
@@ -2578,6 +2635,49 @@ export default function Page() {
     if (!isClient || typeof window === "undefined") return;
     localStorage.setItem("banmao_notify_snooze", notificationSnoozeMinutes.toString());
   }, [notificationSnoozeMinutes, isClient]);
+
+  useEffect(() => {
+    if (!isClient || typeof window === "undefined") return;
+    if (!address) {
+      setIsTelegramConnected(false);
+      return;
+    }
+    const storageKey = buildTelegramConnectionKey(address);
+    const storedFlag = localStorage.getItem(storageKey);
+    if (storedFlag === "true") {
+      setIsTelegramConnected(true);
+      return;
+    }
+    const legacyHandle = localStorage.getItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
+    if (legacyHandle) {
+      setIsTelegramConnected(true);
+      localStorage.setItem(storageKey, "true");
+      localStorage.removeItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
+      localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+      return;
+    }
+    const legacyFlag = localStorage.getItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+    if (legacyFlag === "true") {
+      setIsTelegramConnected(true);
+      localStorage.setItem(storageKey, "true");
+      localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+      return;
+    }
+    setIsTelegramConnected(false);
+  }, [address, isClient]);
+
+  useEffect(() => {
+    if (!isClient || typeof window === "undefined") return;
+    if (!address) return;
+    const storageKey = buildTelegramConnectionKey(address);
+    if (isTelegramConnected) {
+      localStorage.setItem(storageKey, "true");
+    } else {
+      localStorage.removeItem(storageKey);
+    }
+    localStorage.removeItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
+    localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+  }, [address, isClient, isTelegramConnected]);
 
   useEffect(() => {
     if (!joinSectionHighlight) return;
@@ -5142,15 +5242,22 @@ export default function Page() {
     const lower = address.toLowerCase();
     const allActionableKeys = new Set<string>();
 
-    const showNotification = (key: string, createToast: (toast: any) => React.ReactElement, pattern?: number | number[]) => {
-      if (notificationShown) return;
+    const showNotification = (
+      key: string,
+      createToast: (toast: any) => React.ReactElement,
+      pattern?: number | number[]
+    ): boolean => {
+      if (notificationShown) return false;
 
       if (!notifiedRef.current.has(key) && !isSnoozed(key)) {
         notifiedRef.current.add(key);
         startAlertLoop(key, pattern);
         pushNotification(createToast, { duration: Number.POSITIVE_INFINITY, id: key });
         notificationShown = true;
+        return true;
       }
+
+      return false;
     };
 
     // Prioritize by claims > reveal > commit, and sort by room ID to keep it stable
@@ -5168,53 +5275,56 @@ export default function Page() {
       if (avail.claimable) {
         const claimKey = `claim-${viewRoom.id}`;
         allActionableKeys.add(claimKey);
-        showNotification(claimKey, (tt) => (
-          <div className="toast-card toast-card--alert">
-            <button
-              className="toast-close"
-              aria-label="Close notification"
+        const triggered = showNotification(
+          claimKey,
+          (tt) => (
+            <div className="toast-card toast-card--alert">
+              <button
+                className="toast-close"
+                aria-label="Close notification"
                 onClick={() => {
                   stopAlertLoop(claimKey);
                   toast.dismiss(tt?.id);
                 }}
-            >
-              ×
-            </button>
-            <div className="toast-text">
-              <strong>{t.notifyClaim(viewRoom.id)}</strong>
-              <span>{avail.phase === "commit" ? t.committing : t.revealing}</span>
-            </div>
-            <div className="toast-actions">
-              <button
-                className="table-action-button"
-                onClick={() => {
-                  setRoomId(String(viewRoom.id));
-                  stopAlertLoop(claimKey, { dismiss: false });
-                  toast.dismiss(tt?.id);
-                  claim(String(viewRoom.id));
-                }}
               >
-                {t.takeAction}
+                ×
               </button>
-              <button
-                className="table-action-button secondary"
-                onClick={() => {
-                  stopAlertLoop(claimKey);
-                  snooze(claimKey);
-                  toast.dismiss(tt?.id);
-                }}
-              >
-                {t.rememberLater}
-              </button>
+              <div className="toast-text">
+                <strong>{t.notifyClaim(viewRoom.id)}</strong>
+                <span>{avail.phase === "commit" ? t.committing : t.revealing}</span>
+              </div>
+              <div className="toast-actions">
+                <button
+                  className="table-action-button"
+                  onClick={() => {
+                    setRoomId(String(viewRoom.id));
+                    stopAlertLoop(claimKey, { dismiss: false });
+                    toast.dismiss(tt?.id);
+                    claim(String(viewRoom.id));
+                  }}
+                >
+                  {t.takeAction}
+                </button>
+                <button
+                  className="table-action-button secondary"
+                  onClick={() => {
+                    stopAlertLoop(claimKey);
+                    snooze(claimKey);
+                    toast.dismiss(tt?.id);
+                  }}
+                >
+                  {t.rememberLater}
+                </button>
+              </div>
             </div>
-          </div>
-        ));
+          )
+        );
       } else if (viewRoom.state === 2) {
         const needReveal = (isCreator && viewRoom.revealA === 0) || (isOpponent && viewRoom.revealB === 0);
         if (needReveal) {
           const key = `need-reveal-${viewRoom.id}-${isCreator ? "A" : "B"}`;
           allActionableKeys.add(key);
-          showNotification(
+          const triggered = showNotification(
             key,
             (tt) => (
               <div className="toast-card toast-card--alert">
@@ -5259,6 +5369,16 @@ export default function Page() {
             ),
             [vibrationMs, 80, vibrationMs]
           );
+          if (triggered) {
+            sendTelegramReminder({
+              key,
+              roomId: viewRoom.id,
+              type: "reveal",
+              title: t.notifyReveal(viewRoom.id),
+              body: t.reveal,
+              deadline: viewRoom.revealDeadline ?? null,
+            });
+          }
         }
       } else if (viewRoom.state === 1) {
         const creatorNeedsCommit =
@@ -5279,7 +5399,7 @@ export default function Page() {
           allActionableKeys.add(warningKey);
           const timeLabel = formatTimeLeft(viewRoom.commitDeadline, t, nowTs);
           const secondsLabel = Math.max(0, secondsRemaining);
-          showNotification(
+          const triggered = showNotification(
             warningKey,
             (tt) => (
               <div className="toast-card toast-card--alert">
@@ -5324,13 +5444,23 @@ export default function Page() {
             ),
             [vibrationMs, 90, vibrationMs, 90, vibrationMs]
           );
+          if (triggered) {
+            sendTelegramReminder({
+              key: warningKey,
+              roomId: viewRoom.id,
+              type: "commit-urgent",
+              title: t.commitUrgentTitle(viewRoom.id),
+              body: t.commitUrgentBody(timeLabel, secondsLabel),
+              deadline: viewRoom.commitDeadline ?? null,
+            });
+          }
           continue;
         }
 
         if (needCommit) {
           const key = `need-commit-${viewRoom.id}-${isCreator ? "A" : "B"}`;
           allActionableKeys.add(key);
-          showNotification(key, (tt) => (
+          const triggered = showNotification(key, (tt) => (
             <div className="toast-card toast-card--alert">
               <button
                 className="toast-close"
@@ -5371,6 +5501,16 @@ export default function Page() {
               </div>
             </div>
           ));
+          if (triggered) {
+            sendTelegramReminder({
+              key,
+              roomId: viewRoom.id,
+              type: "commit",
+              title: t.notifyCommit(viewRoom.id),
+              body: t.commit,
+              deadline: viewRoom.commitDeadline ?? null,
+            });
+          }
         }
       }
     }
@@ -5405,6 +5545,7 @@ export default function Page() {
     claim,
     commit,
     reveal,
+    sendTelegramReminder,
   ]);
 
   useEffect(() => {
@@ -5645,12 +5786,20 @@ export default function Page() {
                   {!isConnected ? (
                     <p className="stake-section__message">{t.stakeConnectPrompt}</p>
                   ) : !isStakeTableCollapsed ? (
-                  <InfoTable
-                      balance={infoBalance}
-                      decimals={decimals}
-                      stats={infoStats}
-                      strings={t}
-                    />
+                    <div className="stake-section__info-stack">
+                      <InfoTable
+                        balance={infoBalance}
+                        decimals={decimals}
+                        stats={infoStats}
+                        strings={t}
+                      />
+                      <TelegramConnect
+                        strings={t}
+                        defaultConnected={isTelegramConnected}
+                        onConnected={handleTelegramConnected}
+                        onBeforeConnect={triggerInteractBeep}
+                      />
+                    </div>
                   ) : null}
                 </div>
               </section>
@@ -6659,7 +6808,7 @@ export default function Page() {
         onUiScaleChange={handleUiScaleChange}
         theme={theme}
         onThemeChange={setTheme}
-        telegramHandle={TELEGRAM_HANDLE}
+        telegramHandle={TELEGRAM_BOT_USERNAME}
         xHandle={X_HANDLE}
         onInteract={triggerInteractBeep}
         onScreenshot={captureFloatingScreenshot}
