@@ -4,20 +4,20 @@ globalThis.__BUILD_MANIFEST = {
   },
   "devFiles": [],
   "polyfillFiles": [
-    "static/chunks/2ba46_next_dist_build_polyfills_polyfill-nomodule.js"
+    "static/chunks/d3002_next_dist_build_polyfills_polyfill-nomodule.js"
   ],
   "lowPriorityFiles": [],
   "rootMainFiles": [
-    "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_39367479._.js",
-    "static/chunks/2ba46_next_dist_compiled_react-dom_cb1d572f._.js",
-    "static/chunks/2ba46_next_dist_compiled_react-server-dom-turbopack_9a41b52c._.js",
-    "static/chunks/2ba46_next_dist_compiled_next-devtools_index_86b4784d.js",
-    "static/chunks/2ba46_next_dist_compiled_82d57276._.js",
-    "static/chunks/2ba46_next_dist_client_c90b7b2b._.js",
-    "static/chunks/2ba46_next_dist_366b7df5._.js",
-    "static/chunks/2ba46_@swc_helpers_cjs_8a54fa40._.js",
-    "static/chunks/Downloads_banmaogame_banmao-fun 2_a0ff3932._.js",
-    "static/chunks/turbopack-Downloads_banmaogame_banmao-fun 2_4ce3e99f._.js"
+    "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_1dca0f59._.js",
+    "static/chunks/d3002_next_dist_compiled_react-dom_88e90d6d._.js",
+    "static/chunks/d3002_next_dist_compiled_react-server-dom-turbopack_f2a3c050._.js",
+    "static/chunks/d3002_next_dist_compiled_next-devtools_index_17a0be1d.js",
+    "static/chunks/d3002_next_dist_compiled_237bb6aa._.js",
+    "static/chunks/d3002_next_dist_client_68e6b4a2._.js",
+    "static/chunks/d3002_next_dist_fc1f4e69._.js",
+    "static/chunks/d3002_@swc_helpers_cjs_3f38b919._.js",
+    "static/chunks/Downloads_banmaogame_rps2_banmao-fun-v2-main_a0ff3932._.js",
+    "static/chunks/turbopack-Downloads_banmaogame_rps2_banmao-fun-v2-main_3552b8b4._.js"
   ]
 };
 globalThis.__BUILD_MANIFEST.lowPriorityFiles = [
