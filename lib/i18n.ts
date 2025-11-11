@@ -25,10 +25,14 @@ export const langs = {
         stakePH: "$BANMAO",
         telegramReminderLabel: "Telegram reminders",
         telegramReminderDetail:
-            "Generate a secure link to the BANMAO bot and press START in Telegram to receive commit and reveal alerts.",
+            "Connect your Telegram account to get commit and reveal reminders from the BANMAO bot.",
+        telegramReminderConnectButton: "Connect Telegram bot",
         telegramReminderLink: "Open bot",
         telegramReminderLoading: "Processing...",
-        telegramReminderSuccess: "Check Telegram and press \"START\" to finish linking your wallet!",
+        telegramReminderConnecting:
+            "Check Telegram and press \"START\" in the BANMAO bot to finish linking your wallet.",
+        telegramReminderSuccess:
+            "Telegram reminders are active! We'll notify you about commits and reveals automatically.",
         telegramReminderWalletRequired: "Connect your wallet before opening the Telegram bot.",
         telegramReminderServerError: "We couldn't generate a Telegram token. Please try again in a moment.",
         telegramReminderUnknownError: "Something went wrong while opening the Telegram bot.",
@@ -349,10 +353,12 @@ export const langs = {
         stakePH: "$BANMAO",
         telegramReminderLabel: "Telegram 提醒",
         telegramReminderDetail:
-            "生成 BANMAO 机器人的专属链接，在 Telegram 中点击 START 即可接收提交和揭示提醒。",
+            "连接你的 Telegram 账号，即可通过 BANMAO 机器人收到提交和揭示提醒。",
+        telegramReminderConnectButton: "连接 Telegram 机器人",
         telegramReminderLink: "打开机器人",
         telegramReminderLoading: "处理中...",
-        telegramReminderSuccess: "请在 Telegram 中点击“START”完成绑定！",
+        telegramReminderConnecting: "请打开 Telegram，并在 BANMAO 机器人中点击“START”完成绑定。",
+        telegramReminderSuccess: "已成功关联！我们会自动向你发送提交和揭示提醒。",
         telegramReminderWalletRequired: "在打开 Telegram 机器人前请先连接您的钱包。",
         telegramReminderServerError: "暂时无法生成 Telegram 令牌，请稍后再试。",
         telegramReminderUnknownError: "打开 Telegram 机器人时发生未知错误。",
@@ -666,10 +672,14 @@ export const langs = {
         stakePH: "$BANMAO",
         telegramReminderLabel: "Thông báo Telegram",
         telegramReminderDetail:
-            "Tạo liên kết bảo mật tới bot BANMAO và nhấn START trong Telegram để nhận nhắc commit/reveal.",
+            "Kết nối tài khoản Telegram của bạn để nhận nhắc commit và reveal từ bot BANMAO.",
+        telegramReminderConnectButton: "Kết nối Bot Telegram",
         telegramReminderLink: "Mở bot",
         telegramReminderLoading: "Đang xử lý...",
-        telegramReminderSuccess: "Hãy kiểm tra Telegram và nhấn \"START\" để hoàn tất liên kết!",
+        telegramReminderConnecting:
+            "Hãy kiểm tra Telegram và nhấn \"START\" trong bot BANMAO để hoàn tất liên kết.",
+        telegramReminderSuccess:
+            "Đã liên kết thành công! Bạn sẽ nhận được nhắc commit và reveal tự động.",
         telegramReminderWalletRequired: "Vui lòng kết nối ví trước khi mở bot Telegram.",
         telegramReminderServerError: "Không thể tạo token Telegram, hãy thử lại sau ít phút.",
         telegramReminderUnknownError: "Đã xảy ra lỗi khi mở bot Telegram.",
@@ -987,10 +997,14 @@ export const langs = {
         stakePH: "$BANMAO",
         telegramReminderLabel: "Pengingat Telegram",
         telegramReminderDetail:
-            "Buat tautan aman ke bot BANMAO dan tekan START di Telegram untuk menerima pengingat commit dan reveal.",
+            "Hubungkan akun Telegram Anda untuk menerima pengingat commit dan reveal dari bot BANMAO.",
+        telegramReminderConnectButton: "Hubungkan Bot Telegram",
         telegramReminderLink: "Buka bot",
         telegramReminderLoading: "Memproses...",
-        telegramReminderSuccess: "Periksa Telegram dan tekan \"START\" untuk menyelesaikan penyambungan!",
+        telegramReminderConnecting:
+            "Periksa Telegram dan tekan \"START\" di bot BANMAO untuk menyelesaikan penyambungan.",
+        telegramReminderSuccess:
+            "Berhasil terhubung! Kami akan mengirim pengingat commit dan reveal secara otomatis.",
         telegramReminderWalletRequired: "Sambungkan dompet Anda sebelum membuka bot Telegram.",
         telegramReminderServerError: "Token Telegram tidak dapat dibuat. Coba lagi nanti.",
         telegramReminderUnknownError: "Terjadi kesalahan saat membuka bot Telegram.",
@@ -1308,10 +1322,14 @@ export const langs = {
         stakePH: "$BANMAO",
         telegramReminderLabel: "Peringatan Telegram",
         telegramReminderDetail:
-            "Jana pautan selamat ke bot BANMAO dan tekan START di Telegram untuk menerima peringatan commit dan reveal.",
+            "Sambungkan akaun Telegram anda untuk menerima peringatan commit dan reveal daripada bot BANMAO.",
+        telegramReminderConnectButton: "Sambung Bot Telegram",
         telegramReminderLink: "Buka bot",
         telegramReminderLoading: "Sedang diproses...",
-        telegramReminderSuccess: "Semak Telegram dan tekan \"START\" untuk melengkapkan pautan!",
+        telegramReminderConnecting:
+            "Semak Telegram dan tekan \"START\" dalam bot BANMAO untuk melengkapkan pautan.",
+        telegramReminderSuccess:
+            "Berjaya dipautkan! Kami akan menghantar peringatan commit dan reveal secara automatik.",
         telegramReminderWalletRequired: "Sila sambungkan dompet anda sebelum membuka bot Telegram.",
         telegramReminderServerError: "Token Telegram tidak dapat dijana. Cuba lagi sebentar lagi.",
         telegramReminderUnknownError: "Ralat tidak dijangka berlaku ketika membuka bot Telegram.",
@@ -1629,10 +1647,14 @@ export const langs = {
         stakePH: "$BANMAO",
         telegramReminderLabel: "Напоминания в Telegram",
         telegramReminderDetail:
-            "Сгенерируйте безопасную ссылку на бота BANMAO и нажмите START в Telegram, чтобы получать напоминания о commit и reveal.",
+            "Подключите свой аккаунт Telegram, чтобы получать напоминания о commit и reveal от бота BANMAO.",
+        telegramReminderConnectButton: "Подключить бота Telegram",
         telegramReminderLink: "Открыть бота",
         telegramReminderLoading: "Обработка...",
-        telegramReminderSuccess: "Откройте Telegram и нажмите «START», чтобы завершить привязку!",
+        telegramReminderConnecting:
+            "Откройте Telegram и нажмите «START» в боте BANMAO, чтобы завершить привязку.",
+        telegramReminderSuccess:
+            "Связь установлена! Мы будем автоматически отправлять напоминания о commit и reveal.",
         telegramReminderWalletRequired: "Подключите свой кошелек перед открытием Telegram-бота.",
         telegramReminderServerError: "Не удалось создать токен Telegram. Попробуйте позже.",
         telegramReminderUnknownError: "Произошла ошибка при открытии Telegram-бота.",
@@ -1950,10 +1972,14 @@ export const langs = {
         stakePH: "$BANMAO",
         telegramReminderLabel: "텔레그램 알림",
         telegramReminderDetail:
-            "BANMAO 봇으로 가는 안전한 링크를 생성하고 Telegram에서 START를 눌러 커밋/리빌 알림을 받아보세요.",
+            "Telegram 계정을 연결하면 BANMAO 봇이 커밋과 리빌 알림을 보내 드립니다.",
+        telegramReminderConnectButton: "텔레그램 봇 연결",
         telegramReminderLink: "봇 열기",
         telegramReminderLoading: "처리 중...",
-        telegramReminderSuccess: "Telegram을 열어 \"START\"를 눌러 연동을 완료하세요!",
+        telegramReminderConnecting:
+            "Telegram을 열어 BANMAO 봇에서 \"START\"를 눌러 연동을 마무리하세요.",
+        telegramReminderSuccess:
+            "연동이 완료되었습니다! 커밋과 리빌 알림을 자동으로 보내 드릴게요.",
         telegramReminderWalletRequired: "Telegram 봇을 열기 전에 지갑을 먼저 연결하세요.",
         telegramReminderServerError: "Telegram 토큰을 생성할 수 없습니다. 잠시 후 다시 시도하세요.",
         telegramReminderUnknownError: "Telegram 봇을 여는 중 알 수 없는 오류가 발생했습니다.",

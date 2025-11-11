@@ -1234,7 +1234,7 @@ input, select {
 .telegram-connect-box {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   padding: 18px;
   border-radius: 16px;
   border: 1px solid rgba(var(--gold-rgb), 0.35);
@@ -1251,6 +1251,64 @@ input, select {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(var(--gold-rgb), 0.92);
+}
+
+.telegram-connect-box__status {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(var(--gold-rgb), 0.28);
+  background: rgba(var(--gold-rgb), 0.09);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.telegram-connect-box__status-icon {
+  font-size: 20px;
+  line-height: 1;
+  transform: translateY(2px);
+}
+
+.telegram-connect-box__status-text {
+  flex: 1;
+  margin: 0;
+  color: rgba(var(--text-rgb), 0.82);
+}
+
+.telegram-connect-box__status--loading .telegram-connect-box__status-text {
+  color: rgba(var(--text-rgb), 0.72);
+}
+
+.telegram-connect-box__status--connecting {
+  border-color: rgba(var(--gold-rgb), 0.45);
+  background: rgba(var(--gold-rgb), 0.14);
+}
+
+.telegram-connect-box__status--connecting .telegram-connect-box__status-text {
+  color: rgba(var(--gold-rgb), 0.95);
+  font-weight: 600;
+}
+
+.telegram-connect-box__status--connected {
+  border-color: rgba(0, 200, 120, 0.45);
+  background: rgba(0, 200, 120, 0.08);
+}
+
+.telegram-connect-box__status--connected .telegram-connect-box__status-text {
+  color: rgba(0, 200, 120, 0.95);
+  font-weight: 600;
+}
+
+.telegram-connect-box__status--error {
+  border-color: rgba(255, 72, 72, 0.55);
+  background: rgba(255, 72, 72, 0.08);
+}
+
+.telegram-connect-box__status--error .telegram-connect-box__status-text {
+  color: rgba(255, 72, 72, 0.92);
+  font-weight: 600;
 }
 
 .telegram-connect-box__button {
@@ -1283,16 +1341,6 @@ input, select {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
-}
-
-.telegram-connect-box__message {
-  font-size: 13px;
-  line-height: 1.5;
-  color: rgba(var(--text-rgb), 0.82);
-}
-
-.telegram-connect-box__message--success {
-  color: rgba(0, 200, 120, 0.95);
 }
 
 .telegram-connect-box__error {
