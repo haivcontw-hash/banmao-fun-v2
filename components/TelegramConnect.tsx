@@ -49,7 +49,16 @@ export default function TelegramConnect({
     setIsLoading(true);
     setError(null);
 
+    const pendingWindow =
+      typeof window !== "undefined"
+        ? window.open("about:blank", "_blank", "noopener,noreferrer")
+        : null;
+
     try {
+      if (typeof window !== "undefined" && pendingWindow === null) {
+        throw new Error("POPUP_BLOCKED");
+      }
+
       const response = await fetch(TELEGRAM_TOKEN_ENDPOINT, {
         method: "POST",
         headers: {
@@ -67,12 +76,12 @@ export default function TelegramConnect({
         throw new Error("TOKEN_MISSING");
       }
 
-      if (typeof window !== "undefined") {
-        window.open(
-          `https://t.me/${TELEGRAM_BOT_USERNAME}?start=${encodeURIComponent(data.token)}`,
-          "_blank",
-          "noopener,noreferrer"
-        );
+      const telegramUrl = `https://t.me/${TELEGRAM_BOT_USERNAME}?start=${encodeURIComponent(data.token)}`;
+
+      if (pendingWindow) {
+        pendingWindow.location.href = telegramUrl;
+      } else if (typeof window !== "undefined") {
+        window.open(telegramUrl, "_blank", "noopener,noreferrer");
       }
 
       setHasConnected(true);
@@ -85,17 +94,24 @@ export default function TelegramConnect({
           setError(strings.telegramReminderServerError);
         } else if (err.message === "TOKEN_MISSING") {
           setError(strings.telegramReminderServerError);
+        } else if (err.message === "POPUP_BLOCKED") {
+          setError(strings.telegramReminderPopupBlocked ?? strings.telegramReminderUnknownError);
         } else {
           setError(strings.telegramReminderUnknownError);
         }
       } else {
         setError(strings.telegramReminderUnknownError);
       }
+
+      if (pendingWindow && typeof pendingWindow.close === "function") {
+        pendingWindow.close();
+      }
     } finally {
       setIsLoading(false);
     }
   }, [
     address,
+    strings.telegramReminderPopupBlocked,
     isConnected,
     onBeforeConnect,
     onConnected,
