@@ -5,9 +5,9 @@ import { useAccount } from "wagmi";
 
 import type { LocaleStrings } from "../lib/i18n";
 import {
-  TELEGRAM_BOT_USERNAME,
   TELEGRAM_STATUS_ENDPOINT,
   TELEGRAM_TOKEN_ENDPOINT,
+  buildTelegramBotUrl,
 } from "../lib/telegram";
 import { IconTelegram } from "./Icons";
 
@@ -214,10 +214,10 @@ export default function TelegramConnect({
         throw new Error("TOKEN_MISSING");
       }
 
-      const telegramUrl = `https://t.me/${TELEGRAM_BOT_USERNAME}?start=${encodeURIComponent(data.token)}`;
+      const telegramUrl = buildTelegramBotUrl(data.token);
 
       if (pendingWindow) {
-        pendingWindow.location.href = telegramUrl;
+        pendingWindow.location.replace(telegramUrl);
       } else if (typeof window !== "undefined") {
         window.open(telegramUrl, "_blank", "noopener,noreferrer");
       }

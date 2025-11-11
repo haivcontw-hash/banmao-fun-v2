@@ -11,3 +11,16 @@ export function buildTelegramConnectionKey(account: string | null | undefined) {
   if (!account) return TELEGRAM_CONNECTION_STORAGE_KEY;
   return `${TELEGRAM_CONNECTION_STORAGE_KEY}_${account.toLowerCase()}`;
 }
+
+export function buildTelegramBotUrl(token: string) {
+  const sanitizedUsername = TELEGRAM_BOT_USERNAME.replace(/^@+/, "")
+    .trim()
+    .replace(/\s+/g, "");
+
+  const username = sanitizedUsername || "banmao_rps_bot";
+
+  const usernameSegment = encodeURIComponent(username);
+  const tokenSegment = encodeURIComponent(token);
+
+  return `https://t.me/${usernameSegment}?start=${tokenSegment}`;
+}
