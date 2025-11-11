@@ -5314,37 +5314,38 @@ export default function Page() {
                   stopAlertLoop(claimKey);
                   toast.dismiss(tt?.id);
                 }}
-            >
-              ×
-            </button>
-            <div className="toast-text">
-              <strong>{t.notifyClaim(viewRoom.id)}</strong>
-              <span>{avail.phase === "commit" ? t.committing : t.revealing}</span>
-            </div>
-            <div className="toast-actions">
-              <button
-                className="table-action-button"
-                onClick={() => {
-                  setRoomId(String(viewRoom.id));
-                  stopAlertLoop(claimKey, { dismiss: false });
-                  toast.dismiss(tt?.id);
-                  claim(String(viewRoom.id));
-                }}
               >
-                {t.takeAction}
+                ×
               </button>
-              <button
-                className="table-action-button secondary"
-                onClick={() => {
-                  stopAlertLoop(claimKey);
-                  snooze(claimKey);
-                  toast.dismiss(tt?.id);
-                }}
-              >
-                {t.rememberLater}
-              </button>
+              <div className="toast-text">
+                <strong>{t.notifyClaim(viewRoom.id)}</strong>
+                <span>{avail.phase === "commit" ? t.committing : t.revealing}</span>
+              </div>
+              <div className="toast-actions">
+                <button
+                  className="table-action-button"
+                  onClick={() => {
+                    setRoomId(String(viewRoom.id));
+                    stopAlertLoop(claimKey, { dismiss: false });
+                    toast.dismiss(tt?.id);
+                    claim(String(viewRoom.id));
+                  }}
+                >
+                  {t.takeAction}
+                </button>
+                <button
+                  className="table-action-button secondary"
+                  onClick={() => {
+                    stopAlertLoop(claimKey);
+                    snooze(claimKey);
+                    toast.dismiss(tt?.id);
+                  }}
+                >
+                  {t.rememberLater}
+                </button>
+              </div>
             </div>
-          </div>
+          )
         );
       } else if (viewRoom.state === 2) {
         const needReveal = (isCreator && viewRoom.revealA === 0) || (isOpponent && viewRoom.revealB === 0);
