@@ -191,12 +191,9 @@ export default function TelegramConnect({
       typeof window !== "undefined"
         ? window.open("about:blank", "_blank", "noopener,noreferrer")
         : null;
+    const popupBlocked = typeof window !== "undefined" && pendingWindow === null;
 
     try {
-      if (typeof window !== "undefined" && pendingWindow === null) {
-        throw new Error("POPUP_BLOCKED");
-      }
-
       const response = await fetch(TELEGRAM_TOKEN_ENDPOINT, {
         method: "POST",
         headers: {
@@ -218,6 +215,9 @@ export default function TelegramConnect({
 
       if (pendingWindow) {
         pendingWindow.location.replace(telegramUrl);
+        pendingWindow.focus?.();
+      } else if (popupBlocked && typeof window !== "undefined") {
+        window.location.href = telegramUrl;
       } else if (typeof window !== "undefined") {
         window.open(telegramUrl, "_blank", "noopener,noreferrer");
       }
@@ -228,9 +228,7 @@ export default function TelegramConnect({
       console.error("Failed to launch Telegram bot", err);
 
       if (err instanceof Error) {
-        if (err.message === "POPUP_BLOCKED") {
-          setError(strings.telegramReminderPopupBlocked ?? strings.telegramReminderUnknownError);
-        } else if (err.message === "SERVER_ERROR" || err.message === "TOKEN_MISSING") {
+        if (err.message === "SERVER_ERROR" || err.message === "TOKEN_MISSING") {
           setError(strings.telegramReminderServerError);
         } else {
           setError(strings.telegramReminderUnknownError);
@@ -252,7 +250,6 @@ export default function TelegramConnect({
     beginPollingStatus,
     isConnected,
     onBeforeConnect,
-    strings.telegramReminderPopupBlocked,
     strings.telegramReminderServerError,
     strings.telegramReminderUnknownError,
     strings.telegramReminderWalletRequired,
