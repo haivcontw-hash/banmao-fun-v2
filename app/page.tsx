@@ -19,12 +19,19 @@ import FloatingSettings, {
   type HistoryLookupResult,
   type UiScale,
 } from "../components/FloatingSettings";
+import TelegramConnect from "../components/TelegramConnect";
 import { IconDocs, IconHourglass, IconTelegram, IconToken, IconX } from "../components/Icons";
 import { FaCoins, FaEye, FaEyeSlash, FaHandRock, FaSyncAlt, FaTrophy, FaWallet } from "react-icons/fa";
 import { langs, type LocaleStrings } from "../lib/i18n";
 import { RPS_ABI, ERC20_ABI } from "../lib/abis";
 import toast, { Toaster } from "react-hot-toast";
 import { DEFAULT_THEME, ThemeKey, isThemeKey } from "../lib/themes";
+import {
+  TELEGRAM_BOT_USERNAME,
+  TELEGRAM_CONNECTION_STORAGE_KEY,
+  TELEGRAM_LEGACY_USERNAME_STORAGE_KEY,
+  buildTelegramConnectionKey,
+} from "../lib/telegram";
 
 /* ===================== CONSTS ===================== */
 const RPS = process.env.NEXT_PUBLIC_RPS_ADDRESS as `0x${string}`;
@@ -103,14 +110,12 @@ const DEFAULT_COMMIT_WINDOW = 600; // 10 phút commit/inactive
 const MIN_COMMIT_WINDOW = 60; // tối thiểu 1 phút
 const MAX_COMMIT_WINDOW = 24 * 60 * 60; // tối đa 24 giờ
 const REVEAL_WINDOW = 900; // 15 phút reveal
-const TELEGRAM_HANDLE = "banmao_X";
 const X_HANDLE = "banmao_X";
 const UI_SCALE_STORAGE_KEY = "banmao_ui_scale";
 const THEME_STORAGE_KEY = "banmao_theme";
-const TELEGRAM_USERNAME_STORAGE_KEY = "banmao_telegram_username";
 const TELEGRAM_NOTIFY_ENDPOINT = process.env.NEXT_PUBLIC_TELEGRAM_NOTIFY_ENDPOINT;
 const GOOGLE_DOCS_URL = "https://docs.google.com/document/d/1ObVjHuoVCjXbF5zuWqzbcUuoqT86CdCm4Z9mwMWCpp0/";
-const TELEGRAM_URL = `https://t.me/${TELEGRAM_HANDLE}`;
+const TELEGRAM_URL = `https://t.me/${TELEGRAM_BOT_USERNAME}`;
 const X_URL = `https://x.com/${X_HANDLE}`;
 const ROOMS_CACHE_KEY = "banmao_rooms_cache_v1";
 const INFO_CACHE_KEY = "banmao_info_cache_v1";
@@ -221,10 +226,6 @@ type InfoTableProps = {
   decimals: number;
   stats: UserStatsShape;
   strings: LocaleStrings;
-  telegramHandle: string;
-  onTelegramHandleChange: (value: string) => void;
-  telegramLink: string;
-  onTelegramLinkClick?: () => void;
 };
 
 function roomsEqual(a: RoomWithForfeit[], b: RoomWithForfeit[]) {
@@ -432,15 +433,6 @@ type TelegramReminderMeta = {
   body: string;
   deadline?: number | null;
 };
-
-function sanitizeTelegramHandle(raw: string): string {
-  if (typeof raw !== "string") return "";
-  const trimmed = raw.trim();
-  if (!trimmed) return "";
-  const withoutAt = trimmed.replace(/^@+/, "");
-  const cleaned = withoutAt.replace(/[^0-9A-Za-z_]/g, "");
-  return cleaned.slice(0, 32);
-}
 
 function normalizeForfeitAddress(value: string | null | undefined): `0x${string}` | null {
   if (!value) return null;
@@ -829,16 +821,7 @@ function formatTokenAmountSigned(value: bigint, decimals: number) {
   return `${negative ? "-" : "+"}${formatted}`;
 }
 
-function InfoTable({
-  balance,
-  decimals,
-  stats,
-  strings,
-  telegramHandle,
-  onTelegramHandleChange,
-  telegramLink,
-  onTelegramLinkClick,
-}: InfoTableProps) {
+function InfoTable({ balance, decimals, stats, strings }: InfoTableProps) {
   const rows = useMemo<InfoRow[]>(() => {
     const formattedBalance = typeof balance === "bigint" ? formatTokenAmount(balance, decimals) : "-";
     const totalMatches = stats.win + stats.loss + stats.draw;
@@ -905,45 +888,6 @@ function InfoTable({
             </td>
           </tr>
         ))}
-        <tr key="telegram-reminder">
-          <td>
-            <span className="stake-section__info-main stake-section__info-main--telegram">
-              <span className="stake-section__info-icon" aria-hidden="true">
-                <IconTelegram width={18} height={18} />
-              </span>
-              <span className="stake-section__info-field">
-                <input
-                  className="stake-section__telegram-input"
-                  value={telegramHandle ? `@${telegramHandle}` : ""}
-                  onChange={(event) => onTelegramHandleChange(event.target.value)}
-                  placeholder={strings.telegramReminderPlaceholder}
-                  inputMode="text"
-                  autoComplete="off"
-                  spellCheck={false}
-                  aria-label={strings.telegramReminderLabel}
-                />
-                <a
-                  className="stake-section__telegram-link"
-                  href={telegramLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    onTelegramLinkClick?.();
-                    if (typeof window !== "undefined") {
-                      window.open(telegramLink, "_blank", "noopener,noreferrer");
-                    }
-                  }}
-                >
-                  <IconTelegram width={16} height={16} />
-                  <span>{strings.telegramReminderLink}</span>
-                </a>
-              </span>
-            </span>
-            <span className="stake-section__info-caption">{strings.telegramReminderLabel}</span>
-            <span className="stake-section__info-detail">{strings.telegramReminderDetail}</span>
-          </td>
-        </tr>
       </tbody>
     </table>
   );
@@ -1791,7 +1735,7 @@ export default function Page() {
   const [notificationSnoozeMinutes, setNotificationSnoozeMinutes] = useState(
     DEFAULT_SNOOZE_MINUTES
   );
-  const [telegramHandle, setTelegramHandle] = useState<string>("");
+  const [isTelegramConnected, setIsTelegramConnected] = useState(false);
   const [uiScale, setUiScale] = useState<UiScale>("normal");
   const [isSharing, setIsSharing] = useState(false);
   const [isPersonalBoardCollapsed, setIsPersonalBoardCollapsed] = useState(false);
@@ -2278,10 +2222,15 @@ export default function Page() {
     [triggerInteractBeep, setVibrationMs]
   );
 
-  const handleTelegramHandleChange = useCallback((value: string) => {
-    const sanitized = sanitizeTelegramHandle(value);
-    setTelegramHandle(sanitized);
-  }, []);
+  const handleTelegramConnected = useCallback(() => {
+    setIsTelegramConnected(true);
+    if (typeof window !== "undefined") {
+      const storageKey = buildTelegramConnectionKey(address ?? null);
+      window.localStorage.setItem(storageKey, "true");
+      window.localStorage.removeItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
+      window.localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+    }
+  }, [address]);
 
   const pushNotification = useCallback(
     (
@@ -2298,18 +2247,12 @@ export default function Page() {
   const sendTelegramReminder = useCallback(
     (meta: TelegramReminderMeta) => {
       if (!TELEGRAM_NOTIFY_ENDPOINT) return;
-      if (!telegramHandle) return;
+      if (!isTelegramConnected) return;
       if (!address) return;
       if (typeof window === "undefined") return;
 
-      const handleWithAt = telegramHandle.startsWith("@")
-        ? telegramHandle
-        : (telegramHandle ? `@${telegramHandle}` : "");
-
       const payload = {
         address,
-        telegram: telegramHandle,
-        telegramDisplay: handleWithAt,
         roomId: meta.roomId,
         type: meta.type,
         title: meta.title,
@@ -2327,7 +2270,7 @@ export default function Page() {
         console.error("Failed to dispatch Telegram reminder", error);
       });
     },
-    [address, lang, telegramHandle]
+    [address, isTelegramConnected, lang]
   );
 
   const showToast = useCallback(
@@ -2447,7 +2390,7 @@ export default function Page() {
     setNotificationsEnabled(true);
     setVibrationMs(DEFAULT_VIBRATION);
     setNotificationSnoozeMinutes(DEFAULT_SNOOZE_MINUTES);
-    setTelegramHandle("");
+    setIsTelegramConnected(false);
     setIsSharing(false);
     setLang("en");
     setTheme(DEFAULT_THEME);
@@ -2482,7 +2425,6 @@ export default function Page() {
     setCommitInfoMap,
     clearCommitDeadlineFallbacks,
     clearRevealDeadlineFallbacks,
-    setTelegramHandle,
   ]);
 
   const isSnoozed = useCallback((key: string) => {
@@ -2553,10 +2495,6 @@ export default function Page() {
       if (storedSnooze) {
         const parsed = Number(storedSnooze);
         if (!Number.isNaN(parsed) && parsed >= 0) setNotificationSnoozeMinutes(parsed);
-      }
-      const storedTelegram = localStorage.getItem(TELEGRAM_USERNAME_STORAGE_KEY);
-      if (storedTelegram) {
-        setTelegramHandle(sanitizeTelegramHandle(storedTelegram));
       }
       const storedUiScale = localStorage.getItem(UI_SCALE_STORAGE_KEY);
       if (
@@ -2700,12 +2638,46 @@ export default function Page() {
 
   useEffect(() => {
     if (!isClient || typeof window === "undefined") return;
-    if (!telegramHandle) {
-      localStorage.removeItem(TELEGRAM_USERNAME_STORAGE_KEY);
-    } else {
-      localStorage.setItem(TELEGRAM_USERNAME_STORAGE_KEY, telegramHandle);
+    if (!address) {
+      setIsTelegramConnected(false);
+      return;
     }
-  }, [telegramHandle, isClient]);
+    const storageKey = buildTelegramConnectionKey(address);
+    const storedFlag = localStorage.getItem(storageKey);
+    if (storedFlag === "true") {
+      setIsTelegramConnected(true);
+      return;
+    }
+    const legacyHandle = localStorage.getItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
+    if (legacyHandle) {
+      setIsTelegramConnected(true);
+      localStorage.setItem(storageKey, "true");
+      localStorage.removeItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
+      localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+      return;
+    }
+    const legacyFlag = localStorage.getItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+    if (legacyFlag === "true") {
+      setIsTelegramConnected(true);
+      localStorage.setItem(storageKey, "true");
+      localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+      return;
+    }
+    setIsTelegramConnected(false);
+  }, [address, isClient]);
+
+  useEffect(() => {
+    if (!isClient || typeof window === "undefined") return;
+    if (!address) return;
+    const storageKey = buildTelegramConnectionKey(address);
+    if (isTelegramConnected) {
+      localStorage.setItem(storageKey, "true");
+    } else {
+      localStorage.removeItem(storageKey);
+    }
+    localStorage.removeItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
+    localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
+  }, [address, isClient, isTelegramConnected]);
 
   useEffect(() => {
     if (!joinSectionHighlight) return;
@@ -5814,16 +5786,20 @@ export default function Page() {
                   {!isConnected ? (
                     <p className="stake-section__message">{t.stakeConnectPrompt}</p>
                   ) : !isStakeTableCollapsed ? (
-                  <InfoTable
-                      balance={infoBalance}
-                      decimals={decimals}
-                      stats={infoStats}
-                      strings={t}
-                      telegramHandle={telegramHandle}
-                      onTelegramHandleChange={handleTelegramHandleChange}
-                      telegramLink={TELEGRAM_URL}
-                      onTelegramLinkClick={triggerInteractBeep}
-                    />
+                    <div className="stake-section__info-stack">
+                      <InfoTable
+                        balance={infoBalance}
+                        decimals={decimals}
+                        stats={infoStats}
+                        strings={t}
+                      />
+                      <TelegramConnect
+                        strings={t}
+                        defaultConnected={isTelegramConnected}
+                        onConnected={handleTelegramConnected}
+                        onBeforeConnect={triggerInteractBeep}
+                      />
+                    </div>
                   ) : null}
                 </div>
               </section>
@@ -6832,7 +6808,7 @@ export default function Page() {
         onUiScaleChange={handleUiScaleChange}
         theme={theme}
         onThemeChange={setTheme}
-        telegramHandle={TELEGRAM_HANDLE}
+        telegramHandle={TELEGRAM_BOT_USERNAME}
         xHandle={X_HANDLE}
         onInteract={triggerInteractBeep}
         onScreenshot={captureFloatingScreenshot}

@@ -1225,68 +1225,80 @@ input, select {
   width: 100%;
 }
 
-.stake-section__info-main--telegram {
-  flex-wrap: wrap;
-  row-gap: 12px;
+.stake-section__info-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
-.stake-section__info-field {
-  display: inline-flex;
+.telegram-connect-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(var(--gold-rgb), 0.35);
+  background: rgba(var(--gold-rgb), 0.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.telegram-connect-box__title {
+  display: flex;
   align-items: center;
   gap: 10px;
-  flex: 1;
-  justify-content: center;
-  flex-wrap: wrap;
-  min-width: 220px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(var(--gold-rgb), 0.92);
 }
 
-.stake-section__telegram-input {
-  flex: 1 1 180px;
-  min-width: 160px;
-  max-width: 260px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(var(--gold-rgb), 0.35);
-  background: rgba(var(--gold-rgb), 0.06);
-  color: var(--text);
-  font-size: 15px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.stake-section__telegram-input::placeholder {
-  color: rgba(var(--gold-rgb), 0.55);
-}
-
-.stake-section__telegram-input:focus {
-  outline: none;
-  border-color: rgba(var(--gold-rgb), 0.75);
-  box-shadow: 0 0 0 3px rgba(var(--gold-rgb), 0.18);
-}
-
-.stake-section__telegram-link {
+.telegram-connect-box__button {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(var(--gold-rgb), 0.4);
-  background: rgba(var(--gold-rgb), 0.12);
-  color: inherit;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(var(--gold-rgb), 0.55);
+  background: linear-gradient(180deg, rgba(var(--gold-rgb), 0.24), rgba(var(--gold-rgb), 0.05));
+  color: var(--text);
+  font-weight: 600;
   font-size: 14px;
-  text-decoration: none;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.stake-section__telegram-link:hover,
-.stake-section__telegram-link:focus-visible {
-  border-color: rgba(var(--gold-rgb), 0.7);
-  background: rgba(var(--gold-rgb), 0.2);
+.telegram-connect-box__button:hover,
+.telegram-connect-box__button:focus-visible {
+  border-color: rgba(var(--gold-rgb), 0.85);
   transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
 }
 
-.stake-section__telegram-link svg {
-  flex-shrink: 0;
+.telegram-connect-box__button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.telegram-connect-box__message {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(var(--text-rgb), 0.82);
+}
+
+.telegram-connect-box__message--success {
+  color: rgba(0, 200, 120, 0.95);
+}
+
+.telegram-connect-box__error {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 72, 72, 0.92);
 }
 
 .stake-section__info-caption {
