@@ -872,24 +872,20 @@ function InfoTable({ balance, decimals, stats, strings }: InfoTableProps) {
   }, [balance, decimals, stats, strings]);
 
   return (
-    <table className="stake-section__info-table">
-      <tbody>
-        {rows.map((row) => (
-          <tr key={row.key}>
-            <td>
-              <span className="stake-section__info-main">
-                <span className="stake-section__info-icon" aria-hidden="true">
-                  {row.icon}
-                </span>
-                <span className="stake-section__info-value">{row.value}</span>
-              </span>
-              <span className="stake-section__info-caption">{row.label}</span>
-              {row.detail ? <span className="stake-section__info-detail">{row.detail}</span> : null}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="stake-section__info-grid" role="list">
+      {rows.map((row) => (
+        <div key={row.key} className="stake-section__info-card" role="listitem">
+          <span className="stake-section__info-main">
+            <span className="stake-section__info-icon" aria-hidden="true">
+              {row.icon}
+            </span>
+            <span className="stake-section__info-value">{row.value}</span>
+          </span>
+          <span className="stake-section__info-caption">{row.label}</span>
+          {row.detail ? <span className="stake-section__info-detail">{row.detail}</span> : null}
+        </div>
+      ))}
+    </div>
   );
 }
 
