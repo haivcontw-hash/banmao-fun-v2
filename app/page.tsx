@@ -107,6 +107,8 @@ const TELEGRAM_HANDLE = "banmao_X";
 const X_HANDLE = "banmao_X";
 const UI_SCALE_STORAGE_KEY = "banmao_ui_scale";
 const THEME_STORAGE_KEY = "banmao_theme";
+const TELEGRAM_USERNAME_STORAGE_KEY = "banmao_telegram_username";
+const TELEGRAM_NOTIFY_ENDPOINT = process.env.NEXT_PUBLIC_TELEGRAM_NOTIFY_ENDPOINT;
 const GOOGLE_DOCS_URL = "https://docs.google.com/document/d/1ObVjHuoVCjXbF5zuWqzbcUuoqT86CdCm4Z9mwMWCpp0/";
 const TELEGRAM_URL = `https://t.me/${TELEGRAM_HANDLE}`;
 const X_URL = `https://x.com/${X_HANDLE}`;
@@ -219,6 +221,10 @@ type InfoTableProps = {
   decimals: number;
   stats: UserStatsShape;
   strings: LocaleStrings;
+  telegramHandle: string;
+  onTelegramHandleChange: (value: string) => void;
+  telegramLink: string;
+  onTelegramLinkClick?: () => void;
 };
 
 function roomsEqual(a: RoomWithForfeit[], b: RoomWithForfeit[]) {
@@ -417,6 +423,24 @@ type InfoRow = {
   value: string;
   detail?: string | null;
 };
+
+type TelegramReminderMeta = {
+  key: string;
+  roomId: number;
+  type: "commit" | "commit-urgent" | "reveal";
+  title: string;
+  body: string;
+  deadline?: number | null;
+};
+
+function sanitizeTelegramHandle(raw: string): string {
+  if (typeof raw !== "string") return "";
+  const trimmed = raw.trim();
+  if (!trimmed) return "";
+  const withoutAt = trimmed.replace(/^@+/, "");
+  const cleaned = withoutAt.replace(/[^0-9A-Za-z_]/g, "");
+  return cleaned.slice(0, 32);
+}
 
 function normalizeForfeitAddress(value: string | null | undefined): `0x${string}` | null {
   if (!value) return null;
@@ -805,7 +829,16 @@ function formatTokenAmountSigned(value: bigint, decimals: number) {
   return `${negative ? "-" : "+"}${formatted}`;
 }
 
-function InfoTable({ balance, decimals, stats, strings }: InfoTableProps) {
+function InfoTable({
+  balance,
+  decimals,
+  stats,
+  strings,
+  telegramHandle,
+  onTelegramHandleChange,
+  telegramLink,
+  onTelegramLinkClick,
+}: InfoTableProps) {
   const rows = useMemo<InfoRow[]>(() => {
     const formattedBalance = typeof balance === "bigint" ? formatTokenAmount(balance, decimals) : "-";
     const totalMatches = stats.win + stats.loss + stats.draw;
@@ -872,6 +905,45 @@ function InfoTable({ balance, decimals, stats, strings }: InfoTableProps) {
             </td>
           </tr>
         ))}
+        <tr key="telegram-reminder">
+          <td>
+            <span className="stake-section__info-main stake-section__info-main--telegram">
+              <span className="stake-section__info-icon" aria-hidden="true">
+                <IconTelegram width={18} height={18} />
+              </span>
+              <span className="stake-section__info-field">
+                <input
+                  className="stake-section__telegram-input"
+                  value={telegramHandle ? `@${telegramHandle}` : ""}
+                  onChange={(event) => onTelegramHandleChange(event.target.value)}
+                  placeholder={strings.telegramReminderPlaceholder}
+                  inputMode="text"
+                  autoComplete="off"
+                  spellCheck={false}
+                  aria-label={strings.telegramReminderLabel}
+                />
+                <a
+                  className="stake-section__telegram-link"
+                  href={telegramLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    onTelegramLinkClick?.();
+                    if (typeof window !== "undefined") {
+                      window.open(telegramLink, "_blank", "noopener,noreferrer");
+                    }
+                  }}
+                >
+                  <IconTelegram width={16} height={16} />
+                  <span>{strings.telegramReminderLink}</span>
+                </a>
+              </span>
+            </span>
+            <span className="stake-section__info-caption">{strings.telegramReminderLabel}</span>
+            <span className="stake-section__info-detail">{strings.telegramReminderDetail}</span>
+          </td>
+        </tr>
       </tbody>
     </table>
   );
@@ -1719,6 +1791,7 @@ export default function Page() {
   const [notificationSnoozeMinutes, setNotificationSnoozeMinutes] = useState(
     DEFAULT_SNOOZE_MINUTES
   );
+  const [telegramHandle, setTelegramHandle] = useState<string>("");
   const [uiScale, setUiScale] = useState<UiScale>("normal");
   const [isSharing, setIsSharing] = useState(false);
   const [isPersonalBoardCollapsed, setIsPersonalBoardCollapsed] = useState(false);
@@ -2205,6 +2278,11 @@ export default function Page() {
     [triggerInteractBeep, setVibrationMs]
   );
 
+  const handleTelegramHandleChange = useCallback((value: string) => {
+    const sanitized = sanitizeTelegramHandle(value);
+    setTelegramHandle(sanitized);
+  }, []);
+
   const pushNotification = useCallback(
     (
       renderer: Parameters<typeof toast.custom>[0],
@@ -2215,6 +2293,41 @@ export default function Page() {
       return toast.custom(renderer, options);
     },
     [notificationsEnabled, playBeep]
+  );
+
+  const sendTelegramReminder = useCallback(
+    (meta: TelegramReminderMeta) => {
+      if (!TELEGRAM_NOTIFY_ENDPOINT) return;
+      if (!telegramHandle) return;
+      if (!address) return;
+      if (typeof window === "undefined") return;
+
+      const handleWithAt = telegramHandle.startsWith("@")
+        ? telegramHandle
+        : (telegramHandle ? `@${telegramHandle}` : "");
+
+      const payload = {
+        address,
+        telegram: telegramHandle,
+        telegramDisplay: handleWithAt,
+        roomId: meta.roomId,
+        type: meta.type,
+        title: meta.title,
+        body: meta.body,
+        locale: lang,
+        timestamp: Date.now(),
+        deadline: meta.deadline ?? null,
+      };
+
+      void fetch(TELEGRAM_NOTIFY_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).catch((error) => {
+        console.error("Failed to dispatch Telegram reminder", error);
+      });
+    },
+    [address, lang, telegramHandle]
   );
 
   const showToast = useCallback(
@@ -2334,6 +2447,7 @@ export default function Page() {
     setNotificationsEnabled(true);
     setVibrationMs(DEFAULT_VIBRATION);
     setNotificationSnoozeMinutes(DEFAULT_SNOOZE_MINUTES);
+    setTelegramHandle("");
     setIsSharing(false);
     setLang("en");
     setTheme(DEFAULT_THEME);
@@ -2368,6 +2482,7 @@ export default function Page() {
     setCommitInfoMap,
     clearCommitDeadlineFallbacks,
     clearRevealDeadlineFallbacks,
+    setTelegramHandle,
   ]);
 
   const isSnoozed = useCallback((key: string) => {
@@ -2438,6 +2553,10 @@ export default function Page() {
       if (storedSnooze) {
         const parsed = Number(storedSnooze);
         if (!Number.isNaN(parsed) && parsed >= 0) setNotificationSnoozeMinutes(parsed);
+      }
+      const storedTelegram = localStorage.getItem(TELEGRAM_USERNAME_STORAGE_KEY);
+      if (storedTelegram) {
+        setTelegramHandle(sanitizeTelegramHandle(storedTelegram));
       }
       const storedUiScale = localStorage.getItem(UI_SCALE_STORAGE_KEY);
       if (
@@ -2578,6 +2697,15 @@ export default function Page() {
     if (!isClient || typeof window === "undefined") return;
     localStorage.setItem("banmao_notify_snooze", notificationSnoozeMinutes.toString());
   }, [notificationSnoozeMinutes, isClient]);
+
+  useEffect(() => {
+    if (!isClient || typeof window === "undefined") return;
+    if (!telegramHandle) {
+      localStorage.removeItem(TELEGRAM_USERNAME_STORAGE_KEY);
+    } else {
+      localStorage.setItem(TELEGRAM_USERNAME_STORAGE_KEY, telegramHandle);
+    }
+  }, [telegramHandle, isClient]);
 
   useEffect(() => {
     if (!joinSectionHighlight) return;
@@ -5142,15 +5270,22 @@ export default function Page() {
     const lower = address.toLowerCase();
     const allActionableKeys = new Set<string>();
 
-    const showNotification = (key: string, createToast: (toast: any) => React.ReactElement, pattern?: number | number[]) => {
-      if (notificationShown) return;
+    const showNotification = (
+      key: string,
+      createToast: (toast: any) => React.ReactElement,
+      pattern?: number | number[]
+    ): boolean => {
+      if (notificationShown) return false;
 
       if (!notifiedRef.current.has(key) && !isSnoozed(key)) {
         notifiedRef.current.add(key);
         startAlertLoop(key, pattern);
         pushNotification(createToast, { duration: Number.POSITIVE_INFINITY, id: key });
         notificationShown = true;
+        return true;
       }
+
+      return false;
     };
 
     // Prioritize by claims > reveal > commit, and sort by room ID to keep it stable
@@ -5168,11 +5303,13 @@ export default function Page() {
       if (avail.claimable) {
         const claimKey = `claim-${viewRoom.id}`;
         allActionableKeys.add(claimKey);
-        showNotification(claimKey, (tt) => (
-          <div className="toast-card toast-card--alert">
-            <button
-              className="toast-close"
-              aria-label="Close notification"
+        const triggered = showNotification(
+          claimKey,
+          (tt) => (
+            <div className="toast-card toast-card--alert">
+              <button
+                className="toast-close"
+                aria-label="Close notification"
                 onClick={() => {
                   stopAlertLoop(claimKey);
                   toast.dismiss(tt?.id);
@@ -5208,13 +5345,13 @@ export default function Page() {
               </button>
             </div>
           </div>
-        ));
+        );
       } else if (viewRoom.state === 2) {
         const needReveal = (isCreator && viewRoom.revealA === 0) || (isOpponent && viewRoom.revealB === 0);
         if (needReveal) {
           const key = `need-reveal-${viewRoom.id}-${isCreator ? "A" : "B"}`;
           allActionableKeys.add(key);
-          showNotification(
+          const triggered = showNotification(
             key,
             (tt) => (
               <div className="toast-card toast-card--alert">
@@ -5259,6 +5396,16 @@ export default function Page() {
             ),
             [vibrationMs, 80, vibrationMs]
           );
+          if (triggered) {
+            sendTelegramReminder({
+              key,
+              roomId: viewRoom.id,
+              type: "reveal",
+              title: t.notifyReveal(viewRoom.id),
+              body: t.reveal,
+              deadline: viewRoom.revealDeadline ?? null,
+            });
+          }
         }
       } else if (viewRoom.state === 1) {
         const creatorNeedsCommit =
@@ -5279,7 +5426,7 @@ export default function Page() {
           allActionableKeys.add(warningKey);
           const timeLabel = formatTimeLeft(viewRoom.commitDeadline, t, nowTs);
           const secondsLabel = Math.max(0, secondsRemaining);
-          showNotification(
+          const triggered = showNotification(
             warningKey,
             (tt) => (
               <div className="toast-card toast-card--alert">
@@ -5324,13 +5471,23 @@ export default function Page() {
             ),
             [vibrationMs, 90, vibrationMs, 90, vibrationMs]
           );
+          if (triggered) {
+            sendTelegramReminder({
+              key: warningKey,
+              roomId: viewRoom.id,
+              type: "commit-urgent",
+              title: t.commitUrgentTitle(viewRoom.id),
+              body: t.commitUrgentBody(timeLabel, secondsLabel),
+              deadline: viewRoom.commitDeadline ?? null,
+            });
+          }
           continue;
         }
 
         if (needCommit) {
           const key = `need-commit-${viewRoom.id}-${isCreator ? "A" : "B"}`;
           allActionableKeys.add(key);
-          showNotification(key, (tt) => (
+          const triggered = showNotification(key, (tt) => (
             <div className="toast-card toast-card--alert">
               <button
                 className="toast-close"
@@ -5371,6 +5528,16 @@ export default function Page() {
               </div>
             </div>
           ));
+          if (triggered) {
+            sendTelegramReminder({
+              key,
+              roomId: viewRoom.id,
+              type: "commit",
+              title: t.notifyCommit(viewRoom.id),
+              body: t.commit,
+              deadline: viewRoom.commitDeadline ?? null,
+            });
+          }
         }
       }
     }
@@ -5405,6 +5572,7 @@ export default function Page() {
     claim,
     commit,
     reveal,
+    sendTelegramReminder,
   ]);
 
   useEffect(() => {
@@ -5650,6 +5818,10 @@ export default function Page() {
                       decimals={decimals}
                       stats={infoStats}
                       strings={t}
+                      telegramHandle={telegramHandle}
+                      onTelegramHandleChange={handleTelegramHandleChange}
+                      telegramLink={TELEGRAM_URL}
+                      onTelegramLinkClick={triggerInteractBeep}
                     />
                   ) : null}
                 </div>

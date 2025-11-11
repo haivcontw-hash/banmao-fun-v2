@@ -1225,6 +1225,70 @@ input, select {
   width: 100%;
 }
 
+.stake-section__info-main--telegram {
+  flex-wrap: wrap;
+  row-gap: 12px;
+}
+
+.stake-section__info-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+  flex-wrap: wrap;
+  min-width: 220px;
+}
+
+.stake-section__telegram-input {
+  flex: 1 1 180px;
+  min-width: 160px;
+  max-width: 260px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(var(--gold-rgb), 0.35);
+  background: rgba(var(--gold-rgb), 0.06);
+  color: var(--text);
+  font-size: 15px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stake-section__telegram-input::placeholder {
+  color: rgba(var(--gold-rgb), 0.55);
+}
+
+.stake-section__telegram-input:focus {
+  outline: none;
+  border-color: rgba(var(--gold-rgb), 0.75);
+  box-shadow: 0 0 0 3px rgba(var(--gold-rgb), 0.18);
+}
+
+.stake-section__telegram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(var(--gold-rgb), 0.4);
+  background: rgba(var(--gold-rgb), 0.12);
+  color: inherit;
+  font-size: 14px;
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.stake-section__telegram-link:hover,
+.stake-section__telegram-link:focus-visible {
+  border-color: rgba(var(--gold-rgb), 0.7);
+  background: rgba(var(--gold-rgb), 0.2);
+  transform: translateY(-1px);
+}
+
+.stake-section__telegram-link svg {
+  flex-shrink: 0;
+}
+
 .stake-section__info-caption {
   display: block;
   margin-top: 6px;
