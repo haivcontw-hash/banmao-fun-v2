@@ -40,6 +40,7 @@ const BANMAO = process.env.NEXT_PUBLIC_BANMAO as `0x${string}`;
 type Choice = 1 | 2 | 3;
 const STATE = ["Wait", "Committing", "Revealing", "Finished", "Canceled"];
 const ZERO_ADDR = "0x0000000000000000000000000000000000000000";
+const ZERO_ADDR_LOWER = ZERO_ADDR.toLowerCase();
 const ZERO_COMMIT = "0x0000000000000000000000000000000000000000000000000000000000000000";
 const ZERO_BIGINT = BigInt(0);
 const MAX_SALT_VALUE = BigInt(`0x${"f".repeat(64)}`);
@@ -3405,33 +3406,53 @@ export default function Page() {
       const metaB = meta.get(b.id);
       if (!metaA || !metaB) return 0;
 
-      const joinableA =
-        metaA.view.state === 0 &&
-        metaA.view.opponent === ZERO_ADDR &&
-        metaA.availability.live &&
-        !metaA.availability.claimable;
-      const joinableB =
-        metaB.view.state === 0 &&
-        metaB.view.opponent === ZERO_ADDR &&
-        metaB.availability.live &&
-        !metaB.availability.claimable;
+      const opponentALower = metaA.view.opponent?.toLowerCase?.() ?? "";
+      const opponentBLower = metaB.view.opponent?.toLowerCase?.() ?? "";
 
-      if (joinableA && joinableB) {
-        if (metaA.view.stake !== metaB.view.stake) {
-          return metaA.view.stake > metaB.view.stake ? -1 : 1;
+      const hasOpponentA = opponentALower !== "" && opponentALower !== ZERO_ADDR_LOWER;
+      const hasOpponentB = opponentBLower !== "" && opponentBLower !== ZERO_ADDR_LOWER;
+
+      const baseJoinableA = metaA.view.state === 0 && !hasOpponentA;
+      const baseJoinableB = metaB.view.state === 0 && !hasOpponentB;
+
+      const joinReadyA =
+        baseJoinableA && metaA.availability.live && !metaA.availability.claimable;
+      const joinReadyB =
+        baseJoinableB && metaB.availability.live && !metaB.availability.claimable;
+
+      if (joinReadyA !== joinReadyB) {
+        return joinReadyA ? -1 : 1;
+      }
+
+      if (joinReadyA && joinReadyB) {
+        const stakeA = metaA.view.stake ?? ZERO_BIGINT;
+        const stakeB = metaB.view.stake ?? ZERO_BIGINT;
+        if (stakeA !== stakeB) {
+          return stakeA > stakeB ? -1 : 1;
         }
 
         const deadlineA = Number(metaA.view.commitDeadline ?? 0);
         const deadlineB = Number(metaB.view.commitDeadline ?? 0);
-        if (deadlineA !== deadlineB) {
-          if (!Number.isFinite(deadlineA)) return 1;
-          if (!Number.isFinite(deadlineB)) return -1;
+        const finiteA = Number.isFinite(deadlineA) && deadlineA > 0;
+        const finiteB = Number.isFinite(deadlineB) && deadlineB > 0;
+
+        if (finiteA && finiteB && deadlineA !== deadlineB) {
           return deadlineA < deadlineB ? -1 : 1;
+        }
+
+        if (finiteA !== finiteB) {
+          return finiteA ? -1 : 1;
         }
       }
 
-      if (joinableA !== joinableB) {
-        return joinableA ? -1 : 1;
+      if (baseJoinableA !== baseJoinableB) {
+        return baseJoinableA ? -1 : 1;
+      }
+
+      const liveA = metaA.availability.live && !metaA.availability.expired;
+      const liveB = metaB.availability.live && !metaB.availability.expired;
+      if (liveA !== liveB) {
+        return liveA ? -1 : 1;
       }
 
       if (metaA.view.state === 0 && metaB.view.state !== 0) return -1;
