@@ -187,12 +187,6 @@ export default function TelegramConnect({
     setError(null);
     setStatus((prev) => (prev === "connecting" ? prev : "loading"));
 
-    const pendingWindow =
-      typeof window !== "undefined"
-        ? window.open("about:blank", "_blank", "noopener,noreferrer")
-        : null;
-    const popupBlocked = typeof window !== "undefined" && pendingWindow === null;
-
     try {
       const response = await fetch(TELEGRAM_TOKEN_ENDPOINT, {
         method: "POST",
@@ -212,14 +206,19 @@ export default function TelegramConnect({
       }
 
       const telegramUrl = buildTelegramBotUrl(data.token);
+      let didOpen = false;
 
-      if (pendingWindow) {
-        pendingWindow.location.replace(telegramUrl);
-        pendingWindow.focus?.();
-      } else if (popupBlocked && typeof window !== "undefined") {
+      if (typeof window !== "undefined") {
+        const newWindow = window.open(telegramUrl, "_blank", "noopener,noreferrer");
+
+        if (newWindow) {
+          newWindow.focus?.();
+          didOpen = true;
+        }
+      }
+
+      if (!didOpen && typeof window !== "undefined") {
         window.location.href = telegramUrl;
-      } else if (typeof window !== "undefined") {
-        window.open(telegramUrl, "_blank", "noopener,noreferrer");
       }
 
       setStatus("connecting");
@@ -238,10 +237,6 @@ export default function TelegramConnect({
       }
 
       setStatus((prev) => (prev === "connecting" ? prev : "error"));
-
-      if (pendingWindow && typeof pendingWindow.close === "function") {
-        pendingWindow.close();
-      }
     } finally {
       setIsRequesting(false);
     }
