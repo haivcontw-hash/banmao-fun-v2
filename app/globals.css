@@ -1231,6 +1231,76 @@ input, select {
   gap: 22px;
 }
 
+.telegram-reminders {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.telegram-reminders__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--gold-rgb), 0.35);
+  background: rgba(var(--gold-rgb), 0.08);
+  color: rgba(var(--text-rgb), 0.92);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.telegram-reminders__toggle:hover,
+.telegram-reminders__toggle:focus-visible {
+  border-color: rgba(var(--gold-rgb), 0.55);
+  background: rgba(var(--gold-rgb), 0.16);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.telegram-reminders__toggle:focus-visible {
+  outline: 2px solid rgba(var(--gold-rgb), 0.5);
+  outline-offset: 2px;
+}
+
+.telegram-reminders__toggle span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.telegram-reminders__chevron {
+  transition: transform 0.24s ease;
+}
+
+.telegram-reminders__chevron--open {
+  transform: rotate(180deg);
+}
+
+.telegram-reminders__hint {
+  margin: 0;
+  max-width: 420px;
+  font-size: 0.85rem;
+  color: rgba(var(--text-rgb), 0.8);
+}
+
+.telegram-reminders:not(.telegram-reminders--collapsed) .telegram-reminders__hint {
+  display: none;
+}
+
+.telegram-reminders__content {
+  width: min(100%, 420px);
+}
+
+.telegram-reminders__content[hidden] {
+  display: none;
+}
+
 .telegram-connect-box {
   display: flex;
   flex-direction: column;

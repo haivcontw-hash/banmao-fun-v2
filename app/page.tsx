@@ -21,7 +21,16 @@ import FloatingSettings, {
 } from "../components/FloatingSettings";
 import TelegramConnect from "../components/TelegramConnect";
 import { IconDocs, IconHourglass, IconTelegram, IconToken, IconX } from "../components/Icons";
-import { FaCoins, FaEye, FaEyeSlash, FaHandRock, FaSyncAlt, FaTrophy, FaWallet } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaCoins,
+  FaEye,
+  FaEyeSlash,
+  FaHandRock,
+  FaSyncAlt,
+  FaTrophy,
+  FaWallet,
+} from "react-icons/fa";
 import { langs, type LocaleStrings } from "../lib/i18n";
 import { RPS_ABI, ERC20_ABI } from "../lib/abis";
 import toast, { Toaster } from "react-hot-toast";
@@ -1775,6 +1784,7 @@ export default function Page() {
     DEFAULT_SNOOZE_MINUTES
   );
   const [isTelegramConnected, setIsTelegramConnected] = useState(false);
+  const [isTelegramPanelCollapsed, setIsTelegramPanelCollapsed] = useState(true);
   const [uiScale, setUiScale] = useState<UiScale>("normal");
   const [isSharing, setIsSharing] = useState(false);
   const [isPersonalBoardCollapsed, setIsPersonalBoardCollapsed] = useState(false);
@@ -2724,6 +2734,18 @@ export default function Page() {
     localStorage.removeItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
     localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
   }, [address, isClient, isTelegramConnected]);
+
+  useEffect(() => {
+    if (!isConnected) {
+      setIsTelegramPanelCollapsed(true);
+    }
+  }, [isConnected]);
+
+  useEffect(() => {
+    if (isTelegramConnected) {
+      setIsTelegramPanelCollapsed(false);
+    }
+  }, [isTelegramConnected]);
 
   useEffect(() => {
     if (!joinSectionHighlight) return;
@@ -6107,12 +6129,6 @@ export default function Page() {
                         stats={infoStats}
                         strings={t}
                       />
-                      <TelegramConnect
-                        strings={t}
-                        defaultConnected={isTelegramConnected}
-                        onConnected={handleTelegramConnected}
-                        onBeforeConnect={triggerInteractBeep}
-                      />
                     </div>
                   ) : null}
                 </div>
@@ -6372,85 +6388,86 @@ export default function Page() {
             </div>
 
             {isConnected && (
-              <section
-                className={`personal-board${
-                  isPersonalBoardCollapsed ? " personal-board--collapsed" : ""
-                }${showOnlyActionableRooms ? " personal-board--focused" : ""}${
-                  !showOnlyActionableRooms && !isPersonalBoardCollapsed
-                    ? " personal-board--all-limited"
-                    : ""
-                }`}
-              >
-                <div className="personal-board__heading">
-                  <div className="personal-board__heading-text">
-                    <h3 className="glowing-title">{t.personalBoardTitle}</h3>
-                    <p>{t.personalBoardSubtitle}</p>
+              <>
+                <section
+                  className={`personal-board${
+                    isPersonalBoardCollapsed ? " personal-board--collapsed" : ""
+                  }${showOnlyActionableRooms ? " personal-board--focused" : ""}${
+                    !showOnlyActionableRooms && !isPersonalBoardCollapsed
+                      ? " personal-board--all-limited"
+                      : ""
+                  }`}
+                >
+                  <div className="personal-board__heading">
+                    <div className="personal-board__heading-text">
+                      <h3 className="glowing-title">{t.personalBoardTitle}</h3>
+                      <p>{t.personalBoardSubtitle}</p>
+                    </div>
+                    <div className="personal-board__controls">
+                      <button
+                        type="button"
+                        className={`icon-refresh-button personal-board__refresh${
+                          isRefreshing ? " icon-refresh-button--spinning" : ""
+                        }`}
+                        onClick={handleManualRefresh}
+                        title={refreshLabel}
+                        aria-label={refreshLabel}
+                        disabled={isRefreshing}
+                      >
+                        <FaSyncAlt className="icon-refresh-button__icon" aria-hidden="true" />
+                      </button>
+                      <button
+                        type="button"
+                        className={`personal-board__toggle${
+                          isPersonalBoardCollapsed ? " personal-board__toggle--active" : ""
+                        }`}
+                        onClick={() => {
+                          setIsPersonalBoardCollapsed((prev) => !prev);
+                        }}
+                        aria-pressed={isPersonalBoardCollapsed}
+                        aria-label={
+                          isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse
+                        }
+                        title={isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse}
+                      >
+                        <span aria-hidden="true">{isPersonalBoardCollapsed ? "⇲" : "⇱"}</span>
+                        <span className="personal-board__toggle-label">
+                          {isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse}
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        className={`personal-board__toggle${
+                          showOnlyActionableRooms ? " personal-board__toggle--active" : ""
+                        }`}
+                        onClick={() => {
+                          setShowOnlyActionableRooms((prev) => {
+                            const next = !prev;
+                            if (next) setIsPersonalBoardCollapsed(false);
+                            return next;
+                          });
+                        }}
+                        aria-pressed={showOnlyActionableRooms}
+                        aria-label={
+                          showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand
+                        }
+                        title={showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand}
+                      >
+                        <span aria-hidden="true">{showOnlyActionableRooms ? "☰" : "⚡"}</span>
+                        <span className="personal-board__toggle-label">
+                          {showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand}
+                        </span>
+                      </button>
+                    </div>
                   </div>
-                  <div className="personal-board__controls">
-                    <button
-                      type="button"
-                      className={`icon-refresh-button personal-board__refresh${
-                        isRefreshing ? " icon-refresh-button--spinning" : ""
-                      }`}
-                      onClick={handleManualRefresh}
-                      title={refreshLabel}
-                      aria-label={refreshLabel}
-                      disabled={isRefreshing}
-                    >
-                      <FaSyncAlt className="icon-refresh-button__icon" aria-hidden="true" />
-                    </button>
-                    <button
-                      type="button"
-                      className={`personal-board__toggle${
-                        isPersonalBoardCollapsed ? " personal-board__toggle--active" : ""
-                      }`}
-                      onClick={() => {
-                        setIsPersonalBoardCollapsed((prev) => !prev);
-                      }}
-                      aria-pressed={isPersonalBoardCollapsed}
-                      aria-label={
-                        isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse
-                      }
-                      title={isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse}
-                    >
-                      <span aria-hidden="true">{isPersonalBoardCollapsed ? "⇲" : "⇱"}</span>
-                      <span className="personal-board__toggle-label">
-                        {isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse}
-                      </span>
-                    </button>
-                    <button
-                      type="button"
-                      className={`personal-board__toggle${
-                        showOnlyActionableRooms ? " personal-board__toggle--active" : ""
-                      }`}
-                      onClick={() => {
-                        setShowOnlyActionableRooms((prev) => {
-                          const next = !prev;
-                          if (next) setIsPersonalBoardCollapsed(false);
-                          return next;
-                        });
-                      }}
-                      aria-pressed={showOnlyActionableRooms}
-                      aria-label={
-                        showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand
-                      }
-                      title={showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand}
-                    >
-                      <span aria-hidden="true">{showOnlyActionableRooms ? "☰" : "⚡"}</span>
-                      <span className="personal-board__toggle-label">
-                        {showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand}
-                      </span>
-                    </button>
-                  </div>
-                </div>
 
-                {visiblePersonalSummaries.length === 0 ? (
-                  <p className="personal-board__empty">
-                    {showOnlyActionableRooms ? t.personalBoardNoAction : t.personalBoardEmpty}
-                  </p>
-                ) : (
-                  <div className="personal-board__table-wrapper">
-                    <table className="personal-board__table">
+                  {visiblePersonalSummaries.length === 0 ? (
+                    <p className="personal-board__empty">
+                      {showOnlyActionableRooms ? t.personalBoardNoAction : t.personalBoardEmpty}
+                    </p>
+                  ) : (
+                    <div className="personal-board__table-wrapper">
+                      <table className="personal-board__table">
                       <thead>
                         <tr>
                           <th>{t.room}</th>
@@ -6600,10 +6617,54 @@ export default function Page() {
                           );
                         })}
                       </tbody>
-                    </table>
+                      </table>
+                    </div>
+                  )}
+                </section>
+
+                <section
+                  className={`telegram-reminders${
+                    isTelegramPanelCollapsed ? " telegram-reminders--collapsed" : ""
+                  }`}
+                >
+                  <button
+                    type="button"
+                    className="telegram-reminders__toggle"
+                    onClick={() => {
+                      triggerInteractBeep();
+                      setIsTelegramPanelCollapsed((prev) => !prev);
+                    }}
+                    aria-expanded={!isTelegramPanelCollapsed}
+                    aria-controls="telegram-reminders-content"
+                    title={t.telegramReminderLabel}
+                  >
+                    <IconTelegram width={18} height={18} />
+                    <span>{t.telegramReminderLabel}</span>
+                    <FaChevronDown
+                      className={`telegram-reminders__chevron${
+                        isTelegramPanelCollapsed ? "" : " telegram-reminders__chevron--open"
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <p className="telegram-reminders__hint">
+                    {isTelegramConnected ? t.telegramReminderSuccess : t.telegramReminderDetail}
+                  </p>
+                  <div
+                    className="telegram-reminders__content"
+                    id="telegram-reminders-content"
+                    hidden={isTelegramPanelCollapsed}
+                    aria-hidden={isTelegramPanelCollapsed}
+                  >
+                    <TelegramConnect
+                      strings={t}
+                      defaultConnected={isTelegramConnected}
+                      onConnected={handleTelegramConnected}
+                      onBeforeConnect={triggerInteractBeep}
+                    />
                   </div>
-                )}
-              </section>
+                </section>
+              </>
             )}
 
             {/* === RPS === */}
