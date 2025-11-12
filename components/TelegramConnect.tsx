@@ -294,10 +294,7 @@ export default function TelegramConnect({
 
   return (
     <div className="telegram-connect-box">
-      <p className="telegram-connect-box__title">
-        <IconTelegram width={18} height={18} />
-        <span>{strings.telegramReminderLabel}</span>
-      </p>
+      
 
       <div className={statusClassName} aria-live="polite">
         <span className="telegram-connect-box__status-icon" aria-hidden="true">
@@ -307,16 +304,18 @@ export default function TelegramConnect({
       </div>
 
       {showActionButton ? (
-        <button
-          type="button"
-          className="telegram-connect-box__button"
-          onClick={handleConnect}
-          disabled={actionDisabled}
-          aria-busy={isRequesting || status === "loading"}
-          title={walletMissing ? strings.telegramReminderWalletRequired : undefined}
-        >
-          {actionLabel}
-        </button>
+        <div className="telegram-connect-box__actions">
+          <button
+            type="button"
+            className="telegram-connect-box__button"
+            onClick={handleConnect}
+            disabled={actionDisabled}
+            aria-busy={isRequesting || status === "loading"}
+            title={walletMissing ? strings.telegramReminderWalletRequired : undefined}
+          >
+            {actionLabel}
+          </button>
+        </div>
       ) : null}
 
       {error && status !== "error" ? (
