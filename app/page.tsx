@@ -3408,17 +3408,25 @@ export default function Page() {
       const joinableA =
         metaA.view.state === 0 &&
         metaA.view.opponent === ZERO_ADDR &&
-        !metaA.availability.expired &&
+        metaA.availability.live &&
         !metaA.availability.claimable;
       const joinableB =
         metaB.view.state === 0 &&
         metaB.view.opponent === ZERO_ADDR &&
-        !metaB.availability.expired &&
+        metaB.availability.live &&
         !metaB.availability.claimable;
 
       if (joinableA && joinableB) {
         if (metaA.view.stake !== metaB.view.stake) {
           return metaA.view.stake > metaB.view.stake ? -1 : 1;
+        }
+
+        const deadlineA = Number(metaA.view.commitDeadline ?? 0);
+        const deadlineB = Number(metaB.view.commitDeadline ?? 0);
+        if (deadlineA !== deadlineB) {
+          if (!Number.isFinite(deadlineA)) return 1;
+          if (!Number.isFinite(deadlineB)) return -1;
+          return deadlineA < deadlineB ? -1 : 1;
         }
       }
 
