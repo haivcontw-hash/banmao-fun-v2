@@ -4887,8 +4887,6 @@ function TelegramConnect({ strings, defaultConnected = false, onBeforeConnect, o
             setStatus({
                 "TelegramConnect.useCallback[handleConnect]": (prev)=>prev === "connecting" ? prev : "loading"
             }["TelegramConnect.useCallback[handleConnect]"]);
-            const pendingWindow = ("TURBOPACK compile-time truthy", 1) ? window.open("about:blank", "_blank", "noopener,noreferrer") : "TURBOPACK unreachable";
-            const popupBlocked = ("TURBOPACK compile-time value", "object") !== "undefined" && pendingWindow === null;
             try {
                 const response = await fetch(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$lib$2f$telegram$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TELEGRAM_TOKEN_ENDPOINT"], {
                     method: "POST",
@@ -4907,13 +4905,21 @@ function TelegramConnect({ strings, defaultConnected = false, onBeforeConnect, o
                     throw new Error("TOKEN_MISSING");
                 }
                 const telegramUrl = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$lib$2f$telegram$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["buildTelegramBotUrl"])(data.token);
-                if (pendingWindow) {
-                    pendingWindow.location.replace(telegramUrl);
-                    pendingWindow.focus?.();
-                } else if (popupBlocked && ("TURBOPACK compile-time value", "object") !== "undefined") {
-                    window.location.href = telegramUrl;
-                } else if ("TURBOPACK compile-time truthy", 1) {
-                    window.open(telegramUrl, "_blank", "noopener,noreferrer");
+                let didOpen = false;
+                if ("TURBOPACK compile-time truthy", 1) {
+                    const newWindow = window.open(telegramUrl, "_blank", "noopener,noreferrer");
+                    if (newWindow) {
+                        newWindow.focus?.();
+                        didOpen = true;
+                    } else {
+                        setError(strings.telegramReminderPopupBlocked);
+                    }
+                }
+                if (!didOpen) {
+                    setStatus({
+                        "TelegramConnect.useCallback[handleConnect]": (prev)=>prev === "connecting" ? prev : "not_connected"
+                    }["TelegramConnect.useCallback[handleConnect]"]);
+                    return;
                 }
                 setStatus("connecting");
                 beginPollingStatus();
@@ -4931,9 +4937,6 @@ function TelegramConnect({ strings, defaultConnected = false, onBeforeConnect, o
                 setStatus({
                     "TelegramConnect.useCallback[handleConnect]": (prev)=>prev === "connecting" ? prev : "error"
                 }["TelegramConnect.useCallback[handleConnect]"]);
-                if (pendingWindow && typeof pendingWindow.close === "function") {
-                    pendingWindow.close();
-                }
             } finally{
                 setIsRequesting(false);
             }
@@ -4943,6 +4946,7 @@ function TelegramConnect({ strings, defaultConnected = false, onBeforeConnect, o
         beginPollingStatus,
         isConnected,
         onBeforeConnect,
+        strings.telegramReminderPopupBlocked,
         strings.telegramReminderServerError,
         strings.telegramReminderUnknownError,
         strings.telegramReminderWalletRequired
@@ -5000,20 +5004,20 @@ function TelegramConnect({ strings, defaultConnected = false, onBeforeConnect, o
                         height: 18
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/TelegramConnect.tsx",
-                        lineNumber: 299,
+                        lineNumber: 298,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                         children: strings.telegramReminderLabel
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/TelegramConnect.tsx",
-                        lineNumber: 300,
+                        lineNumber: 299,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/TelegramConnect.tsx",
-                lineNumber: 298,
+                lineNumber: 297,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5026,7 +5030,7 @@ function TelegramConnect({ strings, defaultConnected = false, onBeforeConnect, o
                         children: statusIcon
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/TelegramConnect.tsx",
-                        lineNumber: 304,
+                        lineNumber: 303,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5034,13 +5038,13 @@ function TelegramConnect({ strings, defaultConnected = false, onBeforeConnect, o
                         children: statusMessage
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/TelegramConnect.tsx",
-                        lineNumber: 307,
+                        lineNumber: 306,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/TelegramConnect.tsx",
-                lineNumber: 303,
+                lineNumber: 302,
                 columnNumber: 7
             }, this),
             showActionButton ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -5053,7 +5057,7 @@ function TelegramConnect({ strings, defaultConnected = false, onBeforeConnect, o
                 children: actionLabel
             }, void 0, false, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/TelegramConnect.tsx",
-                lineNumber: 311,
+                lineNumber: 310,
                 columnNumber: 9
             }, this) : null,
             error && status !== "error" ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5062,13 +5066,13 @@ function TelegramConnect({ strings, defaultConnected = false, onBeforeConnect, o
                 children: error
             }, void 0, false, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/TelegramConnect.tsx",
-                lineNumber: 324,
+                lineNumber: 323,
                 columnNumber: 9
             }, this) : null
         ]
     }, void 0, true, {
         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/TelegramConnect.tsx",
-        lineNumber: 297,
+        lineNumber: 296,
         columnNumber: 5
     }, this);
 }
