@@ -1295,6 +1295,16 @@ input, select {
 
 .telegram-reminders__content {
   width: min(100%, 420px);
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(var(--gold-rgb), 0.3);
+  background: rgba(var(--gold-rgb), 0.05);
+}
+
+.telegram-reminders__content > * {
+  width: 100%;
 }
 
 .telegram-reminders__content[hidden] {
@@ -1310,11 +1320,14 @@ input, select {
   border: 1px solid rgba(var(--gold-rgb), 0.35);
   background: rgba(var(--gold-rgb), 0.08);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  align-items: center;
+  text-align: center;
 }
 
 .telegram-connect-box__title {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   font-size: 14px;
   font-weight: 600;
@@ -1325,26 +1338,28 @@ input, select {
 
 .telegram-connect-box__status {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   padding: 12px 14px;
   border-radius: 14px;
   border: 1px solid rgba(var(--gold-rgb), 0.28);
   background: rgba(var(--gold-rgb), 0.09);
   font-size: 13px;
   line-height: 1.6;
+  text-align: center;
 }
 
 .telegram-connect-box__status-icon {
   font-size: 20px;
   line-height: 1;
-  transform: translateY(2px);
 }
 
 .telegram-connect-box__status-text {
   flex: 1;
   margin: 0;
   color: rgba(var(--text-rgb), 0.82);
+  text-align: center;
 }
 
 .telegram-connect-box__status--loading .telegram-connect-box__status-text {
@@ -1381,6 +1396,11 @@ input, select {
   font-weight: 600;
 }
 
+.telegram-connect-box__error {
+  text-align: center;
+  width: 100%;
+}
+
 .telegram-connect-box__button {
   display: inline-flex;
   align-items: center;
@@ -1397,6 +1417,7 @@ input, select {
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  align-self: center;
 }
 
 .telegram-connect-box__button:hover,

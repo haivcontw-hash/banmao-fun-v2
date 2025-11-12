@@ -2280,13 +2280,14 @@ export default function Page() {
 
   const handleTelegramConnected = useCallback(() => {
     setIsTelegramConnected(true);
+    setIsTelegramPanelCollapsed(false);
     if (typeof window !== "undefined") {
       const storageKey = buildTelegramConnectionKey(address ?? null);
       window.localStorage.setItem(storageKey, "true");
       window.localStorage.removeItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
       window.localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
     }
-  }, [address]);
+  }, [address, setIsTelegramPanelCollapsed]);
 
   const pushNotification = useCallback(
     (
@@ -2740,12 +2741,6 @@ export default function Page() {
       setIsTelegramPanelCollapsed(true);
     }
   }, [isConnected]);
-
-  useEffect(() => {
-    if (isTelegramConnected) {
-      setIsTelegramPanelCollapsed(false);
-    }
-  }, [isTelegramConnected]);
 
   useEffect(() => {
     if (!joinSectionHighlight) return;
