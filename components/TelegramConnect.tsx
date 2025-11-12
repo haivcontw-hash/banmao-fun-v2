@@ -214,11 +214,14 @@ export default function TelegramConnect({
         if (newWindow) {
           newWindow.focus?.();
           didOpen = true;
+        } else {
+          setError(strings.telegramReminderPopupBlocked);
         }
       }
 
-      if (!didOpen && typeof window !== "undefined") {
-        window.location.href = telegramUrl;
+      if (!didOpen) {
+        setStatus((prev) => (prev === "connecting" ? prev : "not_connected"));
+        return;
       }
 
       setStatus("connecting");
@@ -245,6 +248,7 @@ export default function TelegramConnect({
     beginPollingStatus,
     isConnected,
     onBeforeConnect,
+    strings.telegramReminderPopupBlocked,
     strings.telegramReminderServerError,
     strings.telegramReminderUnknownError,
     strings.telegramReminderWalletRequired,
