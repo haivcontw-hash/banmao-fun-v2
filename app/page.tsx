@@ -6641,9 +6641,6 @@ export default function Page() {
                       aria-hidden="true"
                     />
                   </button>
-                  <p className="telegram-reminders__hint">
-                    {isTelegramConnected ? t.telegramReminderSuccess : t.telegramReminderDetail}
-                  </p>
                   <div
                     className="telegram-reminders__content"
                     id="telegram-reminders-content"
