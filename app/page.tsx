@@ -1526,6 +1526,37 @@ function saveSeenResultRooms(address: `0x${string}`, ids: number[]) {
   localStorage.setItem(`banmao_results_${address}`, JSON.stringify(dedup.slice(0, HIST_LIMIT * 2)));
 }
 
+function prioritizeCachedRooms(rooms: RoomWithForfeit[]) {
+  if (!Array.isArray(rooms) || rooms.length === 0) return [];
+
+  const sorted = [...rooms].sort((a, b) => {
+    const finalA = roomIsFinalized(a);
+    const finalB = roomIsFinalized(b);
+    if (finalA !== finalB) return finalA ? 1 : -1;
+
+    const idA = Number(a?.id ?? 0);
+    const idB = Number(b?.id ?? 0);
+    const finiteA = Number.isFinite(idA) && idA > 0;
+    const finiteB = Number.isFinite(idB) && idB > 0;
+
+    if (finiteA && finiteB) {
+      if (idA === idB) return 0;
+      return idA > idB ? -1 : 1;
+    }
+
+    if (finiteA !== finiteB) {
+      return finiteA ? -1 : 1;
+    }
+
+    return 0;
+  });
+
+  const activeCount = sorted.reduce((count, room) => (roomIsFinalized(room) ? count : count + 1), 0);
+  const limit = Math.max(MAX_TRACKED_ROOMS, activeCount);
+  if (sorted.length <= limit) return sorted;
+  return sorted.slice(0, limit);
+}
+
 function loadCommitDeadlineFallbacksFromStorage() {
   const map = new Map<number, number>();
   if (typeof window === "undefined") return map;
@@ -2553,7 +2584,7 @@ export default function Page() {
             .map((entry) => reviveRoomFromCache(entry))
             .filter((room): room is RoomWithForfeit => !!room);
           if (revived.length > 0) {
-            setCachedRooms(revived);
+            setCachedRooms(prioritizeCachedRooms(revived));
             const nowSeconds = Math.floor(Date.now() / 1000);
             revived.forEach((room) => {
               const remaining = Number(room.commitDeadline ?? 0) - nowSeconds;
@@ -3145,10 +3176,11 @@ export default function Page() {
   useEffect(() => {
     if (!isClient || typeof window === "undefined") return;
     if (rooms.length === 0) return;
-    if (roomsEqual(cachedRooms, rooms)) return;
-    setCachedRooms(rooms);
+    const normalized = prioritizeCachedRooms(rooms);
+    if (roomsEqual(cachedRooms, normalized)) return;
+    setCachedRooms(normalized);
     try {
-      const payload = rooms.map((room) => serializeRoomForCache(room));
+      const payload = normalized.map((room) => serializeRoomForCache(room));
       window.localStorage.setItem(ROOMS_CACHE_KEY, JSON.stringify(payload));
     } catch (error) {
       console.error("Failed to cache rooms", error);
@@ -3328,8 +3360,8 @@ export default function Page() {
           map.set(snapshot.id, { ...snapshot, forfeit: null });
         });
 
-        const sorted = Array.from(map.values()).sort((a, b) => b.id - a.id);
-        const next = sorted.slice(0, MAX_TRACKED_ROOMS);
+        const merged = Array.from(map.values());
+        const next = prioritizeCachedRooms(merged);
         if (roomsEqual(prev, next)) {
           return prev;
         }
