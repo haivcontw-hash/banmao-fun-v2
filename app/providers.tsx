@@ -87,10 +87,22 @@ const connectors = connectorsForWallets(
 );
 
 // ==== wagmi config ====
+const httpTransport = http(RPC, {
+  batch: true,
+  fetchFn: rateLimitedFetch,
+});
+
+const webSocketFallbacks = RPC_WS.map((url) => webSocket(url));
+
+const transportChain =
+  webSocketFallbacks.length > 0
+    ? fallback([...webSocketFallbacks, httpTransport])
+    : httpTransport;
+
 const webSocketTransports =
-  RPC_WS.length > 0
+  webSocketFallbacks.length > 0
     ? {
-        [xlayer.id]: fallback(RPC_WS.map((url) => webSocket(url))),
+        [xlayer.id]: fallback(webSocketFallbacks),
       }
     : undefined;
 
@@ -98,10 +110,7 @@ const config = createConfig({
   chains: [xlayer],
   connectors,
   transports: {
-    [xlayer.id]: http(RPC, {
-      batch: true,
-      fetchFn: rateLimitedFetch,
-    }),
+    [xlayer.id]: transportChain,
   },
   ...(webSocketTransports ? { webSocketTransport: webSocketTransports } : {}),
   ssr: true,
