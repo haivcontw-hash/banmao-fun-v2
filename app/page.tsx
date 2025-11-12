@@ -1474,6 +1474,8 @@ async function copyToClipboard(text: string) {
 const HIST_LIMIT = 12;
 const ROOM_SCAN_LIMIT = 24;
 const MAX_TRACKED_ROOMS = 48;
+const ACTIVE_ROOM_TARGET = 16;
+const ACTIVE_ROOM_BACKFILL_SCAN_LIMIT = 160;
 const COMMIT_DEADLINE_CACHE_KEY = "banmao_commit_deadlines";
 const REVEAL_DEADLINE_CACHE_KEY = "banmao_reveal_deadlines";
 
@@ -1747,6 +1749,13 @@ export default function Page() {
   const [nowTs, setNowTs] = useState(() => Math.floor(Date.now() / 1000));
   const [forfeitResults, setForfeitResults] = useState<Record<number, ForfeitRecord>>({});
   const [cachedRooms, setCachedRooms] = useState<RoomWithForfeit[]>([]);
+  const [backfillRoomIds, setBackfillRoomIds] = useState<bigint[]>([]);
+  const backfillStateRef = useRef<{
+    cursor: number | null;
+    running: boolean;
+  }>({ cursor: null, running: false });
+  const backfillVisitedRef = useRef<Set<number>>(new Set());
+  const backfillPendingIdsRef = useRef<Set<number>>(new Set());
   const [cachedInfo, setCachedInfo] = useState<CachedInfoState | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -2850,6 +2859,8 @@ export default function Page() {
     const ids = new Set<bigint>();
     latestIds.forEach((id) => ids.add(id));
 
+    backfillRoomIds.forEach((id) => ids.add(id));
+
     joinedRooms.forEach((id) => {
       if (Number.isFinite(id) && id > 0) ids.add(BigInt(id));
     });
@@ -2867,10 +2878,42 @@ export default function Page() {
       if (Number.isFinite(id) && id > 0) ids.add(BigInt(id));
     });
 
-    return Array.from(ids)
-      .sort((a, b) => (a === b ? 0 : a > b ? -1 : 1))
-      .slice(0, MAX_TRACKED_ROOMS);
-  }, [latestIds, joinedRooms, commitInfoMap, seenResultRooms, freshResultRooms]);
+    const activeRoomIds = new Set<bigint>();
+    cachedRooms.forEach((room) => {
+      const roomId = Number(room?.id ?? 0);
+      if (!Number.isFinite(roomId) || roomId <= 0) return;
+      if (roomIsFinalized(room)) return;
+      const normalized = BigInt(roomId);
+      activeRoomIds.add(normalized);
+      ids.add(normalized);
+    });
+
+    const sorted = Array.from(ids).sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
+    if (sorted.length <= MAX_TRACKED_ROOMS) {
+      return sorted;
+    }
+
+    const prioritized: bigint[] = [];
+    const remainder: bigint[] = [];
+    sorted.forEach((id) => {
+      if (activeRoomIds.has(id)) {
+        prioritized.push(id);
+      } else {
+        remainder.push(id);
+      }
+    });
+
+    const limit = Math.max(MAX_TRACKED_ROOMS, prioritized.length);
+    return prioritized.concat(remainder).slice(0, limit);
+  }, [
+    latestIds,
+    backfillRoomIds,
+    joinedRooms,
+    commitInfoMap,
+    seenResultRooms,
+    freshResultRooms,
+    cachedRooms,
+  ]);
 
   const roomContracts = useMemo(
     () =>
@@ -3028,7 +3071,30 @@ export default function Page() {
         return !isEmptyRoom;
       }) as RoomWithForfeit[];
 
-    return parsed;
+    const mergedMap = new Map<number, RoomWithForfeit>();
+    parsed.forEach((room) => {
+      const key = Number(room.id ?? 0);
+      if (!Number.isFinite(key) || key <= 0) return;
+      mergedMap.set(key, room);
+    });
+
+    cachedRooms.forEach((room) => {
+      const key = Number(room?.id ?? 0);
+      if (!Number.isFinite(key) || key <= 0) return;
+      if (mergedMap.has(key)) return;
+      if (roomIsFinalized(room)) return;
+      mergedMap.set(key, room);
+    });
+
+    return Array.from(mergedMap.values()).sort((a, b) => {
+      const left = Number(a.id ?? 0);
+      const right = Number(b.id ?? 0);
+      if (!Number.isFinite(left) && !Number.isFinite(right)) return 0;
+      if (!Number.isFinite(left)) return 1;
+      if (!Number.isFinite(right)) return -1;
+      if (left === right) return 0;
+      return left > right ? -1 : 1;
+    });
   }, [
     hasFreshRooms,
     roomsRaw,
@@ -3040,6 +3106,34 @@ export default function Page() {
 
   useEffect(() => {
     roomsRef.current = rooms;
+  }, [rooms]);
+
+  useEffect(() => {
+    if (backfillPendingIdsRef.current.size === 0) return;
+    const activeIds = new Set<string>();
+    const finalizedIds = new Set<string>();
+    rooms.forEach((room) => {
+      if (!room) return;
+      const key = normalizeRoomId(room.id);
+      if (key === "") return;
+      if (roomIsFinalized(room)) {
+        finalizedIds.add(key);
+      } else {
+        activeIds.add(key);
+      }
+    });
+
+    const pending = backfillPendingIdsRef.current;
+    pending.forEach((id) => {
+      const key = normalizeRoomId(id);
+      if (key === "") {
+        pending.delete(id);
+        return;
+      }
+      if (activeIds.has(key) || finalizedIds.has(key)) {
+        pending.delete(id);
+      }
+    });
   }, [rooms]);
 
   useEffect(() => {
@@ -3118,6 +3212,160 @@ export default function Page() {
       cancelled = true;
     };
   }, [publicClient, trackedRoomIds, forfeitEventAbi, updateForfeitResult, rememberForfeitFetch]);
+
+  useEffect(() => {
+    if (!publicClient) return;
+    const totalRooms = Number(nRoom ?? 0);
+    if (!Number.isFinite(totalRooms) || totalRooms <= 0) return;
+
+    const target = Math.min(MAX_TRACKED_ROOMS, ACTIVE_ROOM_TARGET);
+    if (target <= 0) return;
+
+    const activeRooms = rooms.filter((room) => !roomIsFinalized(room));
+    const activeCount = activeRooms.length;
+    const pendingCount = backfillPendingIdsRef.current.size;
+
+    if (activeCount + pendingCount >= target) {
+      if (activeRooms.length === 0) {
+        backfillStateRef.current.cursor = null;
+      }
+      return;
+    }
+
+    if (backfillStateRef.current.running) return;
+
+    const visited = backfillVisitedRef.current;
+    let cursor = backfillStateRef.current.cursor;
+
+    if (!Number.isFinite(cursor)) {
+      if (trackedRoomIds.length > 0) {
+        cursor = Number(trackedRoomIds[trackedRoomIds.length - 1]);
+      } else {
+        cursor = totalRooms;
+      }
+    }
+
+    if (!Number.isFinite(cursor)) {
+      cursor = totalRooms;
+    }
+
+    let startCursor = Math.min(Number(cursor), totalRooms);
+    if (!Number.isFinite(startCursor)) {
+      startCursor = totalRooms;
+    }
+
+    if (startCursor <= 1) return;
+
+    backfillStateRef.current.running = true;
+
+    (async () => {
+      const foundSnapshots: RoomSnapshot[] = [];
+      let attempts = 0;
+      let nextCursor = startCursor - 1;
+
+      while (
+        nextCursor >= 1 &&
+        attempts < ACTIVE_ROOM_BACKFILL_SCAN_LIMIT &&
+        foundSnapshots.length + activeCount + pendingCount < target
+      ) {
+        if (visited.has(nextCursor)) {
+          nextCursor -= 1;
+          attempts += 1;
+          continue;
+        }
+
+        visited.add(nextCursor);
+        attempts += 1;
+
+        try {
+          const snapshot = await fetchRoomSnapshot(nextCursor);
+          if (snapshot && !roomIsFinalized(snapshot)) {
+            foundSnapshots.push(snapshot);
+          }
+        } catch (error) {
+          console.error("Failed to inspect older room", error);
+        }
+
+        nextCursor -= 1;
+      }
+
+      backfillStateRef.current.cursor = nextCursor;
+
+      if (foundSnapshots.length === 0) {
+        return;
+      }
+
+      foundSnapshots.forEach((snapshot) => {
+        backfillPendingIdsRef.current.add(snapshot.id);
+      });
+
+      setBackfillRoomIds((prev) => {
+        if (foundSnapshots.length === 0) return prev;
+        const merged = new Set(prev);
+        foundSnapshots.forEach((snapshot) => {
+          merged.add(BigInt(snapshot.id));
+        });
+        const sorted = Array.from(merged).sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
+        return sorted.slice(0, MAX_TRACKED_ROOMS);
+      });
+
+      setCachedRooms((prev) => {
+        const map = new Map<number, RoomWithForfeit>();
+        prev.forEach((room) => {
+          const id = Number(room.id ?? 0);
+          if (Number.isFinite(id) && id > 0) {
+            map.set(id, room);
+          }
+        });
+
+        foundSnapshots.forEach((snapshot) => {
+          map.set(snapshot.id, { ...snapshot, forfeit: null });
+        });
+
+        const sorted = Array.from(map.values()).sort((a, b) => b.id - a.id);
+        const next = sorted.slice(0, MAX_TRACKED_ROOMS);
+        if (roomsEqual(prev, next)) {
+          return prev;
+        }
+        return next;
+      });
+    })()
+      .catch((error) => {
+        console.error("Active room backfill failed", error);
+      })
+      .finally(() => {
+        backfillStateRef.current.running = false;
+      });
+  }, [
+    publicClient,
+    nRoom,
+    rooms,
+    trackedRoomIds,
+    fetchRoomSnapshot,
+  ]);
+
+  useEffect(() => {
+    if (backfillRoomIds.length === 0) return;
+    const activeSet = new Set<string>();
+    rooms.forEach((room) => {
+      const key = normalizeRoomId(room.id);
+      if (key === "") return;
+      if (!roomIsFinalized(room)) {
+        activeSet.add(key);
+      }
+    });
+
+    setBackfillRoomIds((prev) => {
+      if (prev.length === 0) return prev;
+      const filtered = prev.filter((id) => {
+        const key = normalizeRoomId(id);
+        return key !== "" && activeSet.has(key);
+      });
+      if (filtered.length === prev.length) return prev;
+      return filtered;
+    });
+  }, [rooms, backfillRoomIds.length]);
+
 
   const personalRooms = useMemo(() => {
     if (!addressLower) return [];
