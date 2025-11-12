@@ -1,5 +1,12 @@
 {
   "app": {
+    "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/_not-found/page": [
+      "static/media/13c8bea787795a91-s.p.3c7372c0.woff2",
+      "static/media/eca1cc1e672884b5-s.p.080cd8a2.woff2",
+      "static/media/05ce0245cbf07d46-s.p.bde6fdef.woff2",
+      "static/media/dc6d2a64e9dbf3bc-s.p.4b9eb7a1.woff2",
+      "static/media/9d8c99ccf2e734e7-s.p.b2ed600c.woff2"
+    ],
     "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page": [
       "static/media/13c8bea787795a91-s.p.3c7372c0.woff2",
       "static/media/eca1cc1e672884b5-s.p.080cd8a2.woff2",

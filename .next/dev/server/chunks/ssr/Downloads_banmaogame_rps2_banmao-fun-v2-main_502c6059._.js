@@ -4468,8 +4468,6 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
 
 // lib/telegram.ts
 __turbopack_context__.s([
-    "TELEGRAM_API_BASE_URL",
-    ()=>TELEGRAM_API_BASE_URL,
     "TELEGRAM_BOT_USERNAME",
     ()=>TELEGRAM_BOT_USERNAME,
     "TELEGRAM_CONNECTION_STORAGE_KEY",
@@ -4485,9 +4483,8 @@ __turbopack_context__.s([
     "buildTelegramConnectionKey",
     ()=>buildTelegramConnectionKey
 ]);
-const TELEGRAM_API_BASE_URL = "http://103.75.183.59:3000";
-const TELEGRAM_TOKEN_ENDPOINT = `${TELEGRAM_API_BASE_URL}/api/generate-token`;
-const TELEGRAM_STATUS_ENDPOINT = `${TELEGRAM_API_BASE_URL}/api/check-status`;
+const TELEGRAM_TOKEN_ENDPOINT = "/api/telegram/generate-token";
+const TELEGRAM_STATUS_ENDPOINT = "/api/telegram/check-status";
 const TELEGRAM_BOT_USERNAME = "banmaorps_bot";
 const TELEGRAM_CONNECTION_STORAGE_KEY = "banmao_telegram_connected";
 const TELEGRAM_LEGACY_USERNAME_STORAGE_KEY = "banmao_telegram_username";

@@ -15133,3 +15133,1761 @@ It can also happen if the client has a browser extension installed which messes 
 [06:15:25.240] Browser ERROR   {"body":[{"method":"eth_call","params":[{"data":"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000060","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005f","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005d","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005c","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005b","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005a","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_getFilterChanges","params":["0xc9df8999a1e61c75ee5fa3a033793de1"]},{"method":"eth_getFilterChanges","params":["0x629c858787660e35ffcaf4c395bfe4f9"]},{"method":"eth_getLogs","params":[{"address":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB","fromBlock":"0x2a1439f","toBlock":"0x2a143f8","topics":"[Array]"}]},{"method":"eth_call","params":[{"data":"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000058","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000057","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000053","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000052","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000004f","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]},{"method":"eth_call","params":[{"data":"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000004b","to":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB"},"latest"]}],"details":"Failed to fetch","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: [{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000060\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005f\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005d\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005c\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005b\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000005a\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_getFilterChanges\",\"params\":[\"0xc9df8999a1e61c75ee5fa3a033793de1\"]},{\"method\":\"eth_getFilterChanges\",\"params\":[\"0x629c858787660e35ffcaf4c395bfe4f9\"]},{\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000088\",null,null],\"fromBlock\":\"0x2a1439f\",\"toBlock\":\"0x2a143f8\"}]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000058\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000057\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000053\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac80000000000000000000000000000000000000000000000000000000000000052\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000004f\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0x1bae0ac8000000000000000000000000000000000000000000000000000000000000004b\",\"to\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\"},\"latest\"]}]"],"name":"HttpRequestError","shortMessage":"HTTP request failed.","url":"https://xlayerrpc.okx.com","version":"2.38.6"}
 [06:15:28.446] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
 [06:15:30.310] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000086\",null,null],\"fromBlock\":\"0x2a144ad\",\"toBlock\":\"0x2a14506\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:15:40.298] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000085\",null,null],\"fromBlock\":\"0x2a14507\",\"toBlock\":\"0x2a14560\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:15:45.334] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000085\",null,null],\"fromBlock\":\"0x2a140cf\",\"toBlock\":\"0x2a14128\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:15:53.251] Browser ERROR   {"body":[{"method":"eth_uninstallFilter","params":["0x73f2863b75070f89c0031352389415c7"]},{"method":"eth_uninstallFilter","params":["0xbc7471d549a3aef1e751b052e9d30059"]},{"method":"eth_newFilter","params":[{"address":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB","topics":"[Array]"}]},{"method":"eth_newFilter","params":[{"address":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB","topics":"[Array]"}]},{"method":"eth_uninstallFilter","params":["0xf5cbe5649156b54d063ee96c6bb7c793"]},{"method":"eth_uninstallFilter","params":["0xad336bcdc8e2fcc9fc30e58534037619"]},{"method":"eth_newFilter","params":[{"address":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB","topics":"[Array]"}]},{"method":"eth_newFilter","params":[{"address":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB","topics":"[Array]"}]},{"method":"eth_getLogs","params":[{"address":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB","fromBlock":"0x2a142eb","toBlock":"0x2a14344","topics":"[Array]"}]},{"method":"eth_call","params":[{"data":"0xdd62ed3e0000000000000000000000007ddaa247507e0383b6e2aeb47f30e99f71ebc0f90000000000000000000000002ae44e728106a826616aa8cfec062f22be255acb","to":"0x16d91d1615fc55b76d5f92365bd60c069b46ef78"},"latest"]}],"details":"Failed to fetch","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: [{\"method\":\"eth_uninstallFilter\",\"params\":[\"0x73f2863b75070f89c0031352389415c7\"]},{\"method\":\"eth_uninstallFilter\",\"params\":[\"0xbc7471d549a3aef1e751b052e9d30059\"]},{\"method\":\"eth_newFilter\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0xac131287fe8417903d89f4eb472bc1d0da81641ef725569346dab6c2879a6717\"]}]},{\"method\":\"eth_newFilter\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\"]}]},{\"method\":\"eth_uninstallFilter\",\"params\":[\"0xf5cbe5649156b54d063ee96c6bb7c793\"]},{\"method\":\"eth_uninstallFilter\",\"params\":[\"0xad336bcdc8e2fcc9fc30e58534037619\"]},{\"method\":\"eth_newFilter\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0xac131287fe8417903d89f4eb472bc1d0da81641ef725569346dab6c2879a6717\"]}]},{\"method\":\"eth_newFilter\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\"]}]},{\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000084\",null,null],\"fromBlock\":\"0x2a142eb\",\"toBlock\":\"0x2a14344\"}]},{\"method\":\"eth_call\",\"params\":[{\"data\":\"0xdd62ed3e0000000000000000000000007ddaa247507e0383b6e2aeb47f30e99f71ebc0f90000000000000000000000002ae44e728106a826616aa8cfec062f22be255acb\",\"to\":\"0x16d91d1615fc55b76d5f92365bd60c069b46ef78\"},\"latest\"]}]"],"name":"HttpRequestError","shortMessage":"HTTP request failed.","url":"https://xlayerrpc.okx.com","version":"2.38.6"}
+[06:15:56.383] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:16:04.304] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000081\",null,null],\"fromBlock\":\"0x2a1439f\",\"toBlock\":\"0x2a143f8\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:17:12.288] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:17:15.131] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_76df7139-e236-40fd-96b4-7a7a5e473991__="true"
+                          >
+                  ...
+
+[06:17:17.292] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:17:38.359] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:17:39.990] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a143d2\",\"toBlock\":\"0x2a1442b\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:17:50.350] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1426a\",\"toBlock\":\"0x2a142c3\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:18:15.377] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:18:17.990] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_ee9d44e2-35a1-419c-98de-f844deb240e0__="true"
+                          >
+                  ...
+
+[06:18:19.145] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:19:10.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a144c5\",\"toBlock\":\"0x2a1451e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:19:13.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a144c5\",\"toBlock\":\"0x2a1451e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:19:17.546] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:19:19.203] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_7a1af946-5c6d-49fe-ade2-1be253b4f89f__="true"
+                          >
+                  ...
+
+[06:19:21.018] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:19:33.243] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a146c3\",\"toBlock\":\"0x2a1471c\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:19:39.397] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a146c3\",\"toBlock\":\"0x2a1471c\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:19:49.885] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a145b5\",\"toBlock\":\"0x2a1460e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:19:55.286] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a145b5\",\"toBlock\":\"0x2a1460e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:19:57.023] Browser ERROR   {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_blockNumber\"}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:20:03.113] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14501\",\"toBlock\":\"0x2a1455a\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:20:07.316] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a144a7\",\"toBlock\":\"0x2a14500\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:20:20.675] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:20:23.155] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_94ed3cd2-899c-4553-a702-f9ca74781e26__="true"
+                          >
+                  ...
+
+[06:20:24.201] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:20:26.993] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14810\",\"toBlock\":\"0x2a14869\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:20:29.993] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a147b6\",\"toBlock\":\"0x2a1480f\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:20:33.991] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14810\",\"toBlock\":\"0x2a14869\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:20:42.986] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a1481d\",\"toBlock\":\"0x2a14876\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:20:48.001] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14702\",\"toBlock\":\"0x2a1475b\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:20:55.998] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008b\",null,null],\"fromBlock\":\"0x2a14880\",\"toBlock\":\"0x2a148d9\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:21:05.988] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a145f4\",\"toBlock\":\"0x2a1464d\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:21:09.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008b\",null,null],\"fromBlock\":\"0x2a14826\",\"toBlock\":\"0x2a1487f\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:21:13.003] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a1470f\",\"toBlock\":\"0x2a14768\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:21:20.985] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008a\",null,null],\"fromBlock\":\"0x2a14772\",\"toBlock\":\"0x2a147cb\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:21:24.099] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:21:26.146] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_8d385838-754a-4b10-89d8-6cabc22a8338__="true"
+                          >
+                  ...
+
+[06:21:28.027] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:21:31.985] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14850\",\"toBlock\":\"0x2a148a9\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:21:35.445] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a14850\",\"toBlock\":\"0x2a148a9\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:21:43.985] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a14850\",\"toBlock\":\"0x2a148a9\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:21:45.997] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008b\",null,null],\"fromBlock\":\"0x2a148b3\",\"toBlock\":\"0x2a1490c\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:22:08.096] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a146e8\",\"toBlock\":\"0x2a14741\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:22:11.005] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a14742\",\"toBlock\":\"0x2a1479b\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:22:13.985] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008b\",null,null],\"fromBlock\":\"0x2a147a5\",\"toBlock\":\"0x2a147fe\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:22:16.998] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14634\",\"toBlock\":\"0x2a1468d\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:22:19.998] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a146e8\",\"toBlock\":\"0x2a14741\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:22:25.186] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a146e8\",\"toBlock\":\"0x2a14741\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:22:26.970] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:22:28.115] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_8e75d083-48da-46d7-bc65-9e2307883445__="true"
+                          >
+                  ...
+
+[06:22:31.218] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:22:36.232] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1488f\",\"toBlock\":\"0x2a148e8\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:22:41.029] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14835\",\"toBlock\":\"0x2a1488e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:22:42.146] Browser WARN    Image with src "/rps/scissors.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[06:22:55.418] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:22:55.936] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_3270c28d-3250-4258-a9a3-84a1947e985b__="true"
+                          >
+                  ...
+
+[06:22:57.427] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:22:58.760] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:22:58.760] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:23:16.313] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14473\",\"toBlock\":\"0x2a144cc\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:23:27.995] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1430b\",\"toBlock\":\"0x2a14364\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:23:46.991] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a14419\",\"toBlock\":\"0x2a14472\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:23:47.988] Browser WARN    Image with src "/rps/scissors.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[06:23:49.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14935\",\"toBlock\":\"0x2a1498e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:23:53.000] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a14419\",\"toBlock\":\"0x2a14472\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:23:56.001] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14935\",\"toBlock\":\"0x2a1498e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:23:58.996] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a14419\",\"toBlock\":\"0x2a14472\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:24:01.991] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14935\",\"toBlock\":\"0x2a1498e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:24:04.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a14419\",\"toBlock\":\"0x2a14472\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:24:08.987] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a143bf\",\"toBlock\":\"0x2a14418\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:24:12.987] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14773\",\"toBlock\":\"0x2a147cc\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:24:20.231] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:24:22.996] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_9a2ac93c-ab44-445b-bf53-d732993962ca__="true"
+                          >
+                  ...
+
+[06:24:23.994] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:24:25.996] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:24:25.996] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:24:25.996] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:24:45.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1468b\",\"toBlock\":\"0x2a146e4\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:24:48.991] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1468b\",\"toBlock\":\"0x2a146e4\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:24:51.992] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14631\",\"toBlock\":\"0x2a1468a\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:24:54.617] Browser WARN    Image with src "/rps/scissors.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[06:24:54.617] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a147a1\",\"toBlock\":\"0x2a147fa\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:24:57.990] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1468b\",\"toBlock\":\"0x2a146e4\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:25:01.096] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1468b\",\"toBlock\":\"0x2a146e4\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:25:04.007] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14631\",\"toBlock\":\"0x2a1468a\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:25:07.096] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14978\",\"toBlock\":\"0x2a149d1\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:25:10.464] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a147a1\",\"toBlock\":\"0x2a147fa\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:25:15.249] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1468b\",\"toBlock\":\"0x2a146e4\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:25:52.997] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1446f\",\"toBlock\":\"0x2a144c8\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:25:55.995] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a147b6\",\"toBlock\":\"0x2a1480f\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:25:57.432] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:25:59.232] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_541e8166-9d9f-42a1-8012-e103174f3dbc__="true"
+                          >
+                  ...
+
+[06:26:01.149] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:26:06.996] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a14960\",\"toBlock\":\"0x2a149b9\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:26:09.998] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14852\",\"toBlock\":\"0x2a148ab\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:26:12.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14852\",\"toBlock\":\"0x2a148ab\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:26:37.995] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1441a\",\"toBlock\":\"0x2a14473\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:26:50.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a148ac\",\"toBlock\":\"0x2a14905\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:26:53.988] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a148ac\",\"toBlock\":\"0x2a14905\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:26:59.489] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:27:01.999] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_c506ac0c-09d5-4d9b-988b-d7d271a9ef7d__="true"
+                          >
+                  ...
+
+[06:27:03.095] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:27:05.995] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:27:05.995] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:27:05.995] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[06:27:06.995] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a149fb\",\"toBlock\":\"0x2a14a54\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:27:11.993] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a149a1\",\"toBlock\":\"0x2a149fa\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:27:15.038] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14947\",\"toBlock\":\"0x2a149a0\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:27:19.992] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a14a05\",\"toBlock\":\"0x2a14a5e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:27:54.031] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a14785\",\"toBlock\":\"0x2a147de\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:27:56.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a14843\",\"toBlock\":\"0x2a1489c\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:27:59.988] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008b\",null,null],\"fromBlock\":\"0x2a1484a\",\"toBlock\":\"0x2a148a3\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:28:04.912] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:28:07.987] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_9d99f494-7bf1-4928-8769-249182154a5c__="true"
+                          >
+                  ...
+
+[06:28:09.237] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[06:28:15.996] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1498a\",\"toBlock\":\"0x2a149e3\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:28:18.996] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1498a\",\"toBlock\":\"0x2a149e3\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[06:28:21.996] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1498a\",\"toBlock\":\"0x2a149e3\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[11:49:16.380] Browser ERROR   {"body":[{"method":"eth_getLogs","params":[{"address":"0x2Ae44e728106a826616aA8CFec062F22bE255aCB","fromBlock":"0x2a1498a","toBlock":"0x2a149e3","topics":"[Array]"}]}],"details":"Failed to fetch","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: [{\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a1498a\",\"toBlock\":\"0x2a149e3\"}]}]"],"name":"HttpRequestError","shortMessage":"HTTP request failed.","url":"https://xlayerrpc.okx.com","version":"2.38.6"}
+[11:49:19.859] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:49:21.165] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_e73adbb0-1004-4c95-b17f-3911e84a186d__="true"
+                          >
+                  ...
+
+[11:49:24.225] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:49:46.989] Browser ERROR   Failed to check Telegram status {}
+[11:50:22.235] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:50:24.995] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:51:24.251] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:51:26.006] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_2b421260-b376-4d79-99bd-087a920c01ac__="true"
+                          >
+                  ...
+
+[11:51:27.005] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:52:26.238] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:52:29.155] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:53:28.263] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:53:29.105] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_1fab1326-93a8-48a1-bc46-55498c5656f4__="true"
+                          >
+                  ...
+
+[11:53:30.999] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:53:53.000] Browser ERROR   Failed to check Telegram status {}
+[11:54:37.984] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:54:42.004] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:55:40.387] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:55:41.286] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_41c26c8e-73b6-47b9-9e0a-ef79c3c85f04__="true"
+                          >
+                  ...
+
+[11:55:45.060] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:56:42.436] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:56:45.011] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_a742f1ae-7316-443a-90f5-3ca02aa33461__="true"
+                          >
+                  ...
+
+[11:56:47.010] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:57:45.941] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:57:47.266] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_7a0c27c9-c39c-4627-a9b2-9b62110aa3dc__="true"
+                          >
+                  ...
+
+[11:57:51.679] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:58:05.000] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a19561\",\"toBlock\":\"0x2a195ba\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[11:58:48.372] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:58:51.004] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:59:51.009] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[11:59:55.998] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[11:59:58.011] Browser ERROR   Failed to check Telegram status {}
+[12:00:53.246] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:00:56.014] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:01:00.012] Browser ERROR   Failed to check Telegram status {}
+[12:01:55.196] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:01:58.002] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:02:58.096] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:03:00.196] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_88894aff-ba4f-434e-a7d2-ddd62640a334__="true"
+                          >
+                  ...
+
+[12:03:02.078] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:03:11.998] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a1974a\",\"toBlock\":\"0x2a197a3\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:03:23.995] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a196f0\",\"toBlock\":\"0x2a19749\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:03:53.007] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a195e2\",\"toBlock\":\"0x2a1963b\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:03:56.002] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a198e2\",\"toBlock\":\"0x2a1993b\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:03:58.987] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a19588\",\"toBlock\":\"0x2a195e1\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:04:00.569] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:04:03.332] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_1ac52842-e6d7-4f8e-bca8-f9040c803dd1__="true"
+                          >
+                  ...
+
+[12:04:05.988] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:04:13.440] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a1983f\",\"toBlock\":\"0x2a19898\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:04:23.590] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a1978b\",\"toBlock\":\"0x2a197e4\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:04:30.992] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a198fe\",\"toBlock\":\"0x2a19957\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:04:35.000] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a1978b\",\"toBlock\":\"0x2a197e4\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:05:00.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a19796\",\"toBlock\":\"0x2a197ef\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:05:04.746] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:05:07.679] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_32261b8a-86d0-49ba-889f-8e7cb81e545b__="true"
+                          >
+                  ...
+
+[12:05:13.547] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:05:22.990] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a198df\",\"toBlock\":\"0x2a19938\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:05:32.995] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a1982b\",\"toBlock\":\"0x2a19884\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:05:56.998] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a196c3\",\"toBlock\":\"0x2a1971c\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:05:59.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a19669\",\"toBlock\":\"0x2a196c2\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:06:08.904] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:06:10.255] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_a63a033f-accc-4ed7-9d54-86ffdecd8075__="true"
+                          >
+                  ...
+
+[12:06:13.364] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:06:31.127] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a197af\",\"toBlock\":\"0x2a19808\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:07:11.072] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:07:14.002] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_e549b07a-3f8e-47e4-88c9-021854f92aba__="true"
+                          >
+                  ...
+
+[12:07:14.985] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:07:19.995] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a198fc\",\"toBlock\":\"0x2a19955\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:08:04.997] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a1946a\",\"toBlock\":\"0x2a194c3\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:08:08.995] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a193b6\",\"toBlock\":\"0x2a1940f\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:08:13.146] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:08:15.988] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_aedc9ae0-8ae9-45a4-b082-5731ba606eb6__="true"
+                          >
+                  ...
+
+[12:08:17.035] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:08:19.991] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a199ee\",\"toBlock\":\"0x2a19a47\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:08:25.000] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a199ee\",\"toBlock\":\"0x2a19a47\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:08:29.996] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a198e0\",\"toBlock\":\"0x2a19939\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:08:32.995] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a19994\",\"toBlock\":\"0x2a199ed\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:08:42.990] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a198e0\",\"toBlock\":\"0x2a19939\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:08:49.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a19778\",\"toBlock\":\"0x2a197d1\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:09:08.003] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a1955c\",\"toBlock\":\"0x2a195b5\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:09:13.992] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008d\",null,null],\"fromBlock\":\"0x2a19677\",\"toBlock\":\"0x2a196d0\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:09:15.742] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:09:17.998] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_ab826615-83b7-4aed-8a6f-3b64203378b4__="true"
+                          >
+                  ...
+
+[12:09:20.285] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:09:22.195] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a199d1\",\"toBlock\":\"0x2a19a2a\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:09:44.464] Browser ERROR   {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_blockNumber\"}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:09:44.464] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[12:09:47.420] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a19869\",\"toBlock\":\"0x2a198c2\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:10:10.068] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a196a7\",\"toBlock\":\"0x2a19700\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:10:13.305] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a19882\",\"toBlock\":\"0x2a198db\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:10:18.478] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:10:21.000] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_8705d0a8-0777-428c-b33f-19844c2eccc9__="true"
+                          >
+                  ...
+
+[12:10:22.996] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:10:24.995] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[12:10:24.995] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[12:10:24.995] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[12:10:27.994] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19a12\",\"toBlock\":\"0x2a19a6b\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:10:30.985] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19a12\",\"toBlock\":\"0x2a19a6b\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:10:45.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a1995e\",\"toBlock\":\"0x2a199b7\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:11:03.326] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[12:11:12.351] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a19977\",\"toBlock\":\"0x2a199d0\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:11:21.678] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:11:24.150] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_2f5f90a8-2d68-4131-8a36-1a6811140d3b__="true"
+                          >
+                  ...
+
+[12:11:26.391] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:11:28.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19a50\",\"toBlock\":\"0x2a19aa9\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:11:54.000] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a196cc\",\"toBlock\":\"0x2a19725\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:12:09.997] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a195be\",\"toBlock\":\"0x2a19617\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:12:13.139] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19a73\",\"toBlock\":\"0x2a19acc\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:12:24.480] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:12:25.989] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_b57e9bf6-35b2-4d2e-a65b-65c4ef4598f0__="true"
+                          >
+                  ...
+
+[12:12:28.668] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:12:40.000] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19929\",\"toBlock\":\"0x2a19982\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:12:44.348] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19929\",\"toBlock\":\"0x2a19982\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:13:10.987] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a196b3\",\"toBlock\":\"0x2a1970c\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:13:25.001] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a194f1\",\"toBlock\":\"0x2a1954a\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:13:27.458] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:13:30.995] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_b8e3d6f9-e0fc-45e9-aef3-769e52ec324f__="true"
+                          >
+                  ...
+
+[12:13:33.004] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:13:50.291] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a19968\",\"toBlock\":\"0x2a199c1\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:14:30.457] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:14:32.166] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_94e68e56-af32-4cc3-a6d2-b5f1aca7b311__="true"
+                          >
+                  ...
+
+[12:14:33.013] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:14:47.991] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a1983b\",\"toBlock\":\"0x2a19894\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:14:51.991] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a1983b\",\"toBlock\":\"0x2a19894\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:14:54.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a19b73\",\"toBlock\":\"0x2a19bcc\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:14:59.040] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008e\",null,null],\"fromBlock\":\"0x2a19b73\",\"toBlock\":\"0x2a19bcc\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:14:59.040] Browser ERROR   {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_blockNumber\"}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:15:03.001] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a19b73\",\"toBlock\":\"0x2a19bcc\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:15:04.255] Server  LOG      ✓ Compiled in 71ms
+[12:15:07.655] Server  LOG      ○ Compiling /_not-found/page ...
+[12:15:10.016] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a19b7f\",\"toBlock\":\"0x2a19bd8\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:15:12.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19b7f\",\"toBlock\":\"0x2a19bd8\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:15:12.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008b\",null,null],\"fromBlock\":\"0x2a19b2f\",\"toBlock\":\"0x2a19b88\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:15:12.989] Browser ERROR   Failed to check Telegram status {}
+[12:15:25.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008c\",null,null],\"fromBlock\":\"0x2a19b25\",\"toBlock\":\"0x2a19b7e\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:15:25.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008b\",null,null],\"fromBlock\":\"0x2a198b9\",\"toBlock\":\"0x2a19912\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:15:32.709] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 11 times.
+[12:15:32.718] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 11 times.
+[12:15:33.729] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:15:35.153] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_21003769-f340-47c0-8065-c2f776c1fe2c__="true"
+                          >
+                  ...
+
+[12:15:36.196] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:15:38.169] Browser ERROR   Failed to check Telegram status {}
+[12:16:12.990] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19604\",\"toBlock\":\"0x2a1965d\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:16:16.138] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
+[12:16:33.292] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a198fb\",\"toBlock\":\"0x2a19954\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:16:36.112] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:16:38.450] Server  LOG      ✓ Compiled in 395ms
+[12:16:38.781] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_33795bca-5298-4025-b23c-894508576881__="true"
+                          >
+                  ...
+
+[12:16:42.100] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:16:43.247] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 12 times.
+[12:16:43.257] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 12 times.
+[12:16:43.646] Server  ERROR    ⨯ Detected default export in '[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/api/telegram/check-status/route.ts'. Export a named export for each HTTP method instead.
+[12:16:43.650] Server  ERROR    ⨯ No HTTP methods exported in '[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/api/telegram/check-status/route.ts'. Export a named export for each HTTP method.
+[12:16:44.212] Browser ERROR   Failed to check Telegram status {}
+[12:16:48.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19a7e\",\"toBlock\":\"0x2a19ad7\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:16:48.999] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19a7e\",\"toBlock\":\"0x2a19ad7\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:16:54.997] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19a24\",\"toBlock\":\"0x2a19a7d\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:16:59.011] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19916\",\"toBlock\":\"0x2a1996f\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:16:59.011] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a199ca\",\"toBlock\":\"0x2a19a23\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:06.997] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a198bc\",\"toBlock\":\"0x2a19915\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:09.051] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a198bc\",\"toBlock\":\"0x2a19915\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:11.990] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a198bc\",\"toBlock\":\"0x2a19915\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:14.997] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19754\",\"toBlock\":\"0x2a197ad\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:14.997] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a198bc\",\"toBlock\":\"0x2a19915\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:19.033] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19862\",\"toBlock\":\"0x2a198bb\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:19.988] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a196a0\",\"toBlock\":\"0x2a196f9\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:29.001] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19646\",\"toBlock\":\"0x2a1969f\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:29.001] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a19a7e\",\"toBlock\":\"0x2a19ad7\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:30.854] Server  LOG      ✓ Compiled in 4ms
+[12:17:36.989] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x000000000000000000000000000000000000000000000000000000000000008f\",null,null],\"fromBlock\":\"0x2a19970\",\"toBlock\":\"0x2a199c9\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:37.630] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 13 times.
+[12:17:37.637] Server  WARN    WalletConnect Core is already initialized. This is probably a mistake and can lead to unexpected behavior. Init() was called 13 times.
+[12:17:38.672] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:17:41.989] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_a53bc3a8-345a-4e11-80cb-28aaf07224ae__="true"
+                          >
+                  ...
+
+[12:17:43.159] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:17:45.035] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19c24\",\"toBlock\":\"0x2a19c7d\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:48.881] Browser WARN    Image with src "/rps/scissors.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[12:17:50.967] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[12:17:51.548] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Downloads...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="vi" className="noto_sans_...">
+                          <head>
+                          <body
+-                           __processed_df1862a7-c0bc-40e5-b73b-dab2eb77cf6d__="true"
+                          >
+                  ...
+
+[12:17:52.710] Browser WARN    Lit is in dev mode. Not recommended for production! See https://lit.dev/msg/dev-mode for more information.
+[12:17:56.596] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19b7b\",\"toBlock\":\"0x2a19bd4\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:17:59.168] Browser WARN    Rate limited while fetching forfeit logs {"code":-32016,"details":"over rate limit","metaMessages":["URL: https://xlayerrpc.okx.com","Request body: {\"method\":\"eth_getLogs\",\"params\":[{\"address\":\"0x2Ae44e728106a826616aA8CFec062F22bE255aCB\",\"topics\":[\"0x0a040e9fa8d18588360122b3c43fd8e3795efab941f6925f6ef84a1729f61904\",\"0x0000000000000000000000000000000000000000000000000000000000000090\",null,null],\"fromBlock\":\"0x2a19b7b\",\"toBlock\":\"0x2a19bd4\"}]}"],"name":"RpcRequestError","shortMessage":"RPC Request failed.","version":"2.38.6"}
+[12:18:06.628] Browser ERROR   {"code":-1,"details":"Cannot read properties of undefined (reading 'error')","name":"UnknownRpcError","shortMessage":"An unknown RPC error occurred.","version":"2.38.6"}
