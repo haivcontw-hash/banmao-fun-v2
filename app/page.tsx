@@ -21,7 +21,16 @@ import FloatingSettings, {
 } from "../components/FloatingSettings";
 import TelegramConnect from "../components/TelegramConnect";
 import { IconDocs, IconHourglass, IconTelegram, IconToken, IconX } from "../components/Icons";
-import { FaCoins, FaEye, FaEyeSlash, FaHandRock, FaSyncAlt, FaTrophy, FaWallet } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaCoins,
+  FaEye,
+  FaEyeSlash,
+  FaHandRock,
+  FaSyncAlt,
+  FaTrophy,
+  FaWallet,
+} from "react-icons/fa";
 import { langs, type LocaleStrings } from "../lib/i18n";
 import { RPS_ABI, ERC20_ABI } from "../lib/abis";
 import toast, { Toaster } from "react-hot-toast";
@@ -40,6 +49,7 @@ const BANMAO = process.env.NEXT_PUBLIC_BANMAO as `0x${string}`;
 type Choice = 1 | 2 | 3;
 const STATE = ["Wait", "Committing", "Revealing", "Finished", "Canceled"];
 const ZERO_ADDR = "0x0000000000000000000000000000000000000000";
+const ZERO_ADDR_LOWER = ZERO_ADDR.toLowerCase();
 const ZERO_COMMIT = "0x0000000000000000000000000000000000000000000000000000000000000000";
 const ZERO_BIGINT = BigInt(0);
 const MAX_SALT_VALUE = BigInt(`0x${"f".repeat(64)}`);
@@ -617,9 +627,14 @@ function parseSaltHex(value: string): bigint | null {
 function commitHash(c: Choice, salt: `0x${string}`) {
   return keccak256(encodePacked(["uint8", "bytes32"], [c, salt]));
 }
-function normalizeRoomId(value: string | number | null | undefined): string {
+function normalizeRoomId(
+  value: string | number | bigint | null | undefined
+): string {
   if (value == null) return "";
-  const str = typeof value === "number" ? value.toString() : String(value).trim();
+  const str =
+    typeof value === "number" || typeof value === "bigint"
+      ? value.toString()
+      : String(value).trim();
   if (str === "") return "";
   const digitsOnly = str.replace(/[^0-9]/g, "");
   if (digitsOnly === "") return "";
@@ -1474,6 +1489,8 @@ async function copyToClipboard(text: string) {
 const HIST_LIMIT = 12;
 const ROOM_SCAN_LIMIT = 24;
 const MAX_TRACKED_ROOMS = 48;
+const ACTIVE_ROOM_TARGET = 16;
+const ACTIVE_ROOM_BACKFILL_SCAN_LIMIT = 160;
 const COMMIT_DEADLINE_CACHE_KEY = "banmao_commit_deadlines";
 const REVEAL_DEADLINE_CACHE_KEY = "banmao_reveal_deadlines";
 
@@ -1516,6 +1533,37 @@ function saveSeenResultRooms(address: `0x${string}`, ids: number[]) {
   if (typeof window === "undefined") return;
   const dedup = Array.from(new Set(ids.map((v) => Number(v)).filter((v) => Number.isFinite(v) && v >= 0)));
   localStorage.setItem(`banmao_results_${address}`, JSON.stringify(dedup.slice(0, HIST_LIMIT * 2)));
+}
+
+function prioritizeCachedRooms(rooms: RoomWithForfeit[]) {
+  if (!Array.isArray(rooms) || rooms.length === 0) return [];
+
+  const sorted = [...rooms].sort((a, b) => {
+    const finalA = roomIsFinalized(a);
+    const finalB = roomIsFinalized(b);
+    if (finalA !== finalB) return finalA ? 1 : -1;
+
+    const idA = Number(a?.id ?? 0);
+    const idB = Number(b?.id ?? 0);
+    const finiteA = Number.isFinite(idA) && idA > 0;
+    const finiteB = Number.isFinite(idB) && idB > 0;
+
+    if (finiteA && finiteB) {
+      if (idA === idB) return 0;
+      return idA > idB ? -1 : 1;
+    }
+
+    if (finiteA !== finiteB) {
+      return finiteA ? -1 : 1;
+    }
+
+    return 0;
+  });
+
+  const activeCount = sorted.reduce((count, room) => (roomIsFinalized(room) ? count : count + 1), 0);
+  const limit = Math.max(MAX_TRACKED_ROOMS, activeCount);
+  if (sorted.length <= limit) return sorted;
+  return sorted.slice(0, limit);
 }
 
 function loadCommitDeadlineFallbacksFromStorage() {
@@ -1736,6 +1784,7 @@ export default function Page() {
     DEFAULT_SNOOZE_MINUTES
   );
   const [isTelegramConnected, setIsTelegramConnected] = useState(false);
+  const [isTelegramPanelCollapsed, setIsTelegramPanelCollapsed] = useState(true);
   const [uiScale, setUiScale] = useState<UiScale>("normal");
   const [isSharing, setIsSharing] = useState(false);
   const [isPersonalBoardCollapsed, setIsPersonalBoardCollapsed] = useState(false);
@@ -1747,6 +1796,13 @@ export default function Page() {
   const [nowTs, setNowTs] = useState(() => Math.floor(Date.now() / 1000));
   const [forfeitResults, setForfeitResults] = useState<Record<number, ForfeitRecord>>({});
   const [cachedRooms, setCachedRooms] = useState<RoomWithForfeit[]>([]);
+  const [backfillRoomIds, setBackfillRoomIds] = useState<bigint[]>([]);
+  const backfillStateRef = useRef<{
+    cursor: number | null;
+    running: boolean;
+  }>({ cursor: null, running: false });
+  const backfillVisitedRef = useRef<Set<number>>(new Set());
+  const backfillPendingIdsRef = useRef<Set<number>>(new Set());
   const [cachedInfo, setCachedInfo] = useState<CachedInfoState | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -2538,7 +2594,7 @@ export default function Page() {
             .map((entry) => reviveRoomFromCache(entry))
             .filter((room): room is RoomWithForfeit => !!room);
           if (revived.length > 0) {
-            setCachedRooms(revived);
+            setCachedRooms(prioritizeCachedRooms(revived));
             const nowSeconds = Math.floor(Date.now() / 1000);
             revived.forEach((room) => {
               const remaining = Number(room.commitDeadline ?? 0) - nowSeconds;
@@ -2678,6 +2734,12 @@ export default function Page() {
     localStorage.removeItem(TELEGRAM_LEGACY_USERNAME_STORAGE_KEY);
     localStorage.removeItem(TELEGRAM_CONNECTION_STORAGE_KEY);
   }, [address, isClient, isTelegramConnected]);
+
+  useEffect(() => {
+    if (!isConnected) {
+      setIsTelegramPanelCollapsed(true);
+    }
+  }, [isConnected]);
 
   useEffect(() => {
     if (!joinSectionHighlight) return;
@@ -2850,6 +2912,8 @@ export default function Page() {
     const ids = new Set<bigint>();
     latestIds.forEach((id) => ids.add(id));
 
+    backfillRoomIds.forEach((id) => ids.add(id));
+
     joinedRooms.forEach((id) => {
       if (Number.isFinite(id) && id > 0) ids.add(BigInt(id));
     });
@@ -2867,10 +2931,42 @@ export default function Page() {
       if (Number.isFinite(id) && id > 0) ids.add(BigInt(id));
     });
 
-    return Array.from(ids)
-      .sort((a, b) => (a === b ? 0 : a > b ? -1 : 1))
-      .slice(0, MAX_TRACKED_ROOMS);
-  }, [latestIds, joinedRooms, commitInfoMap, seenResultRooms, freshResultRooms]);
+    const activeRoomIds = new Set<bigint>();
+    cachedRooms.forEach((room) => {
+      const roomId = Number(room?.id ?? 0);
+      if (!Number.isFinite(roomId) || roomId <= 0) return;
+      if (roomIsFinalized(room)) return;
+      const normalized = BigInt(roomId);
+      activeRoomIds.add(normalized);
+      ids.add(normalized);
+    });
+
+    const sorted = Array.from(ids).sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
+    if (sorted.length <= MAX_TRACKED_ROOMS) {
+      return sorted;
+    }
+
+    const prioritized: bigint[] = [];
+    const remainder: bigint[] = [];
+    sorted.forEach((id) => {
+      if (activeRoomIds.has(id)) {
+        prioritized.push(id);
+      } else {
+        remainder.push(id);
+      }
+    });
+
+    const limit = Math.max(MAX_TRACKED_ROOMS, prioritized.length);
+    return prioritized.concat(remainder).slice(0, limit);
+  }, [
+    latestIds,
+    backfillRoomIds,
+    joinedRooms,
+    commitInfoMap,
+    seenResultRooms,
+    freshResultRooms,
+    cachedRooms,
+  ]);
 
   const roomContracts = useMemo(
     () =>
@@ -3028,7 +3124,30 @@ export default function Page() {
         return !isEmptyRoom;
       }) as RoomWithForfeit[];
 
-    return parsed;
+    const mergedMap = new Map<number, RoomWithForfeit>();
+    parsed.forEach((room) => {
+      const key = Number(room.id ?? 0);
+      if (!Number.isFinite(key) || key <= 0) return;
+      mergedMap.set(key, room);
+    });
+
+    cachedRooms.forEach((room) => {
+      const key = Number(room?.id ?? 0);
+      if (!Number.isFinite(key) || key <= 0) return;
+      if (mergedMap.has(key)) return;
+      if (roomIsFinalized(room)) return;
+      mergedMap.set(key, room);
+    });
+
+    return Array.from(mergedMap.values()).sort((a, b) => {
+      const left = Number(a.id ?? 0);
+      const right = Number(b.id ?? 0);
+      if (!Number.isFinite(left) && !Number.isFinite(right)) return 0;
+      if (!Number.isFinite(left)) return 1;
+      if (!Number.isFinite(right)) return -1;
+      if (left === right) return 0;
+      return left > right ? -1 : 1;
+    });
   }, [
     hasFreshRooms,
     roomsRaw,
@@ -3043,12 +3162,41 @@ export default function Page() {
   }, [rooms]);
 
   useEffect(() => {
+    if (backfillPendingIdsRef.current.size === 0) return;
+    const activeIds = new Set<string>();
+    const finalizedIds = new Set<string>();
+    rooms.forEach((room) => {
+      if (!room) return;
+      const key = normalizeRoomId(room.id);
+      if (key === "") return;
+      if (roomIsFinalized(room)) {
+        finalizedIds.add(key);
+      } else {
+        activeIds.add(key);
+      }
+    });
+
+    const pending = backfillPendingIdsRef.current;
+    pending.forEach((id) => {
+      const key = normalizeRoomId(id);
+      if (key === "") {
+        pending.delete(id);
+        return;
+      }
+      if (activeIds.has(key) || finalizedIds.has(key)) {
+        pending.delete(id);
+      }
+    });
+  }, [rooms]);
+
+  useEffect(() => {
     if (!isClient || typeof window === "undefined") return;
     if (rooms.length === 0) return;
-    if (roomsEqual(cachedRooms, rooms)) return;
-    setCachedRooms(rooms);
+    const normalized = prioritizeCachedRooms(rooms);
+    if (roomsEqual(cachedRooms, normalized)) return;
+    setCachedRooms(normalized);
     try {
-      const payload = rooms.map((room) => serializeRoomForCache(room));
+      const payload = normalized.map((room) => serializeRoomForCache(room));
       window.localStorage.setItem(ROOMS_CACHE_KEY, JSON.stringify(payload));
     } catch (error) {
       console.error("Failed to cache rooms", error);
@@ -3119,6 +3267,160 @@ export default function Page() {
     };
   }, [publicClient, trackedRoomIds, forfeitEventAbi, updateForfeitResult, rememberForfeitFetch]);
 
+  useEffect(() => {
+    if (!publicClient) return;
+    const totalRooms = Number(nRoom ?? 0);
+    if (!Number.isFinite(totalRooms) || totalRooms <= 0) return;
+
+    const target = Math.min(MAX_TRACKED_ROOMS, ACTIVE_ROOM_TARGET);
+    if (target <= 0) return;
+
+    const activeRooms = rooms.filter((room) => !roomIsFinalized(room));
+    const activeCount = activeRooms.length;
+    const pendingCount = backfillPendingIdsRef.current.size;
+
+    if (activeCount + pendingCount >= target) {
+      if (activeRooms.length === 0) {
+        backfillStateRef.current.cursor = null;
+      }
+      return;
+    }
+
+    if (backfillStateRef.current.running) return;
+
+    const visited = backfillVisitedRef.current;
+    let cursor = backfillStateRef.current.cursor;
+
+    if (!Number.isFinite(cursor)) {
+      if (trackedRoomIds.length > 0) {
+        cursor = Number(trackedRoomIds[trackedRoomIds.length - 1]);
+      } else {
+        cursor = totalRooms;
+      }
+    }
+
+    if (!Number.isFinite(cursor)) {
+      cursor = totalRooms;
+    }
+
+    let startCursor = Math.min(Number(cursor), totalRooms);
+    if (!Number.isFinite(startCursor)) {
+      startCursor = totalRooms;
+    }
+
+    if (startCursor <= 1) return;
+
+    backfillStateRef.current.running = true;
+
+    (async () => {
+      const foundSnapshots: RoomSnapshot[] = [];
+      let attempts = 0;
+      let nextCursor = startCursor - 1;
+
+      while (
+        nextCursor >= 1 &&
+        attempts < ACTIVE_ROOM_BACKFILL_SCAN_LIMIT &&
+        foundSnapshots.length + activeCount + pendingCount < target
+      ) {
+        if (visited.has(nextCursor)) {
+          nextCursor -= 1;
+          attempts += 1;
+          continue;
+        }
+
+        visited.add(nextCursor);
+        attempts += 1;
+
+        try {
+          const snapshot = await fetchRoomSnapshot(nextCursor);
+          if (snapshot && !roomIsFinalized(snapshot)) {
+            foundSnapshots.push(snapshot);
+          }
+        } catch (error) {
+          console.error("Failed to inspect older room", error);
+        }
+
+        nextCursor -= 1;
+      }
+
+      backfillStateRef.current.cursor = nextCursor;
+
+      if (foundSnapshots.length === 0) {
+        return;
+      }
+
+      foundSnapshots.forEach((snapshot) => {
+        backfillPendingIdsRef.current.add(snapshot.id);
+      });
+
+      setBackfillRoomIds((prev) => {
+        if (foundSnapshots.length === 0) return prev;
+        const merged = new Set(prev);
+        foundSnapshots.forEach((snapshot) => {
+          merged.add(BigInt(snapshot.id));
+        });
+        const sorted = Array.from(merged).sort((a, b) => (a === b ? 0 : a > b ? -1 : 1));
+        return sorted.slice(0, MAX_TRACKED_ROOMS);
+      });
+
+      setCachedRooms((prev) => {
+        const map = new Map<number, RoomWithForfeit>();
+        prev.forEach((room) => {
+          const id = Number(room.id ?? 0);
+          if (Number.isFinite(id) && id > 0) {
+            map.set(id, room);
+          }
+        });
+
+        foundSnapshots.forEach((snapshot) => {
+          map.set(snapshot.id, { ...snapshot, forfeit: null });
+        });
+
+        const merged = Array.from(map.values());
+        const next = prioritizeCachedRooms(merged);
+        if (roomsEqual(prev, next)) {
+          return prev;
+        }
+        return next;
+      });
+    })()
+      .catch((error) => {
+        console.error("Active room backfill failed", error);
+      })
+      .finally(() => {
+        backfillStateRef.current.running = false;
+      });
+  }, [
+    publicClient,
+    nRoom,
+    rooms,
+    trackedRoomIds,
+    fetchRoomSnapshot,
+  ]);
+
+  useEffect(() => {
+    if (backfillRoomIds.length === 0) return;
+    const activeSet = new Set<string>();
+    rooms.forEach((room) => {
+      const key = normalizeRoomId(room.id);
+      if (key === "") return;
+      if (!roomIsFinalized(room)) {
+        activeSet.add(key);
+      }
+    });
+
+    setBackfillRoomIds((prev) => {
+      if (prev.length === 0) return prev;
+      const filtered = prev.filter((id) => {
+        const key = normalizeRoomId(id);
+        return key !== "" && activeSet.has(key);
+      });
+      if (filtered.length === prev.length) return prev;
+      return filtered;
+    });
+  }, [rooms, backfillRoomIds.length]);
+
+
   const personalRooms = useMemo(() => {
     if (!addressLower) return [];
     return rooms
@@ -3152,25 +3454,53 @@ export default function Page() {
       const metaB = meta.get(b.id);
       if (!metaA || !metaB) return 0;
 
-      const joinableA =
-        metaA.view.state === 0 &&
-        metaA.view.opponent === ZERO_ADDR &&
-        !metaA.availability.expired &&
-        !metaA.availability.claimable;
-      const joinableB =
-        metaB.view.state === 0 &&
-        metaB.view.opponent === ZERO_ADDR &&
-        !metaB.availability.expired &&
-        !metaB.availability.claimable;
+      const opponentALower = metaA.view.opponent?.toLowerCase?.() ?? "";
+      const opponentBLower = metaB.view.opponent?.toLowerCase?.() ?? "";
 
-      if (joinableA && joinableB) {
-        if (metaA.view.stake !== metaB.view.stake) {
-          return metaA.view.stake > metaB.view.stake ? -1 : 1;
+      const hasOpponentA = opponentALower !== "" && opponentALower !== ZERO_ADDR_LOWER;
+      const hasOpponentB = opponentBLower !== "" && opponentBLower !== ZERO_ADDR_LOWER;
+
+      const baseJoinableA = metaA.view.state === 0 && !hasOpponentA;
+      const baseJoinableB = metaB.view.state === 0 && !hasOpponentB;
+
+      const joinReadyA =
+        baseJoinableA && metaA.availability.live && !metaA.availability.claimable;
+      const joinReadyB =
+        baseJoinableB && metaB.availability.live && !metaB.availability.claimable;
+
+      if (joinReadyA !== joinReadyB) {
+        return joinReadyA ? -1 : 1;
+      }
+
+      if (joinReadyA && joinReadyB) {
+        const stakeA = metaA.view.stake ?? ZERO_BIGINT;
+        const stakeB = metaB.view.stake ?? ZERO_BIGINT;
+        if (stakeA !== stakeB) {
+          return stakeA > stakeB ? -1 : 1;
+        }
+
+        const deadlineA = Number(metaA.view.commitDeadline ?? 0);
+        const deadlineB = Number(metaB.view.commitDeadline ?? 0);
+        const finiteA = Number.isFinite(deadlineA) && deadlineA > 0;
+        const finiteB = Number.isFinite(deadlineB) && deadlineB > 0;
+
+        if (finiteA && finiteB && deadlineA !== deadlineB) {
+          return deadlineA < deadlineB ? -1 : 1;
+        }
+
+        if (finiteA !== finiteB) {
+          return finiteA ? -1 : 1;
         }
       }
 
-      if (joinableA !== joinableB) {
-        return joinableA ? -1 : 1;
+      if (baseJoinableA !== baseJoinableB) {
+        return baseJoinableA ? -1 : 1;
+      }
+
+      const liveA = metaA.availability.live && !metaA.availability.expired;
+      const liveB = metaB.availability.live && !metaB.availability.expired;
+      if (liveA !== liveB) {
+        return liveA ? -1 : 1;
       }
 
       if (metaA.view.state === 0 && metaB.view.state !== 0) return -1;
@@ -5793,12 +6123,6 @@ export default function Page() {
                         stats={infoStats}
                         strings={t}
                       />
-                      <TelegramConnect
-                        strings={t}
-                        defaultConnected={isTelegramConnected}
-                        onConnected={handleTelegramConnected}
-                        onBeforeConnect={triggerInteractBeep}
-                      />
                     </div>
                   ) : null}
                 </div>
@@ -6058,85 +6382,86 @@ export default function Page() {
             </div>
 
             {isConnected && (
-              <section
-                className={`personal-board${
-                  isPersonalBoardCollapsed ? " personal-board--collapsed" : ""
-                }${showOnlyActionableRooms ? " personal-board--focused" : ""}${
-                  !showOnlyActionableRooms && !isPersonalBoardCollapsed
-                    ? " personal-board--all-limited"
-                    : ""
-                }`}
-              >
-                <div className="personal-board__heading">
-                  <div className="personal-board__heading-text">
-                    <h3 className="glowing-title">{t.personalBoardTitle}</h3>
-                    <p>{t.personalBoardSubtitle}</p>
+              <>
+                <section
+                  className={`personal-board${
+                    isPersonalBoardCollapsed ? " personal-board--collapsed" : ""
+                  }${showOnlyActionableRooms ? " personal-board--focused" : ""}${
+                    !showOnlyActionableRooms && !isPersonalBoardCollapsed
+                      ? " personal-board--all-limited"
+                      : ""
+                  }`}
+                >
+                  <div className="personal-board__heading">
+                    <div className="personal-board__heading-text">
+                      <h3 className="glowing-title">{t.personalBoardTitle}</h3>
+                      <p>{t.personalBoardSubtitle}</p>
+                    </div>
+                    <div className="personal-board__controls">
+                      <button
+                        type="button"
+                        className={`icon-refresh-button personal-board__refresh${
+                          isRefreshing ? " icon-refresh-button--spinning" : ""
+                        }`}
+                        onClick={handleManualRefresh}
+                        title={refreshLabel}
+                        aria-label={refreshLabel}
+                        disabled={isRefreshing}
+                      >
+                        <FaSyncAlt className="icon-refresh-button__icon" aria-hidden="true" />
+                      </button>
+                      <button
+                        type="button"
+                        className={`personal-board__toggle${
+                          isPersonalBoardCollapsed ? " personal-board__toggle--active" : ""
+                        }`}
+                        onClick={() => {
+                          setIsPersonalBoardCollapsed((prev) => !prev);
+                        }}
+                        aria-pressed={isPersonalBoardCollapsed}
+                        aria-label={
+                          isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse
+                        }
+                        title={isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse}
+                      >
+                        <span aria-hidden="true">{isPersonalBoardCollapsed ? "⇲" : "⇱"}</span>
+                        <span className="personal-board__toggle-label">
+                          {isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse}
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        className={`personal-board__toggle${
+                          showOnlyActionableRooms ? " personal-board__toggle--active" : ""
+                        }`}
+                        onClick={() => {
+                          setShowOnlyActionableRooms((prev) => {
+                            const next = !prev;
+                            if (next) setIsPersonalBoardCollapsed(false);
+                            return next;
+                          });
+                        }}
+                        aria-pressed={showOnlyActionableRooms}
+                        aria-label={
+                          showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand
+                        }
+                        title={showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand}
+                      >
+                        <span aria-hidden="true">{showOnlyActionableRooms ? "☰" : "⚡"}</span>
+                        <span className="personal-board__toggle-label">
+                          {showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand}
+                        </span>
+                      </button>
+                    </div>
                   </div>
-                  <div className="personal-board__controls">
-                    <button
-                      type="button"
-                      className={`icon-refresh-button personal-board__refresh${
-                        isRefreshing ? " icon-refresh-button--spinning" : ""
-                      }`}
-                      onClick={handleManualRefresh}
-                      title={refreshLabel}
-                      aria-label={refreshLabel}
-                      disabled={isRefreshing}
-                    >
-                      <FaSyncAlt className="icon-refresh-button__icon" aria-hidden="true" />
-                    </button>
-                    <button
-                      type="button"
-                      className={`personal-board__toggle${
-                        isPersonalBoardCollapsed ? " personal-board__toggle--active" : ""
-                      }`}
-                      onClick={() => {
-                        setIsPersonalBoardCollapsed((prev) => !prev);
-                      }}
-                      aria-pressed={isPersonalBoardCollapsed}
-                      aria-label={
-                        isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse
-                      }
-                      title={isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse}
-                    >
-                      <span aria-hidden="true">{isPersonalBoardCollapsed ? "⇲" : "⇱"}</span>
-                      <span className="personal-board__toggle-label">
-                        {isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse}
-                      </span>
-                    </button>
-                    <button
-                      type="button"
-                      className={`personal-board__toggle${
-                        showOnlyActionableRooms ? " personal-board__toggle--active" : ""
-                      }`}
-                      onClick={() => {
-                        setShowOnlyActionableRooms((prev) => {
-                          const next = !prev;
-                          if (next) setIsPersonalBoardCollapsed(false);
-                          return next;
-                        });
-                      }}
-                      aria-pressed={showOnlyActionableRooms}
-                      aria-label={
-                        showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand
-                      }
-                      title={showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand}
-                    >
-                      <span aria-hidden="true">{showOnlyActionableRooms ? "☰" : "⚡"}</span>
-                      <span className="personal-board__toggle-label">
-                        {showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand}
-                      </span>
-                    </button>
-                  </div>
-                </div>
 
-                {visiblePersonalSummaries.length === 0 ? (
-                  <p className="personal-board__empty">
-                    {showOnlyActionableRooms ? t.personalBoardNoAction : t.personalBoardEmpty}
-                  </p>
-                ) : (
-                  <div className="personal-board__table-wrapper">
-                    <table className="personal-board__table">
+                  {visiblePersonalSummaries.length === 0 ? (
+                    <p className="personal-board__empty">
+                      {showOnlyActionableRooms ? t.personalBoardNoAction : t.personalBoardEmpty}
+                    </p>
+                  ) : (
+                    <div className="personal-board__table-wrapper">
+                      <table className="personal-board__table">
                       <thead>
                         <tr>
                           <th>{t.room}</th>
@@ -6286,10 +6611,54 @@ export default function Page() {
                           );
                         })}
                       </tbody>
-                    </table>
+                      </table>
+                    </div>
+                  )}
+                </section>
+
+                <section
+                  className={`telegram-reminders${
+                    isTelegramPanelCollapsed ? " telegram-reminders--collapsed" : ""
+                  }`}
+                >
+                  <button
+                    type="button"
+                    className="telegram-reminders__toggle"
+                    onClick={() => {
+                      triggerInteractBeep();
+                      setIsTelegramPanelCollapsed((prev) => !prev);
+                    }}
+                    aria-expanded={!isTelegramPanelCollapsed}
+                    aria-controls="telegram-reminders-content"
+                    title={t.telegramReminderLabel}
+                  >
+                    <IconTelegram width={18} height={18} />
+                    <span>{t.telegramReminderLabel}</span>
+                    <FaChevronDown
+                      className={`telegram-reminders__chevron${
+                        isTelegramPanelCollapsed ? "" : " telegram-reminders__chevron--open"
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <p className="telegram-reminders__hint">
+                    {isTelegramConnected ? t.telegramReminderSuccess : t.telegramReminderDetail}
+                  </p>
+                  <div
+                    className="telegram-reminders__content"
+                    id="telegram-reminders-content"
+                    hidden={isTelegramPanelCollapsed}
+                    aria-hidden={isTelegramPanelCollapsed}
+                  >
+                    <TelegramConnect
+                      strings={t}
+                      defaultConnected={isTelegramConnected}
+                      onConnected={handleTelegramConnected}
+                      onBeforeConnect={triggerInteractBeep}
+                    />
                   </div>
-                )}
-              </section>
+                </section>
+              </>
             )}
 
             {/* === RPS === */}

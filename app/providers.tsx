@@ -4,7 +4,7 @@
 import "../lib/serverStoragePolyfill";
 
 import { ReactNode, useEffect, useMemo } from "react";
-import { WagmiProvider, createConfig, http } from "wagmi";
+import { WagmiProvider, createConfig, fallback, http, webSocket } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   RainbowKitProvider,
@@ -29,6 +29,19 @@ import { createRateLimitedFetch } from "../lib/rateLimitedFetch";
 const WC_PROJECT_ID =
   process.env.NEXT_PUBLIC_WC_PROJECT_ID || "df8d376695ef6244fbb2accd6a85f00a";
 const RPC = process.env.NEXT_PUBLIC_RPC_URL || "https://xlayerrpc.okx.com";
+const RPC_WS_FALLBACKS = [
+  "wss://xlayerws.okx.com",
+  "wss://ws.xlayer.tech",
+];
+const RPC_WS = Array.from(
+  new Set(
+    (process.env.NEXT_PUBLIC_RPC_WS_URL || "")
+      .split(",")
+      .map((entry) => entry.trim())
+      .filter((entry) => entry.length > 0)
+      .concat(RPC_WS_FALLBACKS)
+  )
+).filter((entry) => entry.length > 0);
 const RPC_MAX_RPS = Number(process.env.NEXT_PUBLIC_RPC_MAX_RPS ?? "90");
 const RPC_RATE_LIMIT_INTERVAL_MS = Number(
   process.env.NEXT_PUBLIC_RPC_RATE_INTERVAL_MS ?? "1000"
@@ -47,8 +60,8 @@ const xlayer: Chain = {
   name: "XLayer",
   nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 },
   rpcUrls: {
-    default: { http: [RPC] },
-    public: { http: [RPC] },
+    default: { http: [RPC], webSocket: RPC_WS.length ? RPC_WS : undefined },
+    public: { http: [RPC], webSocket: RPC_WS.length ? RPC_WS : undefined },
   },
   blockExplorers: {
     default: { name: "OKLink", url: "https://www.oklink.com/xlayer" },
@@ -74,15 +87,32 @@ const connectors = connectorsForWallets(
 );
 
 // ==== wagmi config ====
+const httpTransport = http(RPC, {
+  batch: true,
+  fetchFn: rateLimitedFetch,
+});
+
+const webSocketFallbacks = RPC_WS.map((url) => webSocket(url));
+
+const transportChain =
+  webSocketFallbacks.length > 0
+    ? fallback([...webSocketFallbacks, httpTransport])
+    : httpTransport;
+
+const webSocketTransports =
+  webSocketFallbacks.length > 0
+    ? {
+        [xlayer.id]: fallback(webSocketFallbacks),
+      }
+    : undefined;
+
 const config = createConfig({
   chains: [xlayer],
   connectors,
   transports: {
-    [xlayer.id]: http(RPC, {
-      batch: true,
-      fetchFn: rateLimitedFetch,
-    }),
+    [xlayer.id]: transportChain,
   },
+  ...(webSocketTransports ? { webSocketTransport: webSocketTransports } : {}),
   ssr: true,
   // Tắt quét nhiều injected provider để modal mở nhanh, giảm log rác
   multiInjectedProviderDiscovery: false,
