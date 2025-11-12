@@ -90,9 +90,7 @@ const connectors = connectorsForWallets(
 const webSocketTransports =
   RPC_WS.length > 0
     ? {
-        [xlayer.id]: fallback(RPC_WS.map((url) => webSocket(url)), {
-          rank: "priority",
-        }),
+        [xlayer.id]: fallback(RPC_WS.map((url) => webSocket(url))),
       }
     : undefined;
 

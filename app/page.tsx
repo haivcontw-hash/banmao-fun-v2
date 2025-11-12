@@ -617,9 +617,14 @@ function parseSaltHex(value: string): bigint | null {
 function commitHash(c: Choice, salt: `0x${string}`) {
   return keccak256(encodePacked(["uint8", "bytes32"], [c, salt]));
 }
-function normalizeRoomId(value: string | number | null | undefined): string {
+function normalizeRoomId(
+  value: string | number | bigint | null | undefined
+): string {
   if (value == null) return "";
-  const str = typeof value === "number" ? value.toString() : String(value).trim();
+  const str =
+    typeof value === "number" || typeof value === "bigint"
+      ? value.toString()
+      : String(value).trim();
   if (str === "") return "";
   const digitsOnly = str.replace(/[^0-9]/g, "");
   if (digitsOnly === "") return "";
