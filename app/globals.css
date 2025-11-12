@@ -1294,11 +1294,11 @@ input, select {
 }
 
 .telegram-reminders__content {
-  width: min(100%, 420px);
+  width: min(100%, 360px);
   display: flex;
   justify-content: center;
-  padding: 12px;
-  border-radius: 18px;
+  padding: 10px;
+  border-radius: 16px;
   border: 1px solid rgba(var(--gold-rgb), 0.3);
   background: rgba(var(--gold-rgb), 0.05);
 }
@@ -1314,9 +1314,9 @@ input, select {
 .telegram-connect-box {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 18px;
-  border-radius: 16px;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 14px;
   border: 1px solid rgba(var(--gold-rgb), 0.35);
   background: rgba(var(--gold-rgb), 0.08);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
@@ -1328,8 +1328,8 @@ input, select {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  font-size: 14px;
+  gap: 8px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1340,12 +1340,12 @@ input, select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 12px 14px;
-  border-radius: 14px;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 12px;
   border: 1px solid rgba(var(--gold-rgb), 0.28);
   background: rgba(var(--gold-rgb), 0.09);
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 1.6;
   text-align: center;
 }
