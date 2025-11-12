@@ -1,8 +1,7 @@
 // lib/telegram.ts
 
-export const TELEGRAM_API_BASE_URL = "http://103.75.183.59:3000";
-export const TELEGRAM_TOKEN_ENDPOINT = `${TELEGRAM_API_BASE_URL}/api/generate-token`;
-export const TELEGRAM_STATUS_ENDPOINT = `${TELEGRAM_API_BASE_URL}/api/check-status`;
+export const TELEGRAM_TOKEN_ENDPOINT = "/api/telegram/generate-token";
+export const TELEGRAM_STATUS_ENDPOINT = "/api/telegram/check-status";
 export const TELEGRAM_BOT_USERNAME = "banmaorps_bot";
 export const TELEGRAM_CONNECTION_STORAGE_KEY = "banmao_telegram_connected";
 export const TELEGRAM_LEGACY_USERNAME_STORAGE_KEY = "banmao_telegram_username";
