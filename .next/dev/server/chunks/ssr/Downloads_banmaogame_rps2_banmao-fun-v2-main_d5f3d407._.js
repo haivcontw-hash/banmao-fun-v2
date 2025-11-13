@@ -3365,6 +3365,58 @@ const DEFAULT_THEME = "gold";
 const THEME_KEYS = THEME_OPTIONS.map((option)=>option.key);
 const isThemeKey = (value)=>THEME_KEYS.includes(value);
 }),
+"[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/lib/ui-scale.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// lib/ui-scale.ts
+__turbopack_context__.s([
+    "MAX_MANUAL_UI_SCALE",
+    ()=>MAX_MANUAL_UI_SCALE,
+    "MIN_AUTO_UI_SCALE",
+    ()=>MIN_AUTO_UI_SCALE,
+    "UI_SCALE_ORDER",
+    ()=>UI_SCALE_ORDER,
+    "UI_SCALE_PRESET_FACTORS",
+    ()=>UI_SCALE_PRESET_FACTORS,
+    "clampAutoUiScaleFactor",
+    ()=>clampAutoUiScaleFactor,
+    "deriveUiScaleLabel",
+    ()=>deriveUiScaleLabel,
+    "getPresetUiScaleFactor",
+    ()=>getPresetUiScaleFactor
+]);
+const UI_SCALE_ORDER = [
+    "xsmall",
+    "small",
+    "normal",
+    "large",
+    "desktop"
+];
+const UI_SCALE_PRESET_FACTORS = {
+    xsmall: 0.38,
+    small: 0.55,
+    normal: 1,
+    large: 1.18,
+    desktop: 1.32
+};
+const MIN_AUTO_UI_SCALE = 0.32;
+const MAX_MANUAL_UI_SCALE = UI_SCALE_PRESET_FACTORS.desktop;
+const getPresetUiScaleFactor = (scale)=>UI_SCALE_PRESET_FACTORS[scale] ?? 1;
+const clampAutoUiScaleFactor = (value)=>{
+    if (!Number.isFinite(value)) return 1;
+    if (value < MIN_AUTO_UI_SCALE) return MIN_AUTO_UI_SCALE;
+    if (value > 1) return 1;
+    return value;
+};
+const deriveUiScaleLabel = (factor)=>{
+    if (!Number.isFinite(factor)) return "normal";
+    if (factor <= 0.42) return "xsmall";
+    if (factor <= 0.62) return "small";
+    if (factor <= 1.08) return "normal";
+    if (factor <= 1.22) return "large";
+    return "desktop";
+};
+}),
 "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -3380,7 +3432,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$r
 var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/Icons.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$lib$2f$i18n$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/lib/i18n.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$lib$2f$themes$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/lib/themes.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$lib$2f$ui$2d$scale$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/lib/ui-scale.ts [app-ssr] (ecmascript)");
 "use client";
+;
 ;
 ;
 ;
@@ -3390,22 +3444,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$r
 ;
 const clamp = (value, min, max)=>Math.min(Math.max(value, min), max);
 const CLICK_THRESHOLD = 5;
-const UI_SCALE_ORDER = [
-    "xsmall",
-    "small",
-    "normal",
-    "large",
-    "desktop"
-];
 const EDGE_PADDING = 16;
-const UI_SCALE_FACTORS = {
-    xsmall: 0.8,
-    small: 0.9,
-    normal: 1,
-    large: 1.1,
-    desktop: 0.7
-};
-const getScaleFactor = (scale)=>UI_SCALE_FACTORS[scale] ?? 1;
+const getEffectiveScale = (value)=>value > 0 ? value : 1;
 const DEFAULT_THEME_LABELS = {
     gold: "Original Gold",
     white: "Luminous White",
@@ -3415,7 +3455,7 @@ const DEFAULT_THEME_LABELS = {
     orange: "Sunset Orange",
     purple: "Royal Purple"
 };
-function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotificationsToggle, vibrationMs, onVibrationChange, snoozeMinutes, onSnoozeChange, uiScale, onUiScaleChange, theme, onThemeChange, telegramHandle, xHandle, onInteract, onScreenshot, onReset, historyLookupId, onHistoryLookupIdChange, historyLookupState, onHistoryLookup, onCopyAddress }) {
+function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotificationsToggle, vibrationMs, onVibrationChange, snoozeMinutes, onSnoozeChange, uiScale, uiScaleFactor, onUiScaleChange, theme, onThemeChange, telegramHandle, xHandle, onInteract, onScreenshot, onReset, historyLookupId, onHistoryLookupIdChange, historyLookupState, onHistoryLookup, onCopyAddress }) {
     const [open, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [position, setPosition] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         x: 24,
@@ -3454,8 +3494,8 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
     ]);
     const currentThemeLabel = themeNames[theme] ?? DEFAULT_THEME_LABELS[theme] ?? DEFAULT_THEME_LABELS.gold;
     const cycleUiScale = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(()=>{
-        const currentIndex = UI_SCALE_ORDER.indexOf(uiScale);
-        const nextValue = UI_SCALE_ORDER[(currentIndex + 1) % UI_SCALE_ORDER.length];
+        const currentIndex = __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$lib$2f$ui$2d$scale$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["UI_SCALE_ORDER"].indexOf(uiScale);
+        const nextValue = __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$lib$2f$ui$2d$scale$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["UI_SCALE_ORDER"][(currentIndex + 1) % __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$lib$2f$ui$2d$scale$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["UI_SCALE_ORDER"].length];
         onInteract?.();
         onUiScaleChange(nextValue);
     }, [
@@ -3495,7 +3535,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
         const maxX = undefined;
         const maxY = undefined;
     }, [
-        uiScale
+        uiScaleFactor
     ]);
     const placeInCorner = (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(()=>{
         if ("TURBOPACK compile-time truthy", 1) return;
@@ -3515,7 +3555,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
         const maxX = undefined;
         const maxY = undefined;
     }, [
-        uiScale
+        uiScaleFactor
     ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (hasPlacedInitialPosition.current) return;
@@ -3615,7 +3655,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
         ;
         const frame = undefined;
     }, [
-        uiScale,
+        uiScaleFactor,
         ensureWithinViewport
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3623,7 +3663,9 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
         className: `floating-settings ${open ? "open" : ""}`,
         style: {
             left: position.x,
-            top: position.y
+            top: position.y,
+            transform: `scale(${getEffectiveScale(uiScaleFactor)})`,
+            transformOrigin: "top left"
         },
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3641,12 +3683,12 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                     unoptimized: true
                 }, void 0, false, {
                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                    lineNumber: 351,
+                    lineNumber: 348,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                lineNumber: 345,
+                lineNumber: 342,
                 columnNumber: 7
             }, this),
             open && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3656,7 +3698,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                         children: t.settingsTitle
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 362,
+                        lineNumber: 359,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -3670,25 +3712,25 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         "aria-hidden": "true",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconBell"], {}, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                            lineNumber: 367,
+                                            lineNumber: 364,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 366,
+                                        lineNumber: 363,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: t.notificationToggle
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 369,
+                                        lineNumber: 366,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 365,
+                                lineNumber: 362,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -3699,13 +3741,13 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 371,
+                                lineNumber: 368,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 364,
+                        lineNumber: 361,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -3719,25 +3761,25 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         "aria-hidden": "true",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconVibrate"], {}, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                            lineNumber: 383,
+                                            lineNumber: 380,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 382,
+                                        lineNumber: 379,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: t.vibrationLabel
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 385,
+                                        lineNumber: 382,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 381,
+                                lineNumber: 378,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3754,7 +3796,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 388,
+                                        lineNumber: 385,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3765,19 +3807,19 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 398,
+                                        lineNumber: 395,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 387,
+                                lineNumber: 384,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 380,
+                        lineNumber: 377,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -3791,25 +3833,25 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         "aria-hidden": "true",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconHourglass"], {}, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                            lineNumber: 405,
+                                            lineNumber: 402,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 404,
+                                        lineNumber: 401,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: t.notificationSnoozeLabel
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 407,
+                                        lineNumber: 404,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 403,
+                                lineNumber: 400,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3828,7 +3870,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         onPointerDown: ()=>onInteract?.()
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 410,
+                                        lineNumber: 407,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3836,19 +3878,19 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         children: t.notificationSnoozeValue(snoozeMinutes)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 422,
+                                        lineNumber: 419,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 409,
+                                lineNumber: 406,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 402,
+                        lineNumber: 399,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3862,25 +3904,25 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         "aria-hidden": "true",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconGlobe"], {}, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                            lineNumber: 431,
+                                            lineNumber: 428,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 430,
+                                        lineNumber: 427,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: t.languageLabel
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 433,
+                                        lineNumber: 430,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 429,
+                                lineNumber: 426,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$LanguageSwitcher$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -3889,13 +3931,13 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                 onInteract: onInteract
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 435,
+                                lineNumber: 432,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 428,
+                        lineNumber: 425,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3909,25 +3951,25 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         "aria-hidden": "true",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconDisplay"], {}, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                            lineNumber: 441,
+                                            lineNumber: 438,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 440,
+                                        lineNumber: 437,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: t.displaySizeLabel
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 443,
+                                        lineNumber: 440,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 439,
+                                lineNumber: 436,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3936,13 +3978,13 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                 children: t.displaySizeButton ? t.displaySizeButton(uiScaleLabels[uiScale]) : `${t.displaySizeLabel}: ${uiScaleLabels[uiScale]}`
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 445,
+                                lineNumber: 442,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 438,
+                        lineNumber: 435,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3963,25 +4005,25 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 "aria-hidden": "true",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconPalette"], {}, void 0, false, {
                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                    lineNumber: 462,
+                                                    lineNumber: 459,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 461,
+                                                lineNumber: 458,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t.themeLabel ?? "Theme"
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 464,
+                                                lineNumber: 461,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 460,
+                                        lineNumber: 457,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3989,7 +4031,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         children: currentThemeLabel
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 466,
+                                        lineNumber: 463,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3998,13 +4040,13 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         children: "▾"
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 467,
+                                        lineNumber: 464,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 453,
+                                lineNumber: 450,
                                 columnNumber: 13
                             }, this),
                             themeOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4022,7 +4064,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 children: option.icon
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 482,
+                                                lineNumber: 479,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4030,7 +4072,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 children: themeNames[option.key] ?? option.key
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 485,
+                                                lineNumber: 482,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4041,24 +4083,24 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 }
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 488,
+                                                lineNumber: 485,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, option.key, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 475,
+                                        lineNumber: 472,
                                         columnNumber: 19
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 473,
+                                lineNumber: 470,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 452,
+                        lineNumber: 449,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4072,25 +4114,25 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         "aria-hidden": "true",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconLink"], {}, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                            lineNumber: 504,
+                                            lineNumber: 501,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 503,
+                                        lineNumber: 500,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: t.socialTitle
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 506,
+                                        lineNumber: 503,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 502,
+                                lineNumber: 499,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -4104,25 +4146,25 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         "aria-hidden": "true",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconTelegram"], {}, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                            lineNumber: 515,
+                                            lineNumber: 512,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 514,
+                                        lineNumber: 511,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: t.telegram
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 517,
+                                        lineNumber: 514,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 508,
+                                lineNumber: 505,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -4136,31 +4178,31 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         "aria-hidden": "true",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconX"], {}, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                            lineNumber: 526,
+                                            lineNumber: 523,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 525,
+                                        lineNumber: 522,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: t.x
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 528,
+                                        lineNumber: 525,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 519,
+                                lineNumber: 516,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 501,
+                        lineNumber: 498,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4174,25 +4216,25 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         "aria-hidden": "true",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconHistory"], {}, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                            lineNumber: 535,
+                                            lineNumber: 532,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 534,
+                                        lineNumber: 531,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: t.historyLookupTitle
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 537,
+                                        lineNumber: 534,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 533,
+                                lineNumber: 530,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4212,7 +4254,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         placeholder: t.historyLookupPlaceholder
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 540,
+                                        lineNumber: 537,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4222,13 +4264,13 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         children: historyLookupState.status === "loading" ? t.historyLookupLoading : t.historyLookupButton
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 553,
+                                        lineNumber: 550,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 539,
+                                lineNumber: 536,
                                 columnNumber: 13
                             }, this),
                             historyLookupState.status === "idle" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4236,7 +4278,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                 children: t.historyLookupEmpty
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 562,
+                                lineNumber: 559,
                                 columnNumber: 15
                             }, this),
                             historyLookupState.status === "error" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4244,7 +4286,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                 children: historyLookupState.message
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 565,
+                                lineNumber: 562,
                                 columnNumber: 15
                             }, this),
                             historyLookupState.status === "success" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4257,7 +4299,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 children: t.historyLookupCreatorLabel
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 572,
+                                                lineNumber: 569,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4268,7 +4310,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                         children: historyLookupState.data.creator
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                        lineNumber: 574,
+                                                        lineNumber: 571,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4278,19 +4320,19 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                         children: t.historyLookupCopy
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                        lineNumber: 575,
+                                                        lineNumber: 572,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 573,
+                                                lineNumber: 570,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 571,
+                                        lineNumber: 568,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4300,7 +4342,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 children: t.historyLookupOpponentLabel
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 585,
+                                                lineNumber: 582,
                                                 columnNumber: 19
                                             }, this),
                                             historyLookupState.data.hasOpponent ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4311,7 +4353,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                         children: historyLookupState.data.opponent
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                        lineNumber: 588,
+                                                        lineNumber: 585,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4321,26 +4363,26 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                         children: t.historyLookupCopy
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                        lineNumber: 589,
+                                                        lineNumber: 586,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 587,
+                                                lineNumber: 584,
                                                 columnNumber: 21
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "floating-settings__history-muted",
                                                 children: historyLookupState.data.opponent
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 598,
+                                                lineNumber: 595,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 584,
+                                        lineNumber: 581,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4350,20 +4392,20 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 children: t.historyLookupStakeLabel
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 602,
+                                                lineNumber: 599,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: historyLookupState.data.stakeFormatted
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 603,
+                                                lineNumber: 600,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 601,
+                                        lineNumber: 598,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4373,20 +4415,20 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 children: t.historyLookupStateLabel
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 606,
+                                                lineNumber: 603,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: historyLookupState.data.stateLabel
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 607,
+                                                lineNumber: 604,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 605,
+                                        lineNumber: 602,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4396,7 +4438,7 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 children: t.historyLookupResultLabel
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 610,
+                                                lineNumber: 607,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4404,13 +4446,13 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                                 children: historyLookupState.data.resultSummary
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                                lineNumber: 611,
+                                                lineNumber: 608,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 609,
+                                        lineNumber: 606,
                                         columnNumber: 17
                                     }, this),
                                     historyLookupState.data.note && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4418,19 +4460,19 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                                         children: historyLookupState.data.note
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                        lineNumber: 614,
+                                        lineNumber: 611,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                                lineNumber: 570,
+                                lineNumber: 567,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 532,
+                        lineNumber: 529,
                         columnNumber: 11
                     }, this),
                     onReset && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -4446,19 +4488,19 @@ function FloatingSettings({ lang, onLangChange, notificationsEnabled, onNotifica
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                        lineNumber: 621,
+                        lineNumber: 618,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-                lineNumber: 361,
+                lineNumber: 358,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/components/FloatingSettings.tsx",
-        lineNumber: 340,
+        lineNumber: 332,
         columnNumber: 5
     }, this);
 }
@@ -5315,7 +5357,6 @@ const TELEGRAM_URL = `https://t.me/${__TURBOPACK__imported__module__$5b$project$
 const X_URL = `https://x.com/${X_HANDLE}`;
 const ROOMS_CACHE_KEY = "banmao_rooms_cache_v1";
 const INFO_CACHE_KEY = "banmao_info_cache_v1";
-const MOBILE_UA_REGEX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
 const RULE_ACCENTS = [
     {
         icon: "🎮",
@@ -5886,7 +5927,7 @@ function InfoTable({ balance, decimals, stats, strings }) {
                     "aria-hidden": "true"
                 }, void 0, false, {
                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                    lineNumber: 861,
+                    lineNumber: 860,
                     columnNumber: 15
                 }, this),
                 label: strings.balance,
@@ -5899,7 +5940,7 @@ function InfoTable({ balance, decimals, stats, strings }) {
                     "aria-hidden": "true"
                 }, void 0, false, {
                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                    lineNumber: 868,
+                    lineNumber: 867,
                     columnNumber: 15
                 }, this),
                 label: strings.winLossRatio,
@@ -5912,7 +5953,7 @@ function InfoTable({ balance, decimals, stats, strings }) {
                     "aria-hidden": "true"
                 }, void 0, false, {
                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                    lineNumber: 875,
+                    lineNumber: 874,
                     columnNumber: 15
                 }, this),
                 label: strings.rps,
@@ -5925,7 +5966,7 @@ function InfoTable({ balance, decimals, stats, strings }) {
                     "aria-hidden": "true"
                 }, void 0, false, {
                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                    lineNumber: 882,
+                    lineNumber: 881,
                     columnNumber: 15
                 }, this),
                 label: strings.totalWinningsLosses ?? `${strings.totalWinnings} / ${strings.totalLosses}`,
@@ -5954,7 +5995,7 @@ function InfoTable({ balance, decimals, stats, strings }) {
                                         children: row.icon
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 897,
+                                        lineNumber: 896,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5962,13 +6003,13 @@ function InfoTable({ balance, decimals, stats, strings }) {
                                         children: row.value
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 900,
+                                        lineNumber: 899,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 896,
+                                lineNumber: 895,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5976,7 +6017,7 @@ function InfoTable({ balance, decimals, stats, strings }) {
                                 children: row.label
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 902,
+                                lineNumber: 901,
                                 columnNumber: 15
                             }, this),
                             row.detail ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5984,28 +6025,28 @@ function InfoTable({ balance, decimals, stats, strings }) {
                                 children: row.detail
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 903,
+                                lineNumber: 902,
                                 columnNumber: 29
                             }, this) : null
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 895,
+                        lineNumber: 894,
                         columnNumber: 13
                     }, this)
                 }, row.key, false, {
                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                    lineNumber: 894,
+                    lineNumber: 893,
                     columnNumber: 11
                 }, this))
         }, void 0, false, {
             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-            lineNumber: 892,
+            lineNumber: 891,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-        lineNumber: 891,
+        lineNumber: 890,
         columnNumber: 5
     }, this);
 }
@@ -7149,12 +7190,12 @@ function Page() {
                         children: statusLabel
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 2380,
+                        lineNumber: 2379,
                         columnNumber: 15
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                    lineNumber: 2379,
+                    lineNumber: 2378,
                     columnNumber: 13
                 }, this), {
                 id,
@@ -7177,27 +7218,27 @@ function Page() {
                                 children: icon
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 2397,
+                                lineNumber: 2396,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
                                 children: defaultTitle
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 2401,
+                                lineNumber: 2400,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 children: message
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 2402,
+                                lineNumber: 2401,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 2395,
+                        lineNumber: 2394,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -7207,13 +7248,13 @@ function Page() {
                         children: "×"
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 2404,
+                        lineNumber: 2403,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                lineNumber: 2394,
+                lineNumber: 2393,
                 columnNumber: 11
             }, this), {
             id,
@@ -8406,7 +8447,7 @@ function Page() {
                             children: "×"
                         }, void 0, false, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 3808,
+                            lineNumber: 3801,
                             columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8417,12 +8458,12 @@ function Page() {
                                     "aria-hidden": "true",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Icons$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["IconHourglass"], {}, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 3817,
+                                        lineNumber: 3810,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 3816,
+                                    lineNumber: 3809,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8432,26 +8473,26 @@ function Page() {
                                             children: t.joinConfirmTitle
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 3820,
+                                            lineNumber: 3813,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: t.joinConfirmDescription
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 3821,
+                                            lineNumber: 3814,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 3819,
+                                    lineNumber: 3812,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 3815,
+                            lineNumber: 3808,
                             columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8465,7 +8506,7 @@ function Page() {
                                             children: t.joinConfirmTimeLabel
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 3826,
+                                            lineNumber: 3819,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -8473,7 +8514,7 @@ function Page() {
                                             children: details.readable
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 3827,
+                                            lineNumber: 3820,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -8481,13 +8522,13 @@ function Page() {
                                             children: t.joinConfirmTimeHint(secondsClamped)
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 3828,
+                                            lineNumber: 3821,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 3825,
+                                    lineNumber: 3818,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8498,7 +8539,7 @@ function Page() {
                                             children: t.joinConfirmStakeLabel
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 3831,
+                                            lineNumber: 3824,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -8509,26 +8550,26 @@ function Page() {
                                                     "aria-hidden": "true"
                                                 }, void 0, false, {
                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                    lineNumber: 3833,
+                                                    lineNumber: 3826,
                                                     columnNumber: 21
                                                 }, this),
                                                 details.stakeLabel
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 3832,
+                                            lineNumber: 3825,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 3830,
+                                    lineNumber: 3823,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 3824,
+                            lineNumber: 3817,
                             columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8540,7 +8581,7 @@ function Page() {
                                     children: t.joinConfirmProceed
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 3839,
+                                    lineNumber: 3832,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -8549,19 +8590,19 @@ function Page() {
                                     children: t.joinConfirmCancel
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 3842,
+                                    lineNumber: 3835,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 3838,
+                            lineNumber: 3831,
                             columnNumber: 15
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                    lineNumber: 3807,
+                    lineNumber: 3800,
                     columnNumber: 13
                 }, this);
             }, {
@@ -8892,7 +8933,7 @@ function Page() {
                             children: "×"
                         }, void 0, false, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 4131,
+                            lineNumber: 4124,
                             columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8902,20 +8943,20 @@ function Page() {
                                     children: finalWarning.title
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 4139,
+                                    lineNumber: 4132,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     children: finalWarning.body
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 4140,
+                                    lineNumber: 4133,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 4138,
+                            lineNumber: 4131,
                             columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -8927,7 +8968,7 @@ function Page() {
                                     children: t.forfeitConfirmProceed
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 4143,
+                                    lineNumber: 4136,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -8936,19 +8977,19 @@ function Page() {
                                     children: t.forfeitCancel
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 4146,
+                                    lineNumber: 4139,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 4142,
+                            lineNumber: 4135,
                             columnNumber: 15
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                    lineNumber: 4130,
+                    lineNumber: 4123,
                     columnNumber: 13
                 }, this);
             }, {
@@ -9923,7 +9964,7 @@ function Page() {
                                         children: "×"
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 5319,
+                                        lineNumber: 5312,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9933,20 +9974,20 @@ function Page() {
                                                 children: t.joinedNotificationTitle(rid)
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 5330,
+                                                lineNumber: 5323,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 children: t.joinedNotificationBody(opponent)
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 5331,
+                                                lineNumber: 5324,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 5329,
+                                        lineNumber: 5322,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9970,7 +10011,7 @@ function Page() {
                                                 children: t.focusRoom
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 5334,
+                                                lineNumber: 5327,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -9982,19 +10023,19 @@ function Page() {
                                                 children: t.dismiss
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 5348,
+                                                lineNumber: 5341,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 5333,
+                                        lineNumber: 5326,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 5318,
+                                lineNumber: 5311,
                                 columnNumber: 17
                             }, this), {
                             duration: Number.POSITIVE_INFINITY,
@@ -10066,7 +10107,7 @@ function Page() {
                                     children: "×"
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5430,
+                                    lineNumber: 5423,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10076,26 +10117,26 @@ function Page() {
                                             children: `🧠 Room #${rid}`
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5438,
+                                            lineNumber: 5431,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: `${player.slice(0, 6)}... committed`
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5439,
+                                            lineNumber: 5432,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5437,
+                                    lineNumber: 5430,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 5429,
+                            lineNumber: 5422,
                             columnNumber: 15
                         }, this), {
                         duration: 4000,
@@ -10137,7 +10178,7 @@ function Page() {
                                     children: "×"
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5469,
+                                    lineNumber: 5462,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10147,26 +10188,26 @@ function Page() {
                                             children: `🔓 Room #${rid}`
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5477,
+                                            lineNumber: 5470,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: `${player.slice(0, 6)}... revealed`
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5478,
+                                            lineNumber: 5471,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5476,
+                                    lineNumber: 5469,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 5468,
+                            lineNumber: 5461,
                             columnNumber: 15
                         }, this), {
                         duration: 4000,
@@ -10300,7 +10341,7 @@ function Page() {
                                 children: "×"
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 5619,
+                                lineNumber: 5612,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10310,20 +10351,20 @@ function Page() {
                                         children: t.notifyClaim(viewRoom.id)
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 5630,
+                                        lineNumber: 5623,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: avail.phase === "commit" ? t.committing : t.revealing
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 5631,
+                                        lineNumber: 5624,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 5629,
+                                lineNumber: 5622,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10342,7 +10383,7 @@ function Page() {
                                         children: t.takeAction
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 5634,
+                                        lineNumber: 5627,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -10355,19 +10396,19 @@ function Page() {
                                         children: t.rememberLater
                                     }, void 0, false, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 5645,
+                                        lineNumber: 5638,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 5633,
+                                lineNumber: 5626,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 5618,
+                        lineNumber: 5611,
                         columnNumber: 13
                     }, this));
             } else if (viewRoom.state === 2) {
@@ -10388,7 +10429,7 @@ function Page() {
                                     children: "×"
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5668,
+                                    lineNumber: 5661,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10398,20 +10439,20 @@ function Page() {
                                             children: t.notifyReveal(viewRoom.id)
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5679,
+                                            lineNumber: 5672,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: t.reveal
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5680,
+                                            lineNumber: 5673,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5678,
+                                    lineNumber: 5671,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10430,7 +10471,7 @@ function Page() {
                                             children: t.takeAction
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5683,
+                                            lineNumber: 5676,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -10443,19 +10484,19 @@ function Page() {
                                             children: t.rememberLater
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5694,
+                                            lineNumber: 5687,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5682,
+                                    lineNumber: 5675,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 5667,
+                            lineNumber: 5660,
                             columnNumber: 15
                         }, this), [
                         vibrationMs,
@@ -10496,7 +10537,7 @@ function Page() {
                                     children: "×"
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5743,
+                                    lineNumber: 5736,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10506,20 +10547,20 @@ function Page() {
                                             children: t.commitUrgentTitle(viewRoom.id)
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5754,
+                                            lineNumber: 5747,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: t.commitUrgentBody(timeLabel, secondsLabel)
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5755,
+                                            lineNumber: 5748,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5753,
+                                    lineNumber: 5746,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10538,7 +10579,7 @@ function Page() {
                                             children: t.takeAction
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5758,
+                                            lineNumber: 5751,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -10551,19 +10592,19 @@ function Page() {
                                             children: t.rememberLater
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5769,
+                                            lineNumber: 5762,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5757,
+                                    lineNumber: 5750,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 5742,
+                            lineNumber: 5735,
                             columnNumber: 15
                         }, this), [
                         vibrationMs,
@@ -10600,7 +10641,7 @@ function Page() {
                                     children: "×"
                                 }, void 0, false, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5802,
+                                    lineNumber: 5795,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10610,20 +10651,20 @@ function Page() {
                                             children: t.notifyCommit(viewRoom.id)
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5813,
+                                            lineNumber: 5806,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             children: t.commit
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5814,
+                                            lineNumber: 5807,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5812,
+                                    lineNumber: 5805,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10642,7 +10683,7 @@ function Page() {
                                             children: t.takeAction
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5817,
+                                            lineNumber: 5810,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -10655,19 +10696,19 @@ function Page() {
                                             children: t.rememberLater
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 5828,
+                                            lineNumber: 5821,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 5816,
+                                    lineNumber: 5809,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                            lineNumber: 5801,
+                            lineNumber: 5794,
                             columnNumber: 13
                         }, this));
                     if (triggered) {
@@ -10798,7 +10839,7 @@ function Page() {
                         children: icon
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 5986,
+                        lineNumber: 5979,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10808,20 +10849,20 @@ function Page() {
                                 children: title
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 5990,
+                                lineNumber: 5983,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 children: bodyText
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 5991,
+                                lineNumber: 5984,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 5989,
+                        lineNumber: 5982,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -10831,13 +10872,13 @@ function Page() {
                         children: "×"
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 5993,
+                        lineNumber: 5986,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                lineNumber: 5985,
+                lineNumber: 5978,
                 columnNumber: 9
             }, this), {
             duration: 8000,
@@ -10916,7 +10957,7 @@ function Page() {
                 }
             }, void 0, false, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                lineNumber: 6064,
+                lineNumber: 6057,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$Header$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -10924,7 +10965,7 @@ function Page() {
                 chainUnsupportedLabel: t.connectUnsupported
             }, void 0, false, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                lineNumber: 6069,
+                lineNumber: 6062,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10939,7 +10980,7 @@ function Page() {
                         children: t.title
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 6072,
+                        lineNumber: 6065,
                         columnNumber: 9
                     }, this),
                     !isConnected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -10949,7 +10990,7 @@ function Page() {
                         children: t.connect
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 6075,
+                        lineNumber: 6068,
                         columnNumber: 26
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10976,7 +11017,7 @@ function Page() {
                                                                     children: t.infoTitle
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 6089,
+                                                                    lineNumber: 6082,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -10994,12 +11035,12 @@ function Page() {
                                                                                 "aria-hidden": "true"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6101,
+                                                                                lineNumber: 6094,
                                                                                 columnNumber: 25
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6091,
+                                                                            lineNumber: 6084,
                                                                             columnNumber: 23
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11016,36 +11057,36 @@ function Page() {
                                                                                 "aria-hidden": "true"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6114,
+                                                                                lineNumber: 6107,
                                                                                 columnNumber: 27
                                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FaEye"], {
                                                                                 className: "stake-section__toggle-icon",
                                                                                 "aria-hidden": "true"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6116,
+                                                                                lineNumber: 6109,
                                                                                 columnNumber: 27
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6103,
+                                                                            lineNumber: 6096,
                                                                             columnNumber: 23
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 6090,
+                                                                    lineNumber: 6083,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 6088,
+                                                            lineNumber: 6081,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6087,
+                                                        lineNumber: 6080,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11056,7 +11097,7 @@ function Page() {
                                                             children: t.stakeConnectPrompt
                                                         }, void 0, false, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 6124,
+                                                            lineNumber: 6117,
                                                             columnNumber: 21
                                                         }, this) : !isStakeTableCollapsed ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "stake-section__info-stack",
@@ -11067,23 +11108,23 @@ function Page() {
                                                                 strings: t
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6127,
+                                                                lineNumber: 6120,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 6126,
+                                                            lineNumber: 6119,
                                                             columnNumber: 21
                                                         }, this) : null
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6122,
+                                                        lineNumber: 6115,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6082,
+                                                lineNumber: 6075,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -11096,7 +11137,7 @@ function Page() {
                                                         children: t.join
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6143,
+                                                        lineNumber: 6136,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11111,7 +11152,7 @@ function Page() {
                                                                         children: t.stake
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6146,
+                                                                        lineNumber: 6139,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11127,7 +11168,7 @@ function Page() {
                                                                                 children: "−"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6150,
+                                                                                lineNumber: 6143,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -11140,7 +11181,7 @@ function Page() {
                                                                                 "aria-label": t.stake
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6164,
+                                                                                lineNumber: 6157,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11153,13 +11194,13 @@ function Page() {
                                                                                 children: "+"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6173,
+                                                                                lineNumber: 6166,
                                                                                 columnNumber: 23
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6149,
+                                                                        lineNumber: 6142,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11177,19 +11218,19 @@ function Page() {
                                                                                 ]
                                                                             }, `stake-step-${multiplier}`, true, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6192,
+                                                                                lineNumber: 6185,
                                                                                 columnNumber: 27
                                                                             }, this);
                                                                         })
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6188,
+                                                                        lineNumber: 6181,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6145,
+                                                                lineNumber: 6138,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11201,7 +11242,7 @@ function Page() {
                                                                         children: t.commitDurationLabel
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6208,
+                                                                        lineNumber: 6201,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11218,7 +11259,7 @@ function Page() {
                                                                                 children: "−"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6212,
+                                                                                lineNumber: 6205,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -11235,7 +11276,7 @@ function Page() {
                                                                                 "aria-describedby": "commit-duration-hint"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6223,
+                                                                                lineNumber: 6216,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11249,13 +11290,13 @@ function Page() {
                                                                                 children: "+"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6236,
+                                                                                lineNumber: 6229,
                                                                                 columnNumber: 23
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6211,
+                                                                        lineNumber: 6204,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -11264,13 +11305,13 @@ function Page() {
                                                                         children: t.commitDurationHint
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6248,
+                                                                        lineNumber: 6241,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6207,
+                                                                lineNumber: 6200,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11282,7 +11323,7 @@ function Page() {
                                                                         children: t.approve
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6254,
+                                                                        lineNumber: 6247,
                                                                         columnNumber: 23
                                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                         className: "approved",
@@ -11295,7 +11336,7 @@ function Page() {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6258,
+                                                                        lineNumber: 6251,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11304,7 +11345,7 @@ function Page() {
                                                                         children: t.create
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6262,
+                                                                        lineNumber: 6255,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11313,19 +11354,19 @@ function Page() {
                                                                         children: isSharing ? t.sharePreparing : t.shareScreenshot
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6265,
+                                                                        lineNumber: 6258,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6252,
+                                                                lineNumber: 6245,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6144,
+                                                        lineNumber: 6137,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11340,7 +11381,7 @@ function Page() {
                                                                         children: t.room
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6272,
+                                                                        lineNumber: 6265,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11356,7 +11397,7 @@ function Page() {
                                                                                 children: "−"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6276,
+                                                                                lineNumber: 6269,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -11370,7 +11411,7 @@ function Page() {
                                                                                 "aria-label": t.room
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6290,
+                                                                                lineNumber: 6283,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11383,19 +11424,19 @@ function Page() {
                                                                                 children: "+"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6300,
+                                                                                lineNumber: 6293,
                                                                                 columnNumber: 23
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6275,
+                                                                        lineNumber: 6268,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6271,
+                                                                lineNumber: 6264,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11407,7 +11448,7 @@ function Page() {
                                                                         children: t.salt
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6317,
+                                                                        lineNumber: 6310,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11424,7 +11465,7 @@ function Page() {
                                                                                 children: "−"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6321,
+                                                                                lineNumber: 6314,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -11437,7 +11478,7 @@ function Page() {
                                                                                 "aria-label": t.salt
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6336,
+                                                                                lineNumber: 6329,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11451,25 +11492,25 @@ function Page() {
                                                                                 children: "+"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6345,
+                                                                                lineNumber: 6338,
                                                                                 columnNumber: 23
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6320,
+                                                                        lineNumber: 6313,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6316,
+                                                                lineNumber: 6309,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6270,
+                                                        lineNumber: 6263,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11481,7 +11522,7 @@ function Page() {
                                                                 children: t.join
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6364,
+                                                                lineNumber: 6357,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11495,7 +11536,7 @@ function Page() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6367,
+                                                                lineNumber: 6360,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11516,25 +11557,25 @@ function Page() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6375,
+                                                                lineNumber: 6368,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6363,
+                                                        lineNumber: 6356,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6138,
+                                                lineNumber: 6131,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 6081,
+                                        lineNumber: 6074,
                                         columnNumber: 13
                                     }, this),
                                     isConnected && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -11553,20 +11594,20 @@ function Page() {
                                                                         children: t.personalBoardTitle
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6404,
+                                                                        lineNumber: 6397,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                         children: t.personalBoardSubtitle
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6405,
+                                                                        lineNumber: 6398,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6403,
+                                                                lineNumber: 6396,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11584,12 +11625,12 @@ function Page() {
                                                                             "aria-hidden": "true"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6418,
+                                                                            lineNumber: 6411,
                                                                             columnNumber: 25
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6408,
+                                                                        lineNumber: 6401,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11607,7 +11648,7 @@ function Page() {
                                                                                 children: isPersonalBoardCollapsed ? "⇲" : "⇱"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6434,
+                                                                                lineNumber: 6427,
                                                                                 columnNumber: 25
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -11615,13 +11656,13 @@ function Page() {
                                                                                 children: isPersonalBoardCollapsed ? t.personalBoardShowAll : t.personalBoardCollapse
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6435,
+                                                                                lineNumber: 6428,
                                                                                 columnNumber: 25
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6420,
+                                                                        lineNumber: 6413,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11643,7 +11684,7 @@ function Page() {
                                                                                 children: showOnlyActionableRooms ? "☰" : "⚡"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6457,
+                                                                                lineNumber: 6450,
                                                                                 columnNumber: 25
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -11651,25 +11692,25 @@ function Page() {
                                                                                 children: showOnlyActionableRooms ? t.personalBoardShowAll : t.personalBoardExpand
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6458,
+                                                                                lineNumber: 6451,
                                                                                 columnNumber: 25
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6439,
+                                                                        lineNumber: 6432,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6407,
+                                                                lineNumber: 6400,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6402,
+                                                        lineNumber: 6395,
                                                         columnNumber: 19
                                                     }, this),
                                                     visiblePersonalSummaries.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -11677,7 +11718,7 @@ function Page() {
                                                         children: showOnlyActionableRooms ? t.personalBoardNoAction : t.personalBoardEmpty
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6466,
+                                                        lineNumber: 6459,
                                                         columnNumber: 21
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "personal-board__table-wrapper",
@@ -11691,35 +11732,35 @@ function Page() {
                                                                                 children: t.room
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6474,
+                                                                                lineNumber: 6467,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                                                 children: t.opponent
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6475,
+                                                                                lineNumber: 6468,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                                                 children: "Phase"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6476,
+                                                                                lineNumber: 6469,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                                                 children: "Status"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6477,
+                                                                                lineNumber: 6470,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                                                 children: t.stakeCol
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6478,
+                                                                                lineNumber: 6471,
                                                                                 columnNumber: 27
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -11727,18 +11768,18 @@ function Page() {
                                                                                 children: t.actionCol
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6479,
+                                                                                lineNumber: 6472,
                                                                                 columnNumber: 27
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6473,
+                                                                        lineNumber: 6466,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 6472,
+                                                                    lineNumber: 6465,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -11761,7 +11802,7 @@ function Page() {
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6495,
+                                                                                                lineNumber: 6488,
                                                                                                 columnNumber: 35
                                                                                             }, this),
                                                                                             card.saltHex && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11776,18 +11817,18 @@ function Page() {
                                                                                                 children: t.personalCopySalt
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6497,
+                                                                                                lineNumber: 6490,
                                                                                                 columnNumber: 37
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 6494,
+                                                                                        lineNumber: 6487,
                                                                                         columnNumber: 33
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                    lineNumber: 6493,
+                                                                                    lineNumber: 6486,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -11799,7 +11840,7 @@ function Page() {
                                                                                                 children: card.opponentDisplay
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6514,
+                                                                                                lineNumber: 6507,
                                                                                                 columnNumber: 35
                                                                                             }, this),
                                                                                             card.opponent && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -11812,18 +11853,18 @@ function Page() {
                                                                                                 children: t.copyAddress
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6516,
+                                                                                                lineNumber: 6509,
                                                                                                 columnNumber: 37
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 6513,
+                                                                                        lineNumber: 6506,
                                                                                         columnNumber: 33
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                    lineNumber: 6512,
+                                                                                    lineNumber: 6505,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -11835,7 +11876,7 @@ function Page() {
                                                                                                 children: card.phase
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6531,
+                                                                                                lineNumber: 6524,
                                                                                                 columnNumber: 35
                                                                                             }, this),
                                                                                             card.timeLeft && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -11843,18 +11884,18 @@ function Page() {
                                                                                                 children: card.timeLeft
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6532,
+                                                                                                lineNumber: 6525,
                                                                                                 columnNumber: 53
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 6530,
+                                                                                        lineNumber: 6523,
                                                                                         columnNumber: 33
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                    lineNumber: 6529,
+                                                                                    lineNumber: 6522,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -11866,25 +11907,25 @@ function Page() {
                                                                                                 children: card.status
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6537,
+                                                                                                lineNumber: 6530,
                                                                                                 columnNumber: 35
                                                                                             }, this),
                                                                                             card.detail && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                                                 children: card.detail
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6538,
+                                                                                                lineNumber: 6531,
                                                                                                 columnNumber: 51
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 6536,
+                                                                                        lineNumber: 6529,
                                                                                         columnNumber: 33
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                    lineNumber: 6535,
+                                                                                    lineNumber: 6528,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -11897,7 +11938,7 @@ function Page() {
                                                                                                 children: card.stakeText
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6543,
+                                                                                                lineNumber: 6536,
                                                                                                 columnNumber: 35
                                                                                             }, this),
                                                                                             card.choice && !card.showChoicePicker && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -11910,20 +11951,20 @@ function Page() {
                                                                                                         height: 20
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                        lineNumber: 6546,
+                                                                                                        lineNumber: 6539,
                                                                                                         columnNumber: 39
                                                                                                     }, this),
                                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                                                         children: card.choice.label
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                        lineNumber: 6547,
+                                                                                                        lineNumber: 6540,
                                                                                                         columnNumber: 39
                                                                                                     }, this)
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6545,
+                                                                                                lineNumber: 6538,
                                                                                                 columnNumber: 37
                                                                                             }, this),
                                                                                             card.showChoicePicker && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -11943,25 +11984,25 @@ function Page() {
                                                                                                                 height: 20
                                                                                                             }, void 0, false, {
                                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                                lineNumber: 6564,
+                                                                                                                lineNumber: 6557,
                                                                                                                 columnNumber: 43
                                                                                                             }, this),
                                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                                                                 children: c.label
                                                                                                             }, void 0, false, {
                                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                                lineNumber: 6565,
+                                                                                                                lineNumber: 6558,
                                                                                                                 columnNumber: 43
                                                                                                             }, this)
                                                                                                         ]
                                                                                                     }, c.k, true, {
                                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                        lineNumber: 6553,
+                                                                                                        lineNumber: 6546,
                                                                                                         columnNumber: 41
                                                                                                     }, this))
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6551,
+                                                                                                lineNumber: 6544,
                                                                                                 columnNumber: 37
                                                                                             }, this),
                                                                                             card.savedChoice && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -11969,18 +12010,18 @@ function Page() {
                                                                                                 children: t.personalChoiceSaved(card.savedChoice)
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6571,
+                                                                                                lineNumber: 6564,
                                                                                                 columnNumber: 37
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 6542,
+                                                                                        lineNumber: 6535,
                                                                                         columnNumber: 33
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                    lineNumber: 6541,
+                                                                                    lineNumber: 6534,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12000,7 +12041,7 @@ function Page() {
                                                                                                 children: isAutoPlaying ? t.personalAutoPlayStop : t.personalAutoPlay
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6580,
+                                                                                                lineNumber: 6573,
                                                                                                 columnNumber: 37
                                                                                             }, this),
                                                                                             card.actionLabel && card.onAction ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12011,14 +12052,14 @@ function Page() {
                                                                                                 children: card.actionLabel
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6593,
+                                                                                                lineNumber: 6586,
                                                                                                 columnNumber: 37
                                                                                             }, this) : !card.allowForfeit ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                                                 className: "personal-board__no-action",
                                                                                                 children: "—"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6602,
+                                                                                                lineNumber: 6595,
                                                                                                 columnNumber: 37
                                                                                             }, this) : null,
                                                                                             card.allowForfeit && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12030,47 +12071,47 @@ function Page() {
                                                                                                 children: t.forfeit
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                                lineNumber: 6605,
+                                                                                                lineNumber: 6598,
                                                                                                 columnNumber: 37
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 6578,
+                                                                                        lineNumber: 6571,
                                                                                         columnNumber: 33
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                    lineNumber: 6577,
+                                                                                    lineNumber: 6570,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, card.id, true, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6492,
+                                                                            lineNumber: 6485,
                                                                             columnNumber: 29
                                                                         }, this);
                                                                     })
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 6482,
+                                                                    lineNumber: 6475,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 6471,
+                                                            lineNumber: 6464,
                                                             columnNumber: 23
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6470,
+                                                        lineNumber: 6463,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6393,
+                                                lineNumber: 6386,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -12092,14 +12133,14 @@ function Page() {
                                                                 height: 18
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6642,
+                                                                lineNumber: 6635,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 children: t.telegramReminderLabel
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6643,
+                                                                lineNumber: 6636,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FaChevronDown"], {
@@ -12107,13 +12148,13 @@ function Page() {
                                                                 "aria-hidden": "true"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6644,
+                                                                lineNumber: 6637,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6631,
+                                                        lineNumber: 6624,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12128,18 +12169,18 @@ function Page() {
                                                             onBeforeConnect: triggerInteractBeep
                                                         }, void 0, false, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 6657,
+                                                            lineNumber: 6650,
                                                             columnNumber: 21
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6651,
+                                                        lineNumber: 6644,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6626,
+                                                lineNumber: 6619,
                                                 columnNumber: 17
                                             }, this)
                                         ]
@@ -12155,7 +12196,7 @@ function Page() {
                                                 children: t.rpsTitle
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6670,
+                                                lineNumber: 6663,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12167,12 +12208,12 @@ function Page() {
                                                         onClick: ()=>handleSelectChoice(c.k)
                                                     }, c.k, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6674,
+                                                        lineNumber: 6667,
                                                         columnNumber: 19
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6672,
+                                                lineNumber: 6665,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12188,7 +12229,7 @@ function Page() {
                                                         children: t.commit
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6685,
+                                                        lineNumber: 6678,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12197,7 +12238,7 @@ function Page() {
                                                         children: t.reveal
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6688,
+                                                        lineNumber: 6681,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12206,7 +12247,7 @@ function Page() {
                                                         children: t.claim
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6694,
+                                                        lineNumber: 6687,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12216,19 +12257,19 @@ function Page() {
                                                         children: t.forfeit
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6697,
+                                                        lineNumber: 6690,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6684,
+                                                lineNumber: 6677,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 6669,
+                                        lineNumber: 6662,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -12244,7 +12285,7 @@ function Page() {
                                                         children: t.list
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6711,
+                                                        lineNumber: 6704,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12259,25 +12300,25 @@ function Page() {
                                                             "aria-hidden": "true"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 6722,
+                                                            lineNumber: 6715,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                        lineNumber: 6712,
+                                                        lineNumber: 6705,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6710,
+                                                lineNumber: 6703,
                                                 columnNumber: 15
                                             }, this),
                                             visibleRooms.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 children: t.empty
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6726,
+                                                lineNumber: 6719,
                                                 columnNumber: 17
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "table-container",
@@ -12291,28 +12332,28 @@ function Page() {
                                                                         children: "ID"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6732,
+                                                                        lineNumber: 6725,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                                         children: t.creator
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6733,
+                                                                        lineNumber: 6726,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                                         children: t.opponent
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6734,
+                                                                        lineNumber: 6727,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                                         children: t.stakeCol
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6735,
+                                                                        lineNumber: 6728,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12320,7 +12361,7 @@ function Page() {
                                                                         children: "Time"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6736,
+                                                                        lineNumber: 6729,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12328,7 +12369,7 @@ function Page() {
                                                                         children: t.stateCol
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6737,
+                                                                        lineNumber: 6730,
                                                                         columnNumber: 23
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -12336,18 +12377,18 @@ function Page() {
                                                                         children: t.actionCol
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6738,
+                                                                        lineNumber: 6731,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                lineNumber: 6731,
+                                                                lineNumber: 6724,
                                                                 columnNumber: 21
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 6730,
+                                                            lineNumber: 6723,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -12365,7 +12406,7 @@ function Page() {
                                                                     children: STATE[viewRoom.state] || viewRoom.state
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 6752,
+                                                                    lineNumber: 6745,
                                                                     columnNumber: 60
                                                                 }, this);
                                                                 const isFinalized = roomIsFinalized(viewRoom);
@@ -12389,13 +12430,13 @@ function Page() {
                                                                     }, nowTs)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 6795,
+                                                                    lineNumber: 6788,
                                                                     columnNumber: 25
                                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     children: "-"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 6797,
+                                                                    lineNumber: 6790,
                                                                     columnNumber: 25
                                                                 }, this);
                                                                 if (isFinalized) {
@@ -12439,7 +12480,7 @@ function Page() {
                                                                             children: label
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6833,
+                                                                            lineNumber: 6826,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     } else if (outcome.via === "commit-timeout") {
@@ -12449,7 +12490,7 @@ function Page() {
                                                                                 children: t.tableWinTimeoutCommit
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6836,
+                                                                                lineNumber: 6829,
                                                                                 columnNumber: 47
                                                                             }, this);
                                                                         } else if (viewerLost) {
@@ -12458,7 +12499,7 @@ function Page() {
                                                                                 children: t.tableLoseTimeoutCommit
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6838,
+                                                                                lineNumber: 6831,
                                                                                 columnNumber: 47
                                                                             }, this);
                                                                         } else {
@@ -12468,7 +12509,7 @@ function Page() {
                                                                                 children: neutral.label
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6844,
+                                                                                lineNumber: 6837,
                                                                                 columnNumber: 47
                                                                             }, this);
                                                                         }
@@ -12479,7 +12520,7 @@ function Page() {
                                                                                 children: t.tableWinTimeoutReveal
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6848,
+                                                                                lineNumber: 6841,
                                                                                 columnNumber: 47
                                                                             }, this);
                                                                         } else if (viewerLost) {
@@ -12488,7 +12529,7 @@ function Page() {
                                                                                 children: t.tableLoseTimeoutReveal
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6850,
+                                                                                lineNumber: 6843,
                                                                                 columnNumber: 47
                                                                             }, this);
                                                                         } else {
@@ -12498,7 +12539,7 @@ function Page() {
                                                                                 children: neutral.label
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6856,
+                                                                                lineNumber: 6849,
                                                                                 columnNumber: 47
                                                                             }, this);
                                                                         }
@@ -12517,7 +12558,7 @@ function Page() {
                                                                             children: forfeitStatus
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6876,
+                                                                            lineNumber: 6869,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     } else if (outcome.via === "both-commit-timeout") {
@@ -12526,7 +12567,7 @@ function Page() {
                                                                             children: t.tableDrawTimeoutCommit
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6878,
+                                                                            lineNumber: 6871,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     } else if (outcome.via === "both-reveal-timeout") {
@@ -12535,7 +12576,7 @@ function Page() {
                                                                             children: t.tableDrawTimeoutReveal
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6880,
+                                                                            lineNumber: 6873,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     } else {
@@ -12544,7 +12585,7 @@ function Page() {
                                                                             children: t.finished
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6882,
+                                                                            lineNumber: 6875,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     }
@@ -12561,7 +12602,7 @@ function Page() {
                                                                                 children: t.claim
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6888,
+                                                                                lineNumber: 6881,
                                                                                 columnNumber: 33
                                                                             }, this);
                                                                         } else {
@@ -12570,7 +12611,7 @@ function Page() {
                                                                                 children: t.canceled
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 6900,
+                                                                                lineNumber: 6893,
                                                                                 columnNumber: 47
                                                                             }, this);
                                                                         }
@@ -12585,7 +12626,7 @@ function Page() {
                                                                             children: t.join
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6904,
+                                                                            lineNumber: 6897,
                                                                             columnNumber: 31
                                                                         }, this);
                                                                     } else {
@@ -12593,7 +12634,7 @@ function Page() {
                                                                             children: t.personalStatusWaitingJoin
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6916,
+                                                                            lineNumber: 6909,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     }
@@ -12610,7 +12651,7 @@ function Page() {
                                                                             children: t.claim
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6923,
+                                                                            lineNumber: 6916,
                                                                             columnNumber: 31
                                                                         }, this);
                                                                     } else if (needCommit) {
@@ -12624,7 +12665,7 @@ function Page() {
                                                                             children: t.commit
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6936,
+                                                                            lineNumber: 6929,
                                                                             columnNumber: 31
                                                                         }, this);
                                                                     } else if (viewRoom.commitA !== ZERO_COMMIT && viewRoom.commitB !== ZERO_COMMIT) {
@@ -12633,7 +12674,7 @@ function Page() {
                                                                             children: t.waitingReveal
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6948,
+                                                                            lineNumber: 6941,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     } else if (viewerIsParticipant) {
@@ -12641,7 +12682,7 @@ function Page() {
                                                                             children: `${t.committing} (${formatTimeLeft(viewRoom.commitDeadline, t, nowTs)})`
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6951,
+                                                                            lineNumber: 6944,
                                                                             columnNumber: 31
                                                                         }, this);
                                                                     } else {
@@ -12649,7 +12690,7 @@ function Page() {
                                                                             children: "—"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6954,
+                                                                            lineNumber: 6947,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     }
@@ -12666,7 +12707,7 @@ function Page() {
                                                                             children: t.claim
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6961,
+                                                                            lineNumber: 6954,
                                                                             columnNumber: 31
                                                                         }, this);
                                                                     } else if (needReveal) {
@@ -12680,7 +12721,7 @@ function Page() {
                                                                             children: t.reveal
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6974,
+                                                                            lineNumber: 6967,
                                                                             columnNumber: 31
                                                                         }, this);
                                                                     } else if (viewRoom.revealA !== 0 && viewRoom.revealB !== 0) {
@@ -12689,7 +12730,7 @@ function Page() {
                                                                             children: t.revealing
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6986,
+                                                                            lineNumber: 6979,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     } else if (viewerIsParticipant) {
@@ -12697,7 +12738,7 @@ function Page() {
                                                                             children: `${t.revealing} (${formatTimeLeft(viewRoom.revealDeadline, t, nowTs)})`
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6989,
+                                                                            lineNumber: 6982,
                                                                             columnNumber: 31
                                                                         }, this);
                                                                     } else {
@@ -12705,7 +12746,7 @@ function Page() {
                                                                             children: "—"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 6992,
+                                                                            lineNumber: 6985,
                                                                             columnNumber: 45
                                                                         }, this);
                                                                     }
@@ -12715,7 +12756,7 @@ function Page() {
                                                                         children: t.canceled
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 6995,
+                                                                        lineNumber: 6988,
                                                                         columnNumber: 43
                                                                     }, this);
                                                                 }
@@ -12731,7 +12772,7 @@ function Page() {
                                                                         children: t.forfeit
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                        lineNumber: 7005,
+                                                                        lineNumber: 6998,
                                                                         columnNumber: 27
                                                                     }, this);
                                                                     const isDashPlaceholder = (()=>{
@@ -12751,7 +12792,7 @@ function Page() {
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7030,
+                                                                            lineNumber: 7023,
                                                                             columnNumber: 29
                                                                         }, this);
                                                                     }
@@ -12763,7 +12804,7 @@ function Page() {
                                                                             children: viewRoom.id
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7040,
+                                                                            lineNumber: 7033,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12773,7 +12814,7 @@ function Page() {
                                                                                     children: `${viewRoom.creator.slice(0, 6)}...${viewRoom.creator.slice(-4)}`
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                    lineNumber: 7042,
+                                                                                    lineNumber: 7035,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12786,13 +12827,13 @@ function Page() {
                                                                                     children: t.copyAddress
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                    lineNumber: 7043,
+                                                                                    lineNumber: 7036,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7041,
+                                                                            lineNumber: 7034,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12803,7 +12844,7 @@ function Page() {
                                                                                         children: `${viewRoom.opponent.slice(0, 6)}...${viewRoom.opponent.slice(-4)}`
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 7059,
+                                                                                        lineNumber: 7052,
                                                                                         columnNumber: 35
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -12816,14 +12857,14 @@ function Page() {
                                                                                         children: t.copyAddress
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 7060,
+                                                                                        lineNumber: 7053,
                                                                                         columnNumber: 35
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7054,
+                                                                            lineNumber: 7047,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12833,7 +12874,7 @@ function Page() {
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7073,
+                                                                            lineNumber: 7066,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12841,7 +12882,7 @@ function Page() {
                                                                             children: timeCell
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7074,
+                                                                            lineNumber: 7067,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12860,7 +12901,7 @@ function Page() {
                                                                                         children: t.expired
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 7079,
+                                                                                        lineNumber: 7072,
                                                                                         columnNumber: 75
                                                                                     }, this),
                                                                                     avail.label === "Joinable" && avail.live && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -12868,7 +12909,7 @@ function Page() {
                                                                                         children: t.joinable
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 7081,
+                                                                                        lineNumber: 7074,
                                                                                         columnNumber: 35
                                                                                     }, this),
                                                                                     avail.live && (viewRoom.state === 1 || viewRoom.state === 2) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -12876,7 +12917,7 @@ function Page() {
                                                                                         children: t.live
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 7084,
+                                                                                        lineNumber: 7077,
                                                                                         columnNumber: 35
                                                                                     }, this),
                                                                                     isFinalized && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -12884,7 +12925,7 @@ function Page() {
                                                                                         children: t.finished
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 7086,
+                                                                                        lineNumber: 7079,
                                                                                         columnNumber: 49
                                                                                     }, this),
                                                                                     !isFinalized && viewRoom.state === 4 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -12892,18 +12933,18 @@ function Page() {
                                                                                         children: t.canceled
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                        lineNumber: 7087,
+                                                                                        lineNumber: 7080,
                                                                                         columnNumber: 74
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                                lineNumber: 7076,
+                                                                                lineNumber: 7069,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7075,
+                                                                            lineNumber: 7068,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -12911,42 +12952,42 @@ function Page() {
                                                                             children: actionElement
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7090,
+                                                                            lineNumber: 7083,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, viewRoom.id, true, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 7039,
+                                                                    lineNumber: 7032,
                                                                     columnNumber: 27
                                                                 }, this);
                                                             })
                                                         }, void 0, false, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 6741,
+                                                            lineNumber: 6734,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                    lineNumber: 6729,
+                                                    lineNumber: 6722,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                lineNumber: 6728,
+                                                lineNumber: 6721,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                        lineNumber: 6709,
+                                        lineNumber: 6702,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 6079,
+                                lineNumber: 6072,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -12961,7 +13002,7 @@ function Page() {
                                             children: t.rules
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 7104,
+                                            lineNumber: 7097,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -12973,20 +13014,20 @@ function Page() {
                                                     children: "⚠️"
                                                 }, void 0, false, {
                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                    lineNumber: 7106,
+                                                    lineNumber: 7099,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     children: t.rulesWarning
                                                 }, void 0, false, {
                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                    lineNumber: 7109,
+                                                    lineNumber: 7102,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 7105,
+                                            lineNumber: 7098,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -12999,7 +13040,7 @@ function Page() {
                                                             children: RULE_ACCENTS[index]?.icon ?? "•"
                                                         }, void 0, false, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 7114,
+                                                            lineNumber: 7107,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -13009,18 +13050,18 @@ function Page() {
                                                             }
                                                         }, void 0, false, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 7117,
+                                                            lineNumber: 7110,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, index, true, {
                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                    lineNumber: 7113,
+                                                    lineNumber: 7106,
                                                     columnNumber: 19
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 7111,
+                                            lineNumber: 7104,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -13038,7 +13079,7 @@ function Page() {
                                                     children: t.communityLinksTitle
                                                 }, void 0, false, {
                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                    lineNumber: 7123,
+                                                    lineNumber: 7116,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -13057,33 +13098,33 @@ function Page() {
                                                                             height: 18
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7132,
+                                                                            lineNumber: 7125,
                                                                             columnNumber: 23
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                             children: t.communityLinkTelegramLabel
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7133,
+                                                                            lineNumber: 7126,
                                                                             columnNumber: 23
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 7126,
+                                                                    lineNumber: 7119,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     children: t.communityLinkTelegramDesc
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 7135,
+                                                                    lineNumber: 7128,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 7125,
+                                                            lineNumber: 7118,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -13099,33 +13140,33 @@ function Page() {
                                                                             height: 18
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7144,
+                                                                            lineNumber: 7137,
                                                                             columnNumber: 23
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                             children: t.communityLinkXLabel
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7145,
+                                                                            lineNumber: 7138,
                                                                             columnNumber: 23
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 7138,
+                                                                    lineNumber: 7131,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     children: t.communityLinkXDesc
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 7147,
+                                                                    lineNumber: 7140,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 7137,
+                                                            lineNumber: 7130,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -13141,62 +13182,62 @@ function Page() {
                                                                             height: 18
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7156,
+                                                                            lineNumber: 7149,
                                                                             columnNumber: 23
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                             children: t.communityLinkDocsLabel
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                            lineNumber: 7157,
+                                                                            lineNumber: 7150,
                                                                             columnNumber: 23
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 7150,
+                                                                    lineNumber: 7143,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     children: t.communityLinkDocsDesc
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                                    lineNumber: 7159,
+                                                                    lineNumber: 7152,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                            lineNumber: 7149,
+                                                            lineNumber: 7142,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                                    lineNumber: 7124,
+                                                    lineNumber: 7117,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                            lineNumber: 7122,
+                                            lineNumber: 7115,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                    lineNumber: 7103,
+                                    lineNumber: 7096,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                                lineNumber: 7102,
+                                lineNumber: 7095,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 6077,
+                        lineNumber: 6070,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -13204,13 +13245,13 @@ function Page() {
                         children: t.footer
                     }, void 0, false, {
                         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                        lineNumber: 7167,
+                        lineNumber: 7160,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                lineNumber: 6071,
+                lineNumber: 6064,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$components$2f$FloatingSettings$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -13240,17 +13281,17 @@ function Page() {
                 onCopyAddress: handleHistoryCopy
             }, void 0, false, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-                lineNumber: 7169,
+                lineNumber: 7162,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/page.tsx",
-        lineNumber: 6063,
+        lineNumber: 6056,
         columnNumber: 5
     }, this);
 }
 }),
 ];
 
-//# sourceMappingURL=Downloads_banmaogame_rps2_banmao-fun-v2-main_502c6059._.js.map
+//# sourceMappingURL=Downloads_banmaogame_rps2_banmao-fun-v2-main_d5f3d407._.js.map

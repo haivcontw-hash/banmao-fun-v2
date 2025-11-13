@@ -323,6 +323,45 @@ function Providers({ children }) {
     }["Providers.useMemo[theme]"], []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Providers.useEffect": ()=>{
+            if (("TURBOPACK compile-time value", "object") === "undefined" || typeof document === "undefined") return;
+            const viewport = document.querySelector('meta[name="viewport"]');
+            if (!viewport) return;
+            const MOBILE_UA_REGEX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+            const DEFAULT_CONTENT = viewport.getAttribute("content") ?? "width=device-width, initial-scale=1";
+            const TARGET_VIEWPORT_WIDTH = 560;
+            const updateViewport = {
+                "Providers.useEffect.updateViewport": ()=>{
+                    const ua = window.navigator?.userAgent ?? "";
+                    const isMobile = MOBILE_UA_REGEX.test(ua);
+                    if (!isMobile) {
+                        viewport.setAttribute("content", DEFAULT_CONTENT);
+                        document.documentElement.classList.remove("mobile-desktop-mode");
+                        document.body?.classList.remove("mobile-desktop-mode");
+                        return;
+                    }
+                    const scale = window.innerWidth > 0 ? window.innerWidth / TARGET_VIEWPORT_WIDTH : 1;
+                    const safeScale = Number.isFinite(scale) && scale > 0 ? Math.min(1, scale) : 1;
+                    viewport.setAttribute("content", `width=${TARGET_VIEWPORT_WIDTH}, initial-scale=${safeScale}, maximum-scale=${safeScale}, user-scalable=no`);
+                    document.documentElement.classList.add("mobile-desktop-mode");
+                    document.body?.classList.add("mobile-desktop-mode");
+                }
+            }["Providers.useEffect.updateViewport"];
+            updateViewport();
+            window.addEventListener("resize", updateViewport);
+            window.addEventListener("orientationchange", updateViewport);
+            return ({
+                "Providers.useEffect": ()=>{
+                    window.removeEventListener("resize", updateViewport);
+                    window.removeEventListener("orientationchange", updateViewport);
+                    viewport.setAttribute("content", DEFAULT_CONTENT);
+                    document.documentElement.classList.remove("mobile-desktop-mode");
+                    document.body?.classList.remove("mobile-desktop-mode");
+                }
+            })["Providers.useEffect"];
+        }
+    }["Providers.useEffect"], []);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Providers.useEffect": ()=>{
             const INACTIVITY_TIMEOUT_MS = 60_000;
             let timeoutId;
             const resetTimer = {
@@ -380,21 +419,21 @@ function Providers({ children }) {
                 children: children
             }, void 0, false, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/providers.tsx",
-                lineNumber: 194,
+                lineNumber: 240,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/providers.tsx",
-            lineNumber: 192,
+            lineNumber: 238,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/providers.tsx",
-        lineNumber: 191,
+        lineNumber: 237,
         columnNumber: 5
     }, this);
 }
-_s(Providers, "5NE9l6P7PiQ7i7PT4x0l44kdbVo=");
+_s(Providers, "AKLrTlPjnIWkOtsb2HnxcfpzkjI=");
 _c2 = Providers;
 var _c, _c1, _c2;
 __turbopack_context__.k.register(_c, 'RPC_WS$Array.from(\n  new Set(\n    (process.env.NEXT_PUBLIC_RPC_WS_URL || "")\n      .split(",")\n      .map((entry) => entry.trim())\n      .filter((entry) => entry.length > 0)\n      .concat(RPC_WS_FALLBACKS)\n  )\n).filter');

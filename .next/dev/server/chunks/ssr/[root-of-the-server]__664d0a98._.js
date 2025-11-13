@@ -347,6 +347,16 @@ function Providers({ children }) {
             overlayBlur: "small"
         }), []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if ("TURBOPACK compile-time truthy", 1) return;
+        //TURBOPACK unreachable
+        ;
+        const viewport = undefined;
+        const MOBILE_UA_REGEX = undefined;
+        const DEFAULT_CONTENT = undefined;
+        const TARGET_VIEWPORT_WIDTH = undefined;
+        const updateViewport = undefined;
+    }, []);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$Downloads$2f$banmaogame$2f$rps2$2f$banmao$2d$fun$2d$v2$2d$main$2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const INACTIVITY_TIMEOUT_MS = 60_000;
         let timeoutId;
         const resetTimer = ()=>{
@@ -391,17 +401,17 @@ function Providers({ children }) {
                 children: children
             }, void 0, false, {
                 fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/providers.tsx",
-                lineNumber: 194,
+                lineNumber: 240,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/providers.tsx",
-            lineNumber: 192,
+            lineNumber: 238,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/Downloads/banmaogame/rps2/banmao-fun-v2-main/app/providers.tsx",
-        lineNumber: 191,
+        lineNumber: 237,
         columnNumber: 5
     }, this);
 }
