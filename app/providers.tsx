@@ -143,6 +143,52 @@ export default function Providers({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+
+    const viewport = document.querySelector<HTMLMetaElement>('meta[name="viewport"]');
+    if (!viewport) return;
+
+    const MOBILE_UA_REGEX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    const DEFAULT_CONTENT = viewport.getAttribute("content") ?? "width=device-width, initial-scale=1";
+    const TARGET_VIEWPORT_WIDTH = 560;
+
+    const updateViewport = () => {
+      const ua = window.navigator?.userAgent ?? "";
+      const isMobile = MOBILE_UA_REGEX.test(ua);
+
+      if (!isMobile) {
+        viewport.setAttribute("content", DEFAULT_CONTENT);
+        document.documentElement.classList.remove("mobile-desktop-mode");
+        document.body?.classList.remove("mobile-desktop-mode");
+        return;
+      }
+
+      const scale = window.innerWidth > 0 ? window.innerWidth / TARGET_VIEWPORT_WIDTH : 1;
+      const safeScale = Number.isFinite(scale) && scale > 0 ? Math.min(1, scale) : 1;
+
+      viewport.setAttribute(
+        "content",
+        `width=${TARGET_VIEWPORT_WIDTH}, initial-scale=${safeScale}, maximum-scale=${safeScale}, user-scalable=no`
+      );
+      document.documentElement.classList.add("mobile-desktop-mode");
+      document.body?.classList.add("mobile-desktop-mode");
+    };
+
+    updateViewport();
+
+    window.addEventListener("resize", updateViewport);
+    window.addEventListener("orientationchange", updateViewport);
+
+    return () => {
+      window.removeEventListener("resize", updateViewport);
+      window.removeEventListener("orientationchange", updateViewport);
+      viewport.setAttribute("content", DEFAULT_CONTENT);
+      document.documentElement.classList.remove("mobile-desktop-mode");
+      document.body?.classList.remove("mobile-desktop-mode");
+    };
+  }, []);
+
+  useEffect(() => {
     const INACTIVITY_TIMEOUT_MS = 60_000;
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
