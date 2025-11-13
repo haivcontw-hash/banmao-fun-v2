@@ -232,7 +232,7 @@ body.mobile-desktop-mode {
 }
 
 body.mobile-desktop-mode {
-  font-size: 15px;
+  font-size: 13px;
 }
 
 body.mobile-desktop-mode .main-wrapper {
@@ -243,20 +243,20 @@ body.mobile-desktop-mode .main-wrapper {
   body.mobile-desktop-mode .table th,
   body.mobile-desktop-mode .table td {
     padding: 4px 2px;
-    font-size: 11px;
+    font-size: 9px;
   }
 
   body.mobile-desktop-mode .stake-section__info-table td {
     padding: 8px 10px;
-    font-size: 12px;
+    font-size: 10px;
   }
 
   body.mobile-desktop-mode .stake-section__info-value {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   body.mobile-desktop-mode .stake-section__info-detail {
-    font-size: 12px;
+    font-size: 10px;
   }
 }
 
