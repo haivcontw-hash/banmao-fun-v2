@@ -241,12 +241,12 @@ body.mobile-desktop-mode .main-wrapper {
 
 @media (max-width: 768px) {
   body.mobile-desktop-mode .table th, body.mobile-desktop-mode .table td {
-    padding: 6px 4px;
+    padding: 4px 2px;
     font-size: 11px;
   }
 
   body.mobile-desktop-mode .stake-section__info-table td {
-    padding: 10px 12px;
+    padding: 8px 10px;
     font-size: 12px;
   }
 
