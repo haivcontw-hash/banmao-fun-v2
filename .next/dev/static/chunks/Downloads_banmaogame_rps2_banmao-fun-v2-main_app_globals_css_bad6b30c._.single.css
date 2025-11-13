@@ -228,7 +228,7 @@ body[data-ui-scale="desktop"] {
 }
 
 html.mobile-desktop-mode, body.mobile-desktop-mode {
-  min-width: 560px;
+  min-width: 666px;
 }
 
 body.mobile-desktop-mode {
@@ -236,7 +236,7 @@ body.mobile-desktop-mode {
 }
 
 body.mobile-desktop-mode .main-wrapper {
-  min-width: 560px;
+  min-width: 666px;
 }
 
 @media (max-width: 768px) {
