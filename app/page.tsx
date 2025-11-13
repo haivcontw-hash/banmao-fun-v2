@@ -129,6 +129,7 @@ const TELEGRAM_URL = `https://t.me/${TELEGRAM_BOT_USERNAME}`;
 const X_URL = `https://x.com/${X_HANDLE}`;
 const ROOMS_CACHE_KEY = "banmao_rooms_cache_v1";
 const INFO_CACHE_KEY = "banmao_info_cache_v1";
+const MOBILE_UA_REGEX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
 
 const RULE_ACCENTS = [
   { icon: "🎮", className: "rule-accent-start" },
@@ -2564,8 +2565,14 @@ export default function Page() {
         if (typeof document !== "undefined") {
           document.body.dataset.uiScale = storedUiScale;
         }
-      } else if (typeof document !== "undefined") {
-        document.body.dataset.uiScale = "normal";
+      } else {
+        const ua = window.navigator?.userAgent ?? "";
+        const prefersDesktopScale = MOBILE_UA_REGEX.test(ua);
+        const fallbackScale = prefersDesktopScale ? "desktop" : "normal";
+        setUiScale(fallbackScale);
+        if (typeof document !== "undefined") {
+          document.body.dataset.uiScale = fallbackScale;
+        }
       }
       if (typeof document !== "undefined") {
         const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
