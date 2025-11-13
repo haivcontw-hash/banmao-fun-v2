@@ -202,45 +202,21 @@ body[data-theme="purple"] {
 html, body { background: var(--bg); color: var(--gold); margin: 0; padding: 0; }
 body {
   --ui-scale-factor: 1;
+  --ui-scale-inverse: 1;
   font-family: var(--font-sans), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body[data-ui-scale="xsmall"] {
-  --ui-scale-factor: 0.8;
-  zoom: 0.8;
+.ui-scale-viewport {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-body[data-ui-scale="small"] {
-  --ui-scale-factor: 0.9;
-  zoom: 0.9;
-}
-
-body[data-ui-scale="normal"] {
-  --ui-scale-factor: 1;
-  zoom: 1;
-}
-
-body[data-ui-scale="large"] {
-  --ui-scale-factor: 1.1;
-  zoom: 1.1;
-}
-
-body[data-ui-scale="desktop"] {
-  --ui-scale-factor: 0.7;
-  zoom: 0.7;
-}
-
-@supports not (zoom: 1) {
-  body[data-ui-scale] {
-    transform-origin: top center;
-  }
-
-  body[data-ui-scale] > * {
-    transform-origin: top center;
-    transform: scale(var(--ui-scale-factor));
-  }
+.ui-scale-content {
+  margin: 0 auto;
+  will-change: transform;
 }
 
 /* =========================

@@ -1,7 +1,16 @@
 // app/page.tsx
 "use client";
 
-import { JSX, isValidElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  JSX,
+  isValidElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import Image from "next/image";
 import {
   useAccount,
@@ -17,7 +26,6 @@ import ChoiceCard from "../components/ChoiceCard";
 import FloatingSettings, {
   type HistoryLookupState,
   type HistoryLookupResult,
-  type UiScale,
 } from "../components/FloatingSettings";
 import TelegramConnect from "../components/TelegramConnect";
 import { IconDocs, IconHourglass, IconTelegram, IconToken, IconX } from "../components/Icons";
@@ -35,6 +43,12 @@ import { langs, type LocaleStrings } from "../lib/i18n";
 import { RPS_ABI, ERC20_ABI } from "../lib/abis";
 import toast, { Toaster } from "react-hot-toast";
 import { DEFAULT_THEME, ThemeKey, isThemeKey } from "../lib/themes";
+import {
+  UiScale,
+  clampAutoUiScaleFactor,
+  deriveUiScaleLabel,
+  getPresetUiScaleFactor,
+} from "../lib/ui-scale";
 import {
   TELEGRAM_BOT_USERNAME,
   TELEGRAM_CONNECTION_STORAGE_KEY,
@@ -136,27 +150,17 @@ const VALID_UI_SCALES: readonly UiScale[] = ["xsmall", "small", "normal", "large
 const isValidUiScale = (value: string | null): value is UiScale =>
   value != null && (VALID_UI_SCALES as readonly string[]).includes(value);
 
-const detectPreferredUiScale = (): UiScale => {
-  if (typeof window === "undefined") return "normal";
-  const width = window.innerWidth || window.document.documentElement.clientWidth || 0;
-  const height = window.innerHeight || window.document.documentElement.clientHeight || 0;
-  const minDimension = Math.min(width, height);
-  const devicePixelRatio = window.devicePixelRatio || 1;
-  const densityAdjustedWidth = minDimension * devicePixelRatio;
+const clampScaleDelta = (next: number, prev: number) => (Math.abs(next - prev) < 0.002 ? prev : next);
 
-  if (minDimension <= 360 || densityAdjustedWidth <= 900) {
-    return "xsmall";
+const computeAutoUiScale = (contentWidth: number, viewportWidth: number) => {
+  if (!Number.isFinite(contentWidth) || contentWidth <= 0) {
+    return { label: "normal" as UiScale, factor: 1 };
   }
-
-  if (minDimension <= 400 || densityAdjustedWidth <= 1080) {
-    return "small";
-  }
-
-  if (minDimension <= 520 || densityAdjustedWidth <= 1280) {
-    return "normal";
-  }
-
-  return "normal";
+  const safeViewport = Number.isFinite(viewportWidth) && viewportWidth > 0 ? viewportWidth : contentWidth;
+  const rawFactor = safeViewport / contentWidth;
+  const factor = clampAutoUiScaleFactor(rawFactor);
+  const label = deriveUiScaleLabel(factor);
+  return { label, factor };
 };
 
 const RULE_ACCENTS = [
@@ -1815,7 +1819,38 @@ export default function Page() {
   const [isTelegramConnected, setIsTelegramConnected] = useState(false);
   const [isTelegramPanelCollapsed, setIsTelegramPanelCollapsed] = useState(true);
   const [uiScale, setUiScale] = useState<UiScale>("normal");
+  const [uiScaleFactor, setUiScaleFactor] = useState(1);
+  const [baseContentWidth, setBaseContentWidth] = useState<number | null>(null);
   const uiScaleManualRef = useRef(false);
+  const applyUiScaleToBody = useCallback((label: UiScale, factor: number) => {
+    if (typeof document === "undefined") return;
+    const normalized = Number.isFinite(factor) && factor > 0 ? factor : 1;
+    document.body.dataset.uiScale = label;
+    document.body.style.setProperty("--ui-scale-factor", normalized.toFixed(4));
+    document.body.style.setProperty("--ui-scale-inverse", (1 / normalized).toFixed(4));
+  }, []);
+  const measureAndApplyAutoScale = useCallback(() => {
+    if (uiScaleManualRef.current || typeof window === "undefined") return;
+    const container = mainContentRef.current;
+    const measuredWidth = container?.scrollWidth ?? 0;
+    const resolvedWidth = measuredWidth > 0 ? measuredWidth : baseContentWidth ?? 0;
+    if (measuredWidth > 0 && measuredWidth !== baseContentWidth) {
+      setBaseContentWidth(measuredWidth);
+    }
+    if (resolvedWidth <= 0) {
+      const fallbackFactor = clampAutoUiScaleFactor(1);
+      setUiScale((prev) => (prev === "normal" ? prev : "normal"));
+      setUiScaleFactor((prev) => clampScaleDelta(fallbackFactor, prev));
+      applyUiScaleToBody("normal", fallbackFactor);
+      return;
+    }
+    const viewportWidth = window.innerWidth || window.document?.documentElement?.clientWidth || resolvedWidth;
+    const { label, factor } = computeAutoUiScale(resolvedWidth, viewportWidth);
+    uiScaleManualRef.current = false;
+    setUiScale((prev) => (prev === label ? prev : label));
+    setUiScaleFactor((prev) => clampScaleDelta(factor, prev));
+    applyUiScaleToBody(label, factor);
+  }, [applyUiScaleToBody, baseContentWidth]);
   const [isSharing, setIsSharing] = useState(false);
   const [isPersonalBoardCollapsed, setIsPersonalBoardCollapsed] = useState(false);
   const [isStakeTableCollapsed, setIsStakeTableCollapsed] = useState(false);
@@ -1852,6 +1887,16 @@ export default function Page() {
   const forfeitResultsRef = useRef<Record<number, ForfeitRecord>>({});
   const forfeitFetchMetaRef = useRef<Map<number, { lastAttempt: number; settled: boolean }>>(new Map());
   const fetchedForfeitIdsRef = useRef<Set<number>>(new Set());
+  const scaledContentStyle = useMemo<CSSProperties>(() => {
+    const factor = Number.isFinite(uiScaleFactor) && uiScaleFactor > 0 ? uiScaleFactor : 1;
+    const width = baseContentWidth && baseContentWidth > 0 ? baseContentWidth : 1200;
+    return {
+      transform: `scale(${factor})`,
+      transformOrigin: "top left",
+      width: `${width}px`,
+      minWidth: `${width}px`,
+    };
+  }, [uiScaleFactor, baseContentWidth]);
   const roomsRef = useRef<any[]>([]);
   const stableRoomsRawRef = useRef<any[] | null>(null);
   const stableTrackedRoomIdsRef = useRef<bigint[]>([]);
@@ -2190,22 +2235,20 @@ export default function Page() {
     if (typeof window !== "undefined") localStorage.setItem("banmao_lang", l);
   }, []);
 
-  const handleUiScaleChange = useCallback((value: UiScale) => {
-    uiScaleManualRef.current = true;
-    setUiScale((prev) => {
-      if (prev === value) {
-        if (typeof document !== "undefined") {
-          document.body.dataset.uiScale = value;
-        }
-        if (typeof window !== "undefined") {
-          window.localStorage.setItem(UI_SCALE_STORAGE_KEY, value);
-          window.localStorage.setItem(UI_SCALE_MANUAL_STORAGE_KEY, "1");
-        }
-        return prev;
+  const handleUiScaleChange = useCallback(
+    (value: UiScale) => {
+      uiScaleManualRef.current = true;
+      const presetFactor = getPresetUiScaleFactor(value);
+      setUiScale(value);
+      setUiScaleFactor(presetFactor);
+      applyUiScaleToBody(value, presetFactor);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(UI_SCALE_STORAGE_KEY, value);
+        window.localStorage.setItem(UI_SCALE_MANUAL_STORAGE_KEY, "1");
       }
-      return value;
-    });
-  }, []);
+    },
+    [applyUiScaleToBody]
+  );
 
   const triggerInteractBeep = useCallback(() => playBeep(true), [playBeep]);
 
@@ -2497,11 +2540,14 @@ export default function Page() {
       document.body.dataset.theme = DEFAULT_THEME;
     }
 
-    const autoScale = detectPreferredUiScale();
     uiScaleManualRef.current = false;
-    setUiScale(autoScale);
-    if (typeof document !== "undefined") {
-      document.body.dataset.uiScale = autoScale;
+    setUiScale("normal");
+    setUiScaleFactor(1);
+    applyUiScaleToBody("normal", 1);
+    if (typeof window !== "undefined") {
+      window.requestAnimationFrame(() => {
+        measureAndApplyAutoScale();
+      });
     }
 
     notifiedRef.current.clear();
@@ -2531,6 +2577,8 @@ export default function Page() {
     setCommitInfoMap,
     clearCommitDeadlineFallbacks,
     clearRevealDeadlineFallbacks,
+    applyUiScaleToBody,
+    measureAndApplyAutoScale,
   ]);
 
   const isSnoozed = useCallback((key: string) => {
@@ -2584,65 +2632,66 @@ export default function Page() {
   // init client
   useEffect(() => {
     setIsClient(true);
-    if (typeof window !== "undefined") {
-      const timer = window.setInterval(() => {
-        setNowTs(Math.floor(Date.now() / 1000));
-      }, 1000);
-      const storedLang = localStorage.getItem("banmao_lang");
-      if (storedLang && langs[storedLang as keyof typeof langs]) setLang(storedLang);
-      const storedNotif = localStorage.getItem("banmao_notify");
-      if (storedNotif != null) setNotificationsEnabled(storedNotif === "1");
-      const storedVibration = localStorage.getItem("banmao_vibration");
-      if (storedVibration) {
-        const parsed = Number(storedVibration);
-        if (!Number.isNaN(parsed) && parsed >= 0) setVibrationMs(parsed);
-      }
-      const storedSnooze = localStorage.getItem("banmao_notify_snooze");
-      if (storedSnooze) {
-        const parsed = Number(storedSnooze);
-        if (!Number.isNaN(parsed) && parsed >= 0) setNotificationSnoozeMinutes(parsed);
-      }
-      const storedUiScale = localStorage.getItem(UI_SCALE_STORAGE_KEY);
-      const storedUiScaleManual = localStorage.getItem(UI_SCALE_MANUAL_STORAGE_KEY);
-      const hasManualUiScale =
-        storedUiScaleManual === "1" || (storedUiScaleManual == null && isValidUiScale(storedUiScale));
-
-      if (isValidUiScale(storedUiScale) && hasManualUiScale) {
-        uiScaleManualRef.current = true;
-        setUiScale(storedUiScale);
-        if (typeof document !== "undefined") {
-          document.body.dataset.uiScale = storedUiScale;
-        }
-      } else {
-        const autoScale = detectPreferredUiScale();
-        uiScaleManualRef.current = false;
-        setUiScale(autoScale);
-        if (typeof document !== "undefined") {
-          document.body.dataset.uiScale = autoScale;
-        }
-      }
-      if (typeof document !== "undefined") {
-        const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-        if (storedTheme && isThemeKey(storedTheme)) {
-          setTheme(storedTheme);
-          document.body.dataset.theme = storedTheme;
-        } else {
-          document.body.dataset.theme = DEFAULT_THEME;
-        }
-      }
-      return () => {
-        window.clearInterval(timer);
-      };
+    if (typeof window === "undefined") return;
+    const timer = window.setInterval(() => {
+      setNowTs(Math.floor(Date.now() / 1000));
+    }, 1000);
+    const storedLang = localStorage.getItem("banmao_lang");
+    if (storedLang && langs[storedLang as keyof typeof langs]) setLang(storedLang);
+    const storedNotif = localStorage.getItem("banmao_notify");
+    if (storedNotif != null) setNotificationsEnabled(storedNotif === "1");
+    const storedVibration = localStorage.getItem("banmao_vibration");
+    if (storedVibration) {
+      const parsed = Number(storedVibration);
+      if (!Number.isNaN(parsed) && parsed >= 0) setVibrationMs(parsed);
     }
-  }, []);
+    const storedSnooze = localStorage.getItem("banmao_notify_snooze");
+    if (storedSnooze) {
+      const parsed = Number(storedSnooze);
+      if (!Number.isNaN(parsed) && parsed >= 0) setNotificationSnoozeMinutes(parsed);
+    }
+    const storedUiScale = localStorage.getItem(UI_SCALE_STORAGE_KEY);
+    const storedUiScaleManual = localStorage.getItem(UI_SCALE_MANUAL_STORAGE_KEY);
+    const hasManualUiScale = storedUiScaleManual === "1";
+
+    if (isValidUiScale(storedUiScale) && hasManualUiScale) {
+      uiScaleManualRef.current = true;
+      const presetFactor = getPresetUiScaleFactor(storedUiScale);
+      const measuredWidth = mainContentRef.current?.scrollWidth ?? 0;
+      if (measuredWidth > 0) {
+        setBaseContentWidth(measuredWidth);
+      }
+      setUiScale(storedUiScale);
+      setUiScaleFactor(presetFactor);
+      applyUiScaleToBody(storedUiScale, presetFactor);
+    } else {
+      uiScaleManualRef.current = false;
+      window.requestAnimationFrame(() => {
+        measureAndApplyAutoScale();
+      });
+    }
+
+    if (typeof document !== "undefined") {
+      const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+      if (storedTheme && isThemeKey(storedTheme)) {
+        setTheme(storedTheme);
+        document.body.dataset.theme = storedTheme;
+      } else {
+        document.body.dataset.theme = DEFAULT_THEME;
+      }
+    }
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, [applyUiScaleToBody, measureAndApplyAutoScale]);
 
   useEffect(() => {
-    if (!isClient || typeof window === "undefined") return;
+    if (!isClient || typeof window === "undefined" || typeof ResizeObserver === "undefined") return;
 
     const handleResponsiveScale = () => {
       if (uiScaleManualRef.current) return;
-      const nextScale = detectPreferredUiScale();
-      setUiScale((prev) => (prev === nextScale ? prev : nextScale));
+      measureAndApplyAutoScale();
     };
 
     handleResponsiveScale();
@@ -2652,7 +2701,25 @@ export default function Page() {
       window.removeEventListener("resize", handleResponsiveScale);
       window.removeEventListener("orientationchange", handleResponsiveScale);
     };
-  }, [isClient]);
+  }, [isClient, measureAndApplyAutoScale]);
+
+  useEffect(() => {
+    if (!isClient || typeof window === "undefined") return;
+    const container = mainContentRef.current;
+    if (!container) return;
+    const observer = new ResizeObserver(() => {
+      if (uiScaleManualRef.current) {
+        const width = container.scrollWidth;
+        if (width > 0) {
+          setBaseContentWidth((prev) => (prev === width ? prev : width));
+        }
+        return;
+      }
+      measureAndApplyAutoScale();
+    });
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [isClient, measureAndApplyAutoScale]);
 
   useEffect(() => {
     if (!isClient || typeof window === "undefined") return;
@@ -2695,13 +2762,11 @@ export default function Page() {
   }, [isClient, rememberCommitDuration]);
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.body.dataset.uiScale = uiScale;
-    }
+    applyUiScaleToBody(uiScale, uiScaleFactor);
     if (!isClient || typeof window === "undefined") return;
     localStorage.setItem(UI_SCALE_STORAGE_KEY, uiScale);
     localStorage.setItem(UI_SCALE_MANUAL_STORAGE_KEY, uiScaleManualRef.current ? "1" : "0");
-  }, [uiScale, isClient]);
+  }, [uiScale, uiScaleFactor, isClient, applyUiScaleToBody]);
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -6127,14 +6192,16 @@ export default function Page() {
   /* ===================== RENDER ===================== */
   return (
     <main>
-      <Toaster
-        position="top-center"
-        toastOptions={{ className: "toast-wrapper", duration: 5000 }}
-        containerStyle={{ inset: "12px", pointerEvents: "none", width: "auto", zIndex: 9999 }}
-      />
-      <Header connectLabel={t.connect} chainUnsupportedLabel={t.connectUnsupported} />
+      <div className="ui-scale-viewport">
+        <div className="ui-scale-content" style={scaledContentStyle}>
+          <Toaster
+            position="top-center"
+            toastOptions={{ className: "toast-wrapper", duration: 5000 }}
+            containerStyle={{ inset: "12px", pointerEvents: "none", width: "auto", zIndex: 9999 }}
+          />
+          <Header connectLabel={t.connect} chainUnsupportedLabel={t.connectUnsupported} />
 
-      <div ref={mainContentRef} className="main-wrapper">
+          <div ref={mainContentRef} className="main-wrapper">
         <h2 className="glowing-title" style={{ textAlign: "center" }}>
           {t.title}
         </h2>
@@ -7231,6 +7298,8 @@ export default function Page() {
         </div>
 
         <footer className="footer-credit">{t.footer}</footer>
+          </div>
+        </div>
       </div>
       <FloatingSettings
         lang={lang as keyof typeof langs}
@@ -7244,6 +7313,7 @@ export default function Page() {
           setNotificationSnoozeMinutes(value);
         }}
         uiScale={uiScale}
+        uiScaleFactor={uiScaleFactor}
         onUiScaleChange={handleUiScaleChange}
         theme={theme}
         onThemeChange={setTheme}

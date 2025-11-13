@@ -19,10 +19,9 @@ import {
 } from "./Icons";
 import { langs } from "../lib/i18n";
 import { THEME_OPTIONS, ThemeKey } from "../lib/themes";
+import { UiScale, UI_SCALE_ORDER } from "../lib/ui-scale";
 
 type LangKey = keyof typeof langs;
-
-export type UiScale = "xsmall" | "small" | "normal" | "large" | "desktop";
 
 export type HistoryLookupResult = {
   id: number;
@@ -53,6 +52,7 @@ type Props = {
   snoozeMinutes: number;
   onSnoozeChange: (value: number) => void;
   uiScale: UiScale;
+  uiScaleFactor: number;
   onUiScaleChange: (value: UiScale) => void;
   theme: ThemeKey;
   onThemeChange: (value: ThemeKey) => void;
@@ -70,17 +70,8 @@ type Props = {
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 const CLICK_THRESHOLD = 5;
-const UI_SCALE_ORDER: UiScale[] = ["xsmall", "small", "normal", "large", "desktop"];
 const EDGE_PADDING = 16;
-const UI_SCALE_FACTORS: Record<UiScale, number> = {
-  xsmall: 0.8,
-  small: 0.9,
-  normal: 1,
-  large: 1.1,
-  desktop: 0.7,
-};
-
-const getScaleFactor = (scale: UiScale) => UI_SCALE_FACTORS[scale] ?? 1;
+const getEffectiveScale = (value: number) => (value > 0 ? value : 1);
 
 const DEFAULT_THEME_LABELS: Record<ThemeKey, string> = {
   gold: "Original Gold",
@@ -102,6 +93,7 @@ export default function FloatingSettings({
   snoozeMinutes,
   onSnoozeChange,
   uiScale,
+  uiScaleFactor,
   onUiScaleChange,
   theme,
   onThemeChange,
@@ -166,7 +158,7 @@ export default function FloatingSettings({
     if (typeof window === "undefined") return;
     const element = panelRef.current;
     const rect = element?.getBoundingClientRect();
-    const scale = getScaleFactor(uiScale);
+    const scale = getEffectiveScale(uiScaleFactor);
     const width = rect?.width ?? 112;
     const height = rect?.height ?? 112;
     const widthCss = width / scale;
@@ -186,13 +178,13 @@ export default function FloatingSettings({
       }
       return { x: nextX, y: nextY };
     });
-  }, [uiScale]);
+  }, [uiScaleFactor]);
 
   const placeInCorner = useCallback(() => {
     if (typeof window === "undefined") return;
     const element = panelRef.current;
     const rect = element?.getBoundingClientRect();
-    const scale = getScaleFactor(uiScale);
+    const scale = getEffectiveScale(uiScaleFactor);
     const width = rect?.width ?? 112;
     const height = rect?.height ?? 112;
     const widthCss = width / scale;
@@ -208,7 +200,7 @@ export default function FloatingSettings({
       x: maxX,
       y: maxY,
     });
-  }, [uiScale]);
+  }, [uiScaleFactor]);
 
   useEffect(() => {
     if (hasPlacedInitialPosition.current) return;
@@ -234,7 +226,7 @@ export default function FloatingSettings({
 
   const startDrag = (event: ReactPointerEvent) => {
     if (typeof window === "undefined") return;
-    const scale = getScaleFactor(uiScale);
+    const scale = getEffectiveScale(uiScaleFactor);
     const pointerX = event.clientX / scale;
     const pointerY = event.clientY / scale;
     dragging.current = true;
@@ -267,7 +259,7 @@ export default function FloatingSettings({
     const movedDistance = Math.sqrt(dx * dx + dy * dy);
     if (movedDistance > CLICK_THRESHOLD) cancelLongPress();
     const rect = panelRef.current?.getBoundingClientRect();
-    const scale = getScaleFactor(uiScale);
+    const scale = getEffectiveScale(uiScaleFactor);
     const pointerX = event.clientX / scale;
     const pointerY = event.clientY / scale;
     const width = rect?.width ?? 112;
@@ -334,13 +326,18 @@ export default function FloatingSettings({
       ensureWithinViewport();
     });
     return () => window.cancelAnimationFrame(frame);
-  }, [uiScale, ensureWithinViewport]);
+  }, [uiScaleFactor, ensureWithinViewport]);
 
   return (
     <div
       ref={panelRef}
       className={`floating-settings ${open ? "open" : ""}`}
-      style={{ left: position.x, top: position.y }}
+      style={{
+        left: position.x,
+        top: position.y,
+        transform: `scale(${getEffectiveScale(uiScaleFactor)})`,
+        transformOrigin: "top left",
+      }}
     >
       <button
         className="floating-settings__toggle"
