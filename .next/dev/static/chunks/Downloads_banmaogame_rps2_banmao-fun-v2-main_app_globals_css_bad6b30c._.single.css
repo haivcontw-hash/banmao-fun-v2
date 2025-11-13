@@ -208,15 +208,15 @@ body {
 }
 
 body[data-ui-scale="xsmall"] {
-  zoom: .8;
+  zoom: .6;
 }
 
 body[data-ui-scale="small"] {
-  zoom: .9;
+  zoom: .7;
 }
 
 body[data-ui-scale="normal"] {
-  zoom: 1;
+  zoom: .9;
 }
 
 body[data-ui-scale="large"] {
@@ -224,7 +224,7 @@ body[data-ui-scale="large"] {
 }
 
 body[data-ui-scale="desktop"] {
-  zoom: .7;
+  zoom: .5;
 }
 
 html.mobile-desktop-mode, body.mobile-desktop-mode {
@@ -234,18 +234,18 @@ html.mobile-desktop-mode, body.mobile-desktop-mode {
 }
 
 body.mobile-desktop-mode {
-  font-size: 15px;
+  font-size: 13px;
 }
 
 body.mobile-desktop-mode .main-wrapper {
   width: 100%;
-  max-width: 560px;
+  max-width: 777px;
   margin: 0 auto;
 }
 
 @media (max-width: 768px) {
   body.mobile-desktop-mode .table th, body.mobile-desktop-mode .table td {
-    padding: 6px 4px;
+    padding: 8px 6px;
     font-size: 11px;
   }
 
