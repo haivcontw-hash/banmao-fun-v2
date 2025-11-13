@@ -152,6 +152,27 @@ export default function Providers({ children }: { children: ReactNode }) {
     const DEFAULT_CONTENT = viewport.getAttribute("content") ?? "width=device-width, initial-scale=1";
     const TARGET_VIEWPORT_WIDTH = 560;
 
+    const getDeviceWidth = () => {
+      const innerWidth = typeof window.innerWidth === "number" ? window.innerWidth : 0;
+      const screenWidth =
+        typeof window.screen?.width === "number" ? window.screen.width : 0;
+      const visualWidth =
+        typeof window.visualViewport?.width === "number"
+          ? window.visualViewport.width
+          : 0;
+
+      const candidates = [innerWidth, screenWidth, visualWidth].filter(
+        (value) => Number.isFinite(value) && value > 0
+      );
+
+      if (candidates.length === 0) {
+        return TARGET_VIEWPORT_WIDTH;
+      }
+
+      const minCandidate = Math.min(...candidates);
+      return Math.min(minCandidate, TARGET_VIEWPORT_WIDTH);
+    };
+
     const updateViewport = () => {
       const ua = window.navigator?.userAgent ?? "";
       const isMobile = MOBILE_UA_REGEX.test(ua);
@@ -163,7 +184,8 @@ export default function Providers({ children }: { children: ReactNode }) {
         return;
       }
 
-      const scale = window.innerWidth > 0 ? window.innerWidth / TARGET_VIEWPORT_WIDTH : 1;
+      const deviceWidth = getDeviceWidth();
+      const scale = deviceWidth > 0 ? deviceWidth / TARGET_VIEWPORT_WIDTH : 1;
       const safeScale = Number.isFinite(scale) && scale > 0 ? Math.min(1, scale) : 1;
 
       viewport.setAttribute(
