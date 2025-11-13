@@ -143,6 +143,74 @@ export default function Providers({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+
+    const viewport = document.querySelector<HTMLMetaElement>('meta[name="viewport"]');
+    if (!viewport) return;
+
+    const MOBILE_UA_REGEX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    const DEFAULT_CONTENT = viewport.getAttribute("content") ?? "width=device-width, initial-scale=1";
+    const TARGET_VIEWPORT_WIDTH = 560;
+
+    const getDeviceWidth = () => {
+      const innerWidth = typeof window.innerWidth === "number" ? window.innerWidth : 0;
+      const screenWidth =
+        typeof window.screen?.width === "number" ? window.screen.width : 0;
+      const visualWidth =
+        typeof window.visualViewport?.width === "number"
+          ? window.visualViewport.width
+          : 0;
+
+      const candidates = [innerWidth, screenWidth, visualWidth].filter(
+        (value) => Number.isFinite(value) && value > 0
+      );
+
+      if (candidates.length === 0) {
+        return TARGET_VIEWPORT_WIDTH;
+      }
+
+      const minCandidate = Math.min(...candidates);
+      return Math.min(minCandidate, TARGET_VIEWPORT_WIDTH);
+    };
+
+    const updateViewport = () => {
+      const ua = window.navigator?.userAgent ?? "";
+      const isMobile = MOBILE_UA_REGEX.test(ua);
+
+      if (!isMobile) {
+        viewport.setAttribute("content", DEFAULT_CONTENT);
+        document.documentElement.classList.remove("mobile-desktop-mode");
+        document.body?.classList.remove("mobile-desktop-mode");
+        return;
+      }
+
+      const deviceWidth = getDeviceWidth();
+      const scale = deviceWidth > 0 ? deviceWidth / TARGET_VIEWPORT_WIDTH : 1;
+      const safeScale = Number.isFinite(scale) && scale > 0 ? Math.min(1, scale) : 1;
+
+      viewport.setAttribute(
+        "content",
+        `width=${TARGET_VIEWPORT_WIDTH}, initial-scale=${safeScale}, maximum-scale=${safeScale}, user-scalable=no`
+      );
+      document.documentElement.classList.add("mobile-desktop-mode");
+      document.body?.classList.add("mobile-desktop-mode");
+    };
+
+    updateViewport();
+
+    window.addEventListener("resize", updateViewport);
+    window.addEventListener("orientationchange", updateViewport);
+
+    return () => {
+      window.removeEventListener("resize", updateViewport);
+      window.removeEventListener("orientationchange", updateViewport);
+      viewport.setAttribute("content", DEFAULT_CONTENT);
+      document.documentElement.classList.remove("mobile-desktop-mode");
+      document.body?.classList.remove("mobile-desktop-mode");
+    };
+  }, []);
+
+  useEffect(() => {
     const INACTIVITY_TIMEOUT_MS = 60_000;
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
