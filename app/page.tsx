@@ -122,6 +122,7 @@ const MAX_COMMIT_WINDOW = 24 * 60 * 60; // tối đa 24 giờ
 const REVEAL_WINDOW = 900; // 15 phút reveal
 const X_HANDLE = "banmao_X";
 const UI_SCALE_STORAGE_KEY = "banmao_ui_scale";
+const UI_SCALE_MANUAL_STORAGE_KEY = "banmao_ui_scale_manual";
 const THEME_STORAGE_KEY = "banmao_theme";
 const TELEGRAM_NOTIFY_ENDPOINT = process.env.NEXT_PUBLIC_TELEGRAM_NOTIFY_ENDPOINT;
 const GOOGLE_DOCS_URL = "https://docs.google.com/document/d/1ObVjHuoVCjXbF5zuWqzbcUuoqT86CdCm4Z9mwMWCpp0/";
@@ -129,6 +130,34 @@ const TELEGRAM_URL = `https://t.me/${TELEGRAM_BOT_USERNAME}`;
 const X_URL = `https://x.com/${X_HANDLE}`;
 const ROOMS_CACHE_KEY = "banmao_rooms_cache_v1";
 const INFO_CACHE_KEY = "banmao_info_cache_v1";
+
+const VALID_UI_SCALES: readonly UiScale[] = ["xsmall", "small", "normal", "large", "desktop"] as const;
+
+const isValidUiScale = (value: string | null): value is UiScale =>
+  value != null && (VALID_UI_SCALES as readonly string[]).includes(value);
+
+const detectPreferredUiScale = (): UiScale => {
+  if (typeof window === "undefined") return "normal";
+  const width = window.innerWidth || window.document.documentElement.clientWidth || 0;
+  const height = window.innerHeight || window.document.documentElement.clientHeight || 0;
+  const minDimension = Math.min(width, height);
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const densityAdjustedWidth = minDimension * devicePixelRatio;
+
+  if (minDimension <= 360 || densityAdjustedWidth <= 900) {
+    return "xsmall";
+  }
+
+  if (minDimension <= 400 || densityAdjustedWidth <= 1080) {
+    return "small";
+  }
+
+  if (minDimension <= 520 || densityAdjustedWidth <= 1280) {
+    return "normal";
+  }
+
+  return "normal";
+};
 
 const RULE_ACCENTS = [
   { icon: "🎮", className: "rule-accent-start" },
@@ -1786,6 +1815,7 @@ export default function Page() {
   const [isTelegramConnected, setIsTelegramConnected] = useState(false);
   const [isTelegramPanelCollapsed, setIsTelegramPanelCollapsed] = useState(true);
   const [uiScale, setUiScale] = useState<UiScale>("normal");
+  const uiScaleManualRef = useRef(false);
   const [isSharing, setIsSharing] = useState(false);
   const [isPersonalBoardCollapsed, setIsPersonalBoardCollapsed] = useState(false);
   const [isStakeTableCollapsed, setIsStakeTableCollapsed] = useState(false);
@@ -2161,7 +2191,20 @@ export default function Page() {
   }, []);
 
   const handleUiScaleChange = useCallback((value: UiScale) => {
-    setUiScale(value);
+    uiScaleManualRef.current = true;
+    setUiScale((prev) => {
+      if (prev === value) {
+        if (typeof document !== "undefined") {
+          document.body.dataset.uiScale = value;
+        }
+        if (typeof window !== "undefined") {
+          window.localStorage.setItem(UI_SCALE_STORAGE_KEY, value);
+          window.localStorage.setItem(UI_SCALE_MANUAL_STORAGE_KEY, "1");
+        }
+        return prev;
+      }
+      return value;
+    });
   }, []);
 
   const triggerInteractBeep = useCallback(() => playBeep(true), [playBeep]);
@@ -2454,6 +2497,13 @@ export default function Page() {
       document.body.dataset.theme = DEFAULT_THEME;
     }
 
+    const autoScale = detectPreferredUiScale();
+    uiScaleManualRef.current = false;
+    setUiScale(autoScale);
+    if (typeof document !== "undefined") {
+      document.body.dataset.uiScale = autoScale;
+    }
+
     notifiedRef.current.clear();
     snoozedRef.current.clear();
     myCreatedRoomsRef.current.clear();
@@ -2553,19 +2603,23 @@ export default function Page() {
         if (!Number.isNaN(parsed) && parsed >= 0) setNotificationSnoozeMinutes(parsed);
       }
       const storedUiScale = localStorage.getItem(UI_SCALE_STORAGE_KEY);
-      if (
-        storedUiScale === "xsmall" ||
-        storedUiScale === "small" ||
-        storedUiScale === "normal" ||
-        storedUiScale === "large" ||
-        storedUiScale === "desktop"
-      ) {
-        setUiScale(storedUiScale as UiScale);
+      const storedUiScaleManual = localStorage.getItem(UI_SCALE_MANUAL_STORAGE_KEY);
+      const hasManualUiScale =
+        storedUiScaleManual === "1" || (storedUiScaleManual == null && isValidUiScale(storedUiScale));
+
+      if (isValidUiScale(storedUiScale) && hasManualUiScale) {
+        uiScaleManualRef.current = true;
+        setUiScale(storedUiScale);
         if (typeof document !== "undefined") {
           document.body.dataset.uiScale = storedUiScale;
         }
-      } else if (typeof document !== "undefined") {
-        document.body.dataset.uiScale = "normal";
+      } else {
+        const autoScale = detectPreferredUiScale();
+        uiScaleManualRef.current = false;
+        setUiScale(autoScale);
+        if (typeof document !== "undefined") {
+          document.body.dataset.uiScale = autoScale;
+        }
       }
       if (typeof document !== "undefined") {
         const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
@@ -2581,6 +2635,24 @@ export default function Page() {
       };
     }
   }, []);
+
+  useEffect(() => {
+    if (!isClient || typeof window === "undefined") return;
+
+    const handleResponsiveScale = () => {
+      if (uiScaleManualRef.current) return;
+      const nextScale = detectPreferredUiScale();
+      setUiScale((prev) => (prev === nextScale ? prev : nextScale));
+    };
+
+    handleResponsiveScale();
+    window.addEventListener("resize", handleResponsiveScale);
+    window.addEventListener("orientationchange", handleResponsiveScale);
+    return () => {
+      window.removeEventListener("resize", handleResponsiveScale);
+      window.removeEventListener("orientationchange", handleResponsiveScale);
+    };
+  }, [isClient]);
 
   useEffect(() => {
     if (!isClient || typeof window === "undefined") return;
@@ -2628,6 +2700,7 @@ export default function Page() {
     }
     if (!isClient || typeof window === "undefined") return;
     localStorage.setItem(UI_SCALE_STORAGE_KEY, uiScale);
+    localStorage.setItem(UI_SCALE_MANUAL_STORAGE_KEY, uiScaleManualRef.current ? "1" : "0");
   }, [uiScale, isClient]);
 
   useEffect(() => {
